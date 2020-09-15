@@ -1,5 +1,5 @@
-![Compile](https://github.com/NU-CSYE6530-Fall2020/gateway-device-app-Taowyoo/workflows/Java%20Compile%20with%20Maven/badge.svg?branch=chapter01)
-![Test](https://github.com/NU-CSYE6530-Fall2020/gateway-device-app-Taowyoo/workflows/Java%20CI%20with%20Maven/badge.svg?branch=chapter01)
+![Compile](https://github.com/NU-CSYE6530-Fall2020/gateway-device-app-Taowyoo/workflows/Compile/badge.svg?branch=chapter01)
+![Test](https://github.com/NU-CSYE6530-Fall2020/gateway-device-app-Taowyoo/workflows/Test/badge.svg?branch=chapter01)
 
 # Yuxiang' GDA
 

@@ -1,4 +1,6 @@
-[![Work in Repl.it](https://classroom.github.com/assets/work-in-replit-14baed9a392b3a25080506f3b7b6d57f295ec2978f6f33ec97e36a161684cbe9.svg)](https://classroom.github.com/online_ide?assignment_repo_id=3118878&assignment_repo_type=AssignmentRepo)
+![Java Compile with Maven](https://github.com/NU-CSYE6530-Fall2020/gateway-device-app-Taowyoo/workflows/Java%20Compile%20with%20Maven/badge.svg?branch=chapter01)
+![Java Package with Maven](https://github.com/NU-CSYE6530-Fall2020/gateway-device-app-Taowyoo/workflows/Java%20CI%20with%20Maven/badge.svg?branch=chapter01)
+
 # Yuxiang' GDA
 
 ## Introduction
@@ -19,4 +21,4 @@ The gateway device java app that will be deploied on gateway device(stimulated o
   
 ## CI/CD
 
-**TODO** Use Github Action to implement continuous integration and continuous deployment.
+Use Github Action to implement continuous integration and continuous deployment.

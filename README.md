@@ -7,16 +7,16 @@ The gateway device java app that will be deploied on gateway device(stimulated o
 
 ## Testing Strategy
 
-At very beginner, there shoud be two parts:
+  At very beginner, there shoud be two parts:
 
 1. Unit Test
   
-  All methods should have corresponding unit test and shoud be 100% passed.
+    All methods should have corresponding unit test and shoud be 100% passed.
 
 2. Integration Test
 
-  There should be intergrations tests that test all the functionality and feature for this software
+    There should be intergrations tests that test all the functionality and feature for this software
   
 ## CI/CD
 
-  **TODO** Use Github Action to implement continuous integration and continuous deployment.
+**TODO** Use Github Action to implement continuous integration and continuous deployment.

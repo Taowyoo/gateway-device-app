@@ -14,6 +14,8 @@ What does your implementation do?
     
     I choose idea for developing. I installed the latest OpenJDK 14 on my computer and setup environment path for java. After run common unit test and integration test for part01 successfully, all things done.
 
+    In addition, all new things I created has been committed to a new branch `chapter01`.
+
 2. Set CI/CD for auto testing
    
     I used GitHub Action to implement the CI/CD. I created `.yml` files under `.github/workflows/` to let github auto run some auto task to test my GDA.

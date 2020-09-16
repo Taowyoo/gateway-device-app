@@ -70,8 +70,10 @@ URL: https://github.com/NU-CSYE6530-Fall2020/gateway-device-app-Taowyoo/tree/cha
 diagram you provide will look similar to, but not the same as, its counterpart in the
 book [Programming the IoT](https://learning.oreilly.com/library/view/programming-the-internet/9781492081401/). -->
 
-For fist chapter, I did not write any new code. But here is the current class diagram for DeviceDataManager and GatewayDeviceApp, which will help myself for further development:
-![Two Class](./pic/classdiagram.png)
+For fist chapter, I did not write any new code. But here is the current class diagram for GatewayDeviceApp, ConfigUtil, and ConfigConst:
+
+I simply hide all static final member variables of ConfigConst.
+![Lab01 Class Diagram](../../doc/uml/Lab01.svg)
 
 ### Unit Tests Executed
 

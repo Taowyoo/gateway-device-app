@@ -12,7 +12,7 @@ What does your implementation do?
 
 1. Development environment configuration
     
-    At first, I tried using idea to develop. But after import the project, there were some small bugs. And for convenient: developing both CDA and GDA in one IDE. I changed to using Eclipse. I install the latest OpenJDK 14 on my computer and setup environment path for java. Then all things done.
+    I choose idea for developing. I installed the latest OpenJDK 14 on my computer and setup environment path for java. After run common unit test and integration test for part01 successfully, all things done.
 
 2. Set CI/CD for auto testing
    
@@ -43,7 +43,7 @@ How does your implementation work?
     6. Then run `mvn -B clean test -Dtest=programmingtheiot.part01.unit.common.ConfigUtilTest -Dtest=programmingtheiot.part01.integration.app.GatewayDeviceAppTest` to build and run tests only for part01.
     
     Here is example screen shot:
-    ![Github Action](./GithubAction.JPG)
+    ![Github Action](./pic/GithubAction.JPG)
 
     For future parts and new codes. I will update these yml files to fit to project needs, such as test part02 part 03 or run packaging and publish jar to Github Release and deploy it to my cloud to complete a full CD/CD lifecycle.
 
@@ -54,7 +54,7 @@ How does your implementation work?
     2. Then when I finish coding and commit or pull request. it will turn into In progress.
     3. After code being merged into main branch. It will turn to Done.
     4. Also, I also will write some note that's important to me in Note column.
-    ![workflow](./workflow.JPG)
+    ![workflow](./pic/workflow.JPG)
 
 ### Code Repository and Branch
 
@@ -68,8 +68,8 @@ URL: https://github.com/NU-CSYE6530-Fall2020/gateway-device-app-Taowyoo/tree/cha
 diagram you provide will look similar to, but not the same as, its counterpart in the
 book [Programming the IoT](https://learning.oreilly.com/library/view/programming-the-internet/9781492081401/). -->
 
-For fist chapter, I did not write new code. But here is the current class diagram of GDA:
-
+For fist chapter, I did not write any new code. But here is the current class diagram for DeviceDataManager and GatewayDeviceApp, which will help myself for further development:
+![Two Class](./pic/classdiagram.png)
 
 ### Unit Tests Executed
 

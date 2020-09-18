@@ -1,0 +1,271 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="860.08203125" height="375" style="background-color:white">
+    <defs />
+    <g>
+        <g transform="translate(-86,-30) scale(1,1)">
+            <rect fill="#C0C0C0" stroke="none" x="607" y="223" width="336.08203125" height="175" opacity="0.2" />
+        </g>
+        <g transform="translate(-86,-30) scale(1,1)">
+            <rect fill="#ffffff" stroke="none" x="600" y="216" width="336.08203125" height="175" />
+        </g>
+        <g transform="translate(-86,-30) scale(1,1)">
+            <path fill="none" stroke="#000000" d="M 600 216 L 936.08203125 216 L 936.08203125 391 L 600 391 L 600 216 Z Z" stroke-miterlimit="10" />
+        </g>
+        <g transform="translate(-86,-30) scale(1,1)">
+            <path fill="none" stroke="#000000" d="M 600 256 L 936.08203125 256" stroke-miterlimit="10" />
+        </g>
+        <g transform="translate(-86,-30) scale(1,1)">
+            <path fill="none" stroke="#000000" d="M 600 294 L 936.08203125 294" stroke-miterlimit="10" />
+        </g>
+        <g transform="translate(-86,-30) scale(1,1)">
+            <g>
+                <path fill="none" stroke="none" />
+                <text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="bold" text-decoration="none" x="710.95654296875" y="235.5">GatewayDeviceApp</text>
+            </g>
+        </g>
+        <g transform="translate(-86,-30) scale(1,1)">
+            <g>
+                <path fill="none" stroke="none" />
+                <text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="none" x="738.06103515625" y="250.5">(from app)</text>
+            </g>
+        </g>
+        <g transform="translate(-86,-30) scale(1,1)">
+            <g>
+                <path fill="none" stroke="none" />
+                <text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="none" x="605" y="273.5">-_Logger: Logger</text>
+                <!-- <path fill="none" stroke="#000000" d="M 605 273.5 L 704.74072265625 273.5" stroke-miterlimit="10" /> -->
+            </g>
+        </g>
+        <g transform="translate(-86,-30) scale(1,1)">
+            <g>
+                <path fill="none" stroke="none" />
+                <text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="none" x="605" y="288.5">+DEFAULT_TEST_RUNTIME: long = 60000L</text>
+                <!-- <path fill="none" stroke="#000000" d="M 605 288.5 L 867.03759765625 288.5" stroke-miterlimit="10" /> -->
+            </g>
+        </g>
+        <g transform="translate(-86,-30) scale(1,1)">
+            <g>
+                <path fill="none" stroke="none" />
+                <text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="none" x="605" y="311.5">«constructor»+GatewayDeviceApp(args: String[*])</text>
+            </g>
+        </g>
+        <g transform="translate(-86,-30) scale(1,1)">
+            <g>
+                <path fill="none" stroke="none" />
+                <text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="none" x="605" y="326.5">+main(args: String[*]): void</text>
+                <!-- <path fill="none" stroke="#000000" d="M 605 326.5 L 759.25439453125 326.5" stroke-miterlimit="10" /> -->
+            </g>
+        </g>
+        <g transform="translate(-86,-30) scale(1,1)">
+            <g>
+                <path fill="none" stroke="none" />
+                <text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="none" x="605" y="341.5">+startApp(): void</text>
+            </g>
+        </g>
+        <g transform="translate(-86,-30) scale(1,1)">
+            <g>
+                <path fill="none" stroke="none" />
+                <text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="none" x="605" y="356.5">+stopApp(code: int): void</text>
+            </g>
+        </g>
+        <g transform="translate(-86,-30) scale(1,1)">
+            <g>
+                <path fill="none" stroke="none" />
+                <text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="none" x="605" y="371.5">-initConfig(configFile: String): void</text>
+            </g>
+        </g>
+        <g transform="translate(-86,-30) scale(1,1)">
+            <g>
+                <path fill="none" stroke="none" />
+                <text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="none" x="605" y="386.5">-parseArgs(args: String[*]): void</text>
+            </g>
+        </g>
+        <g transform="translate(-86,-30) scale(1,1)">
+            <rect fill="#C0C0C0" stroke="none" x="103" y="47" width="430.37646484375" height="355" opacity="0.2" />
+        </g>
+        <g transform="translate(-86,-30) scale(1,1)">
+            <rect fill="#ffffff" stroke="none" x="96" y="40" width="430.37646484375" height="355" />
+        </g>
+        <g transform="translate(-86,-30) scale(1,1)">
+            <path fill="none" stroke="#000000" d="M 96 40 L 526.37646484375 40 L 526.37646484375 395 L 96 395 L 96 40 Z Z" stroke-miterlimit="10" />
+        </g>
+        <g transform="translate(-86,-30) scale(1,1)">
+            <path fill="none" stroke="#000000" d="M 96 80 L 526.37646484375 80" stroke-miterlimit="10" />
+        </g>
+        <g transform="translate(-86,-30) scale(1,1)">
+            <path fill="none" stroke="#000000" d="M 96 148 L 526.37646484375 148" stroke-miterlimit="10" />
+        </g>
+        <g transform="translate(-86,-30) scale(1,1)">
+            <g>
+                <path fill="none" stroke="none" />
+                <text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="bold" text-decoration="none" x="283.010986328125" y="59.5">ConfigUtil</text>
+            </g>
+        </g>
+        <g transform="translate(-86,-30) scale(1,1)">
+            <g>
+                <path fill="none" stroke="none" />
+                <text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="none" x="267.129150390625" y="74.5">(from common)</text>
+            </g>
+        </g>
+        <g transform="translate(-86,-30) scale(1,1)">
+            <g>
+                <path fill="none" stroke="none" />
+                <text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="none" x="101" y="97.5">-_Logger: Logger</text>
+                <!-- <path fill="none" stroke="#000000" d="M 101 97.5 L 200.74072265625 97.5" stroke-miterlimit="10" /> -->
+            </g>
+        </g>
+        <g transform="translate(-86,-30) scale(1,1)">
+            <g>
+                <path fill="none" stroke="none" />
+                <text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="none" x="101" y="112.5">-sectionProperties: HierarchicalINIConfiguration = null</text>
+            </g>
+        </g>
+        <g transform="translate(-86,-30) scale(1,1)">
+            <g>
+                <path fill="none" stroke="none" />
+                <text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="none" x="101" y="127.5">-isLoaded: boolean = false</text>
+            </g>
+        </g>
+        <g transform="translate(-86,-30) scale(1,1)">
+            <g>
+                <path fill="none" stroke="none" />
+                <text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="none" x="101" y="142.5">-configFileName: String</text>
+            </g>
+        </g>
+        <g transform="translate(-86,-30) scale(1,1)">
+            <g>
+                <path fill="none" stroke="none" />
+                <text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="none" x="101" y="165.5">+getInstance(): ConfigUtil</text>
+                <!-- <path fill="none" stroke="#000000" d="M 101 165.5 L 248.04345703125 165.5" stroke-miterlimit="10" /> -->
+            </g>
+        </g>
+        <g transform="translate(-86,-30) scale(1,1)">
+            <g>
+                <path fill="none" stroke="none" />
+                <text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="none" x="101" y="180.5">«constructor»-ConfigUtil()</text>
+            </g>
+        </g>
+        <g transform="translate(-86,-30) scale(1,1)">
+            <g>
+                <path fill="none" stroke="none" />
+                <text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="none" x="101" y="195.5">+getProperty(section: String, propName: String): String</text>
+            </g>
+        </g>
+        <g transform="translate(-86,-30) scale(1,1)">
+            <g>
+                <path fill="none" stroke="none" />
+                <text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="none" x="101" y="210.5">+getProperty(section: String, propName: String, defaultVal: String): String</text>
+            </g>
+        </g>
+        <g transform="translate(-86,-30) scale(1,1)">
+            <g>
+                <path fill="none" stroke="none" />
+                <text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="none" x="101" y="225.5">+getBoolean(section: String, propName: String): boolean</text>
+            </g>
+        </g>
+        <g transform="translate(-86,-30) scale(1,1)">
+            <g>
+                <path fill="none" stroke="none" />
+                <text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="none" x="101" y="240.5">+getInteger(section: String, propName: String): int</text>
+            </g>
+        </g>
+        <g transform="translate(-86,-30) scale(1,1)">
+            <g>
+                <path fill="none" stroke="none" />
+                <text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="none" x="101" y="255.5">+getInteger(section: String, propName: String, defaultVal: int): int</text>
+            </g>
+        </g>
+        <g transform="translate(-86,-30) scale(1,1)">
+            <g>
+                <path fill="none" stroke="none" />
+                <text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="none" x="101" y="270.5">+getFloat(section: String, propName: String): float</text>
+            </g>
+        </g>
+        <g transform="translate(-86,-30) scale(1,1)">
+            <g>
+                <path fill="none" stroke="none" />
+                <text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="none" x="101" y="285.5">+getFloat(section: String, propName: String, defaultVal: float): float</text>
+            </g>
+        </g>
+        <g transform="translate(-86,-30) scale(1,1)">
+            <g>
+                <path fill="none" stroke="none" />
+                <text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="none" x="101" y="300.5">+hasProperty(section: String, propName: String): boolean</text>
+            </g>
+        </g>
+        <g transform="translate(-86,-30) scale(1,1)">
+            <g>
+                <path fill="none" stroke="none" />
+                <text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="none" x="101" y="315.5">+hasSection(section: String): boolean</text>
+            </g>
+        </g>
+        <g transform="translate(-86,-30) scale(1,1)">
+            <g>
+                <path fill="none" stroke="none" />
+                <text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="none" x="101" y="330.5">+isConfigDataLoaded(): boolean</text>
+            </g>
+        </g>
+        <g transform="translate(-86,-30) scale(1,1)">
+            <g>
+                <path fill="none" stroke="none" />
+                <text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="none" x="101" y="345.5">+getCredentials(section: String): Properties</text>
+            </g>
+        </g>
+        <g transform="translate(-86,-30) scale(1,1)">
+            <g>
+                <path fill="none" stroke="none" />
+                <text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="none" x="101" y="360.5">-initBackingProperties(): void</text>
+            </g>
+        </g>
+        <g transform="translate(-86,-30) scale(1,1)">
+            <g>
+                <path fill="none" stroke="none" />
+                <text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="none" x="101" y="375.5">-loadConfig(): boolean</text>
+            </g>
+        </g>
+        <g transform="translate(-86,-30) scale(1,1)">
+            <g>
+                <path fill="none" stroke="none" />
+                <text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="none" x="101" y="390.5">-loadConfig(configFileName: String): boolean</text>
+            </g>
+        </g>
+        <g transform="translate(-86,-30) scale(1,1)">
+            <rect fill="#C0C0C0" stroke="none" x="719" y="47" width="172.287109375" height="72" opacity="0.2" />
+        </g>
+        <g transform="translate(-86,-30) scale(1,1)">
+            <rect fill="#ffffff" stroke="none" x="712" y="40" width="172.287109375" height="72" />
+        </g>
+        <g transform="translate(-86,-30) scale(1,1)">
+            <path fill="none" stroke="#000000" d="M 712 40 L 884.287109375 40 L 884.287109375 112 L 712 112 L 712 40 Z Z" stroke-miterlimit="10" />
+        </g>
+        <g transform="translate(-86,-30) scale(1,1)">
+            <path fill="none" stroke="#000000" d="M 712 80 L 884.287109375 80" stroke-miterlimit="10" />
+        </g>
+        <g transform="translate(-86,-30) scale(1,1)">
+            <path fill="none" stroke="#000000" d="M 712 90 L 884.287109375 90" stroke-miterlimit="10" />
+        </g>
+        <g transform="translate(-86,-30) scale(1,1)">
+            <g>
+                <path fill="none" stroke="none" />
+                <text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="bold" text-decoration="none" x="762.37451171875" y="59.5">ConfigConst</text>
+            </g>
+        </g>
+        <g transform="translate(-86,-30) scale(1,1)">
+            <g>
+                <path fill="none" stroke="none" />
+                <text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="none" x="752.640380859375" y="74.5">(from MyModel)</text>
+            </g>
+        </g>
+        <g transform="translate(-86,-30) scale(1,1)">
+            <g>
+                <path fill="none" stroke="none" />
+                <text fill="#000000" stroke="none" font-family="Arial" font-size="13px" font-style="normal" font-weight="normal" text-decoration="none" x="717" y="107.5">«constructor»-ConfigConst()</text>
+            </g>
+        </g>
+        <g transform="translate(-86,-30) scale(1,1)">
+            <path fill="none" stroke="#000000" d="M 527 154 L 711 101" stroke-miterlimit="10" stroke-dasharray="3" />
+        </g>
+        <g transform="translate(-86,-30) scale(1,1)">
+            <path fill="none" stroke="#000000" d="M 702.3995271881724 107.85797837653453 L 711 101 L 700.0692243380679 99.76787036862449" stroke-miterlimit="10" />
+        </g>
+    </g>
+</svg>

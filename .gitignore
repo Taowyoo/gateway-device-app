@@ -3,3 +3,83 @@
 **/cert
 **/cred
 
+# idea stuff
+# User-specific stuff
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/**/usage.statistics.xml
+.idea/**/dictionaries
+.idea/**/shelf
+
+# Generated files
+.idea/**/contentModel.xml
+
+# Sensitive or high-churn files
+.idea/**/dataSources/
+.idea/**/dataSources.ids
+.idea/**/dataSources.local.xml
+.idea/**/sqlDataSources.xml
+.idea/**/dynamic.xml
+.idea/**/uiDesigner.xml
+.idea/**/dbnavigator.xml
+
+# Gradle and Maven with auto-import
+# When using Gradle or Maven with auto-import, you should exclude module files,
+# since they will be recreated, and may cause churn.  Uncomment if using
+# auto-import.
+.idea/artifacts
+.idea/compiler.xml
+.idea/jarRepositories.xml
+.idea/modules.xml
+.idea/*.iml
+.idea/modules
+*.iml
+*.ipr
+
+# CMake
+cmake-build-*/
+
+# Mongo Explorer plugin
+.idea/**/mongoSettings.xml
+
+# File-based project format
+*.iws
+
+# IntelliJ
+out/
+
+# mpeltonen/sbt-idea plugin
+.idea_modules/
+
+# JIRA plugin
+atlassian-ide-plugin.xml
+
+# Cursive Clojure plugin
+.idea/replstate.xml
+
+# Crashlytics plugin (for Android Studio and IntelliJ)
+com_crashlytics_export_strings.xml
+crashlytics.properties
+crashlytics-build.properties
+fabric.properties
+
+# Editor-based Rest Client
+.idea/httpRequests
+
+# Android studio 3.1+ serialized cache file
+.idea/caches/build_file_checksums.ser
+.idea/libraries/Maven__com_google_code_gson_gson_2_8_6.xml
+.idea/libraries/Maven__com_sun_mail_javax_mail_1_6_2.xml
+.idea/libraries/Maven__commons_cli_commons_cli_1_4.xml
+.idea/libraries/Maven__commons_configuration_commons_configuration_1_10.xml
+.idea/libraries/Maven__commons_lang_commons_lang_2_6.xml
+.idea/libraries/Maven__commons_logging_commons_logging_1_1_1.xml
+.idea/libraries/Maven__javax_activation_activation_1_1.xml
+.idea/libraries/Maven__junit_junit_4_12.xml
+.idea/libraries/Maven__org_apache_commons_commons_pool2_2_6_2.xml
+.idea/libraries/Maven__org_eclipse_californium_californium_core_1_0_7.xml
+.idea/libraries/Maven__org_eclipse_californium_element_connector_1_0_7.xml
+.idea/libraries/Maven__org_eclipse_paho_org_eclipse_paho_client_mqttv3_1_2_1.xml
+.idea/libraries/Maven__org_hamcrest_hamcrest_core_1_3.xml
+.idea/libraries/Maven__org_slf4j_slf4j_api_1_7_25.xml
+.idea/libraries/Maven__redis_clients_jedis_3_2_0.xml

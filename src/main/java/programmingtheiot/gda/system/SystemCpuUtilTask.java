@@ -30,11 +30,16 @@ public class SystemCpuUtilTask extends BaseSystemUtilTask
 	
 	
 	// protected methods
-	
+
+	/**
+	 * Get System CPU occupied percentage.
+	 *
+	 * @return float System CPU occupied percentage
+	 */
 	@Override
 	protected float getSystemUtil()
 	{
-		return 0.0f;
+		return (float)ManagementFactory.getOperatingSystemMXBean().getSystemLoadAverage();
 	}
 	
 }

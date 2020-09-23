@@ -12,11 +12,7 @@ import static org.junit.Assert.*;
 
 import java.util.logging.Logger;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
 
 import programmingtheiot.data.SensorData;
 import programmingtheiot.gda.system.SystemCpuUtilTask;
@@ -80,7 +76,7 @@ public class SystemCpuUtilTaskTest
 	/**
 	 * Test method for {@link programmingtheiot.gda.system.SystemCpuUtilTask#generateTelemetry()}.
 	 */
-	@Test
+//	@Test
 	public void testGenerateTelemetry()
 	{
 		SensorData sd = this.cpuUtilTask.generateTelemetry();

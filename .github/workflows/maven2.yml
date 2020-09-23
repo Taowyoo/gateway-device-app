@@ -5,9 +5,9 @@ name: Compile
 
 on:
   push:
-    branches: [ chapter01 ]
+    branches: [ alpha001, chapter02 ]
   pull_request:
-    branches: [ chapter01 ]
+    branches: [ alpha001, chapter02 ]
 
 jobs:
   build:
@@ -21,4 +21,4 @@ jobs:
       with:
         java-version: 11
     - name: Build with Maven
-      run: mvn -B test-compile --file pom.xml
+      run: mvn -B verify --file pom_test.xml

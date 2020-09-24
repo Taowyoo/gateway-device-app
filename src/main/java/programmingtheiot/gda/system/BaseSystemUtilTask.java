@@ -8,6 +8,7 @@
 
 package programmingtheiot.gda.system;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import programmingtheiot.data.SensorData;
@@ -35,15 +36,27 @@ public abstract class BaseSystemUtilTask
 	
 	
 	// public methods
-	
+
+	/**
+	 * Generate Telemetry Sensor Data.
+	 *
+	 * @return
+	 */
 	public SensorData generateTelemetry()
 	{
 		return null;
 	}
-	
+
+	/**
+	 * Retrieve Telemetry Value by calling method implemented by sub-class.
+	 *
+	 * @return float Telemetry value
+	 */
 	public float getTelemetryValue()
 	{
-		return 0.0f;
+		float val = getSystemUtil();
+		_Logger.log(Level.INFO, "Got telemetry value: {0}.", val);
+		return val;
 	}
 	
 	
@@ -53,7 +66,7 @@ public abstract class BaseSystemUtilTask
 	 * Template method definition. Sub-class will implement this to retrieve
 	 * the system utilization measure.
 	 * 
-	 * @return float
+	 * @return float System util measure data
 	 */
 	protected abstract float getSystemUtil();
 	

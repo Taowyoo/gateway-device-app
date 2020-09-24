@@ -1,5 +1,4 @@
-![Compile](https://github.com/NU-CSYE6530-Fall2020/gateway-device-app-Taowyoo/workflows/Compile/badge.svg?branch=chapter01)
-![Test](https://github.com/NU-CSYE6530-Fall2020/gateway-device-app-Taowyoo/workflows/Test/badge.svg?branch=chapter01)
+![Build](https://github.com/NU-CSYE6530-Fall2020/gateway-device-app-Taowyoo/workflows/Build/badge.svg)
 
 # Yuxiang' GDA
 

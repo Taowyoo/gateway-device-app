@@ -30,11 +30,15 @@ public class SystemMemUtilTask extends BaseSystemUtilTask
 	
 	
 	// protected methods
-	
+	/**
+	 * Get System Memory current occupied in
+	 *
+	 * @return float System Memory current occupied
+	 */
 	@Override
 	protected float getSystemUtil()
 	{
-		return 0.0f;
+		return (float)ManagementFactory.getMemoryMXBean().getHeapMemoryUsage().getUsed();
 	}
 	
 }

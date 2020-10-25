@@ -76,7 +76,7 @@ public class SystemCpuUtilTaskTest
 	/**
 	 * Test method for {@link programmingtheiot.gda.system.SystemCpuUtilTask#generateTelemetry()}.
 	 */
-//	@Test
+	@Test
 	public void testGenerateTelemetry()
 	{
 		SensorData sd = this.cpuUtilTask.generateTelemetry();

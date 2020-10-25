@@ -25,7 +25,7 @@ public abstract class BaseSystemUtilTask
 	
 	
 	// private
-	
+	private SensorData latestSensorData = null;
 	
 	// constructors
 	
@@ -44,7 +44,9 @@ public abstract class BaseSystemUtilTask
 	 */
 	public SensorData generateTelemetry()
 	{
-		return null;
+		this.latestSensorData = new SensorData();
+		this.latestSensorData.setValue(getSystemUtil());
+		return this.latestSensorData;
 	}
 
 	/**
@@ -54,7 +56,10 @@ public abstract class BaseSystemUtilTask
 	 */
 	public float getTelemetryValue()
 	{
-		float val = getSystemUtil();
+		if (this.latestSensorData == null){
+			generateTelemetry();
+		}
+		float val = this.latestSensorData.getValue();
 		_Logger.log(Level.INFO, "Got telemetry value: {0}.", val);
 		return val;
 	}

@@ -5,9 +5,21 @@ name: Build
 
 on:
   push:
-    branches: [ alpha001, chapter02 ]
+    paths:
+      - 'src/**'
+      - 'config/**'
+      - '.github/workflows/**'
+    branches:
+      - alpha001
+      - 'chapter**'
   pull_request:
-    branches: [ alpha001, chapter02 ]
+    paths:
+      - 'src/**'
+      - 'config/**'
+      - '.github/workflows/**'
+    branches:
+      - alpha001
+      - 'chapter**'
 
 jobs:
   build:
@@ -20,5 +32,9 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 11
+    - name: actions-setup-redis
+      # You may pin to the exact commit or the version.
+      # uses: shogo82148/actions-setup-redis@f168880de5407eeb262957436a2ed697af41cdb4
+      uses: shogo82148/actions-setup-redis@v1.9.1
     - name: Build with Maven
       run: mvn -B verify --file pom_test.xml

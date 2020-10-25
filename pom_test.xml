@@ -120,6 +120,7 @@
 				<configuration>
 					<includes>
 						<include>**/part01/unit/**</include>
+						<include>**/part02/unit/**</include>
 					</includes>
 				</configuration>
 			</plugin>
@@ -136,12 +137,14 @@
 							<goal>integration-test</goal>
 							<goal>verify</goal>
 						</goals>
-
 					</execution>
 				</executions>
 				<configuration>
 					<includes>
-						<include>**/part01/integration/**</include>
+						<include>**/part02/integration/data/**</include>
+						<include>**/part02/integration/connection/*Persistence*.*</include>
+						<include>**/part02/integration/app/**</include>
+						<include>**/part01/integration/app/**</include>
 					</includes>
 				</configuration>
 			</plugin>

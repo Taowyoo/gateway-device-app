@@ -14,6 +14,7 @@ import java.nio.file.Path;
 import java.util.List;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 /**
  * Shell representation of class for student implementation.
@@ -37,7 +38,7 @@ public class DataUtil
 	
 	
 	// private var's
-	
+	Gson gson = null;
 	
 	// constructors
 	
@@ -48,6 +49,8 @@ public class DataUtil
 	private DataUtil()
 	{
 		super();
+//		gson = new Gson();
+		gson = new GsonBuilder().setPrettyPrinting().create();
 	}
 	
 	
@@ -55,42 +58,50 @@ public class DataUtil
 	
 	public String actuatorDataToJson(ActuatorData actuatorData)
 	{
-		return null;
+		String jsonData = gson.toJson(actuatorData);
+		return jsonData;
 	}
 	
 	public String sensorDataToJson(SensorData sensorData)
 	{
-		return null;
+		String jsonData = gson.toJson(sensorData);
+		return jsonData;
 	}
 	
 	public String systemPerformanceDataToJson(SystemPerformanceData sysPerfData)
 	{
-		return null;
+		String jsonData = gson.toJson(sysPerfData);
+		return jsonData;
 	}
 	
 	public String systemStateDataToJson(SystemStateData sysStateData)
 	{
-		return null;
+		String jsonData = gson.toJson(sysStateData);
+		return jsonData;
 	}
 	
 	public ActuatorData jsonToActuatorData(String jsonData)
 	{
-		return null;
+		ActuatorData actuatorData = gson.fromJson(jsonData, ActuatorData.class);
+		return actuatorData;
 	}
 	
 	public SensorData jsonToSensorData(String jsonData)
 	{
-		return null;
+		SensorData sensorData = gson.fromJson(jsonData, SensorData.class);
+		return sensorData;
 	}
 	
 	public SystemPerformanceData jsonToSystemPerformanceData(String jsonData)
 	{
-		return null;
+		SystemPerformanceData systemPerformanceData = gson.fromJson(jsonData, SystemPerformanceData.class);
+		return systemPerformanceData;
 	}
 	
 	public SystemStateData jsonToSystemStateData(String jsonData)
 	{
-		return null;
+		SystemStateData systemStateData = gson.fromJson(jsonData, SystemStateData.class);
+		return systemStateData;
 	}
 	
 }

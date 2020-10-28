@@ -26,6 +26,7 @@ public class SystemMemUtilTask extends BaseSystemUtilTask
 	public SystemMemUtilTask()
 	{
 		super();
+		this.dataName = "SystemMemUtil";
 	}
 	
 	

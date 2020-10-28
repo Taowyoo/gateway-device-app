@@ -11,6 +11,7 @@ package programmingtheiot.gda.system;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import programmingtheiot.common.ConfigConst;
 import programmingtheiot.data.SensorData;
 
 /**
@@ -22,11 +23,11 @@ public abstract class BaseSystemUtilTask
 	
 	private static final Logger _Logger =
 		Logger.getLogger(BaseSystemUtilTask.class.getName());
-	
-	
+
 	// private
 	private SensorData latestSensorData = null;
-	
+	protected String dataName = "BaseSystemUtil";
+
 	// constructors
 	
 	public BaseSystemUtilTask()
@@ -45,6 +46,7 @@ public abstract class BaseSystemUtilTask
 	public SensorData generateTelemetry()
 	{
 		this.latestSensorData = new SensorData();
+		this.latestSensorData.setName(this.dataName);
 		this.latestSensorData.setValue(getSystemUtil());
 		return this.latestSensorData;
 	}

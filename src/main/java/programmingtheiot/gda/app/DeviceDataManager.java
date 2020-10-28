@@ -57,6 +57,8 @@ public class DeviceDataManager extends JedisPubSub implements IDataMessageListen
 
 	private RedisPersistenceAdapter redisClient = null;
 	private SystemPerformanceManager sysPerfManager;
+	private Thread subCDAThread;
+
 //	private int cloudQos = configUtil.getInteger(ConfigConst.CLOUD_GATEWAY_SERVICE,ConfigConst.DEFAULT_QOS_KEY);
 //	private int mqttQos = configUtil.getInteger(ConfigConst.MQTT_GATEWAY_SERVICE,ConfigConst.DEFAULT_QOS_KEY);
 
@@ -69,7 +71,9 @@ public class DeviceDataManager extends JedisPubSub implements IDataMessageListen
 		this.enableCloudClient = configUtil.getBoolean(ConfigConst.GATEWAY_DEVICE, ConfigConst.ENABLE_CLOUD_CLIENT_KEY);
 		this.enableSmtpClient  = configUtil.getBoolean(ConfigConst.GATEWAY_DEVICE, ConfigConst.ENABLE_SMTP_CLIENT_KEY);
 		this.enablePersistenceClient = configUtil.getBoolean(ConfigConst.GATEWAY_DEVICE, ConfigConst.ENABLE_PERSISTENCE_CLIENT_KEY);
+		_Logger.log(Level.INFO,"Get config enablePersistenceClient: " + this.enablePersistenceClient );
 		this.sysPerfManager = new SystemPerformanceManager(10);
+		this.sysPerfManager.setDataMessageListener(this);
 		initConnections();
 	}
 	
@@ -86,7 +90,8 @@ public class DeviceDataManager extends JedisPubSub implements IDataMessageListen
 		this.enableCloudClient = enableCloudClient;
 		this.enableSmtpClient = enableSmtpClient;
 		this.enablePersistenceClient = enablePersistenceClient;
-		this.sysPerfManager = new SystemPerformanceManager();
+		this.sysPerfManager = new SystemPerformanceManager(10);
+		this.sysPerfManager.setDataMessageListener(this);
 		initConnections();
 	}
 	
@@ -95,41 +100,50 @@ public class DeviceDataManager extends JedisPubSub implements IDataMessageListen
 
 	// implement methods for JedisPubSub begin
 	public void onMessage(String channel, String message) {
-		if(channel == ResourceNameEnum.CDA_SENSOR_MSG_RESOURCE.getResourceName()){
-			try {
-				SensorData data = this.dataUtil.jsonToSensorData(message);
-				handleSensorMessage(ResourceNameEnum.CDA_SENSOR_MSG_RESOURCE, data);
-			}
-			catch (JsonParseException ex) {
-				_Logger.log(Level.WARNING,"Fail to convert subscribed message to SensorData!");
-			}
+		_Logger.log(Level.INFO, String.format("onMessage callback on channel: %s", channel));
+		switch(ResourceNameEnum.getEnumFromValue(channel)){
+			case CDA_SENSOR_MSG_RESOURCE:
+				try {
+					SensorData data = this.dataUtil.jsonToSensorData(message);
+					handleSensorMessage(ResourceNameEnum.CDA_SENSOR_MSG_RESOURCE, data);
+				}
+				catch (JsonParseException ex) {
+					_Logger.log(Level.WARNING,String.format("Fail to convert subscribed message to SensorData! JsonParseException:\n%s\nmsg:\n%s", ex.toString(), message));
+				}
+				break;
+			case CDA_ACTUATOR_CMD_RESOURCE:
+				try {
+					ActuatorData data = this.dataUtil.jsonToActuatorData(message);
+					handleActuatorCommandResponse(ResourceNameEnum.CDA_ACTUATOR_CMD_RESOURCE, data);
+				}
+				catch (JsonParseException ex) {
+					_Logger.log(Level.WARNING, String.format("Fail to convert subscribed message to ActuatorData! JsonParseException:\n%s\nmsg:\n%s", ex.toString(), message));
+				}
+				break;
+			case CDA_MGMT_STATUS_MSG_RESOURCE:
+				try {
+					SystemPerformanceData data = this.dataUtil.jsonToSystemPerformanceData(message);
+					handleSystemPerformanceMessage(ResourceNameEnum.CDA_MGMT_STATUS_MSG_RESOURCE, data);
+				}
+				catch (JsonParseException ex) {
+					_Logger.log(Level.WARNING,String.format("Fail to convert subscribed message to SystemPerformanceData! JsonParseException:\n%s\nmsg:\n%s", ex.toString(), message));
+				}
+				break;
+			case CDA_MGMT_STATUS_CMD_RESOURCE:
+				break;
+			case GDA_MGMT_STATUS_MSG_RESOURCE:
+				break;
+			case GDA_MGMT_STATUS_CMD_RESOURCE:
+				handleIncomingMessage(ResourceNameEnum.GDA_MGMT_STATUS_MSG_RESOURCE, message);
+				break;
+			default:
+				_Logger.log(Level.WARNING, String.format("Got a msg from invalid channel, channel: %s msg: %s", channel, message));
 		}
-		else if(channel == ResourceNameEnum.CDA_ACTUATOR_CMD_RESOURCE.getResourceName()){
-			try {
-				ActuatorData data = this.dataUtil.jsonToActuatorData(message);
-				handleActuatorCommandResponse(ResourceNameEnum.CDA_SENSOR_MSG_RESOURCE, data);
-			}
-			catch (JsonParseException ex) {
-				_Logger.log(Level.WARNING,"Fail to convert subscribed message to SensorData!");
-			}
-		}
-		else if(channel == ResourceNameEnum.CDA_MGMT_STATUS_MSG_RESOURCE.getResourceName()){
-			try {
-				SystemPerformanceData data = this.dataUtil.jsonToSystemPerformanceData(message);
-				handleSystemPerformanceMessage(ResourceNameEnum.CDA_SENSOR_MSG_RESOURCE, data);
-			}
-			catch (JsonParseException ex) {
-				_Logger.log(Level.WARNING,"Fail to convert subscribed message to SensorData!");
-			}
-		}
-		else if(channel == ResourceNameEnum.GDA_MGMT_STATUS_MSG_RESOURCE.getResourceName()){
-			handleIncomingMessage(ResourceNameEnum.GDA_MGMT_STATUS_MSG_RESOURCE, message);
-		}
-		else{
-			_Logger.log(Level.WARNING, String.format("Got a msg from invalid channel, channel: %s msg: %s", channel, message));
-		}
-	}
 
+	}
+	public void onUnsubscribe(String channel, int subscribedChannels) {
+		_Logger.log(Level.INFO, String.format("Unsubscribe channel: %s %s", subscribedChannels, channel));
+	}
 	// implement methods for JedisPubSub end
 
 	// implement methods for IDataMessageListener begin
@@ -184,20 +198,17 @@ public class DeviceDataManager extends JedisPubSub implements IDataMessageListen
 	{
 		_Logger.log(Level.INFO,"Handling a SensorMessage: " + data.toString());
 		if (this.enablePersistenceClient){
-			if (this.enablePersistenceClient){
-				this.redisClient.storeData(resourceName.getResourceName(),ConfigConst.DEFAULT_QOS, data);
-			}
-			String jsonData = this.dataUtil.sensorDataToJson(data);
-			if (jsonData != null){
-				this.handleUpstreamTransmission(resourceName, jsonData);
-				return true;
-			}
-			else{
-				_Logger.log(Level.WARNING,"Fail to convert SensorData to Json string!");
-				return false;
-			}
+			this.redisClient.storeData(resourceName.getResourceName(),ConfigConst.DEFAULT_QOS, data);
 		}
-		return true;
+		String jsonData = this.dataUtil.sensorDataToJson(data);
+		if (jsonData != null){
+			this.handleUpstreamTransmission(resourceName, jsonData);
+			return true;
+		}
+		else{
+			_Logger.log(Level.WARNING,"Fail to convert SensorData to Json string!");
+			return false;
+		}
 	}
 
 	@Override
@@ -205,20 +216,17 @@ public class DeviceDataManager extends JedisPubSub implements IDataMessageListen
 	{
 		_Logger.log(Level.INFO,"Handling a SystemPerformanceMessage: " + data.toString());
 		if (this.enablePersistenceClient){
-			if (this.enablePersistenceClient){
-				this.redisClient.storeData(resourceName.getResourceName(),ConfigConst.DEFAULT_QOS, data);
-			}
-			String jsonData = this.dataUtil.systemPerformanceDataToJson(data);
-			if (jsonData != null){
-				this.handleUpstreamTransmission(resourceName, jsonData);
-				return true;
-			}
-			else{
-				_Logger.log(Level.WARNING,"Fail to convert SensorData to Json string!");
-				return false;
-			}
+			this.redisClient.storeData(resourceName.getResourceName(),ConfigConst.DEFAULT_QOS, data);
 		}
-		return true;
+		String jsonData = this.dataUtil.systemPerformanceDataToJson(data);
+		if (jsonData != null){
+			this.handleUpstreamTransmission(resourceName, jsonData);
+			return true;
+		}
+		else{
+			_Logger.log(Level.WARNING,"Fail to convert SensorData to Json string!");
+			return false;
+		}
 	}
 	// Implement methods for IDataMessageListener end
 	
@@ -228,8 +236,9 @@ public class DeviceDataManager extends JedisPubSub implements IDataMessageListen
 		this.sysPerfManager.startManager();
 		if (this.enablePersistenceClient){
 			this.redisClient.connectClient();
-			this.redisClient.subscribeToChannel(this,ResourceNameEnum.CDA_SENSOR_MSG_RESOURCE);
-			this.redisClient.subscribeToChannel(this,ResourceNameEnum.CDA_ACTUATOR_CMD_RESOURCE);
+			Runnable toRun = this.redisClient.subscribeToChannel(this, new ResourceNameEnum[]{ResourceNameEnum.CDA_SENSOR_MSG_RESOURCE, ResourceNameEnum.CDA_ACTUATOR_CMD_RESOURCE});
+			this.subCDAThread = new Thread(toRun);
+			this.subCDAThread.start();
 		}
 		_Logger.log(Level.INFO, "DeviceDataManager started.");
 	}

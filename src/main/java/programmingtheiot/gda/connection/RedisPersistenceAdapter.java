@@ -8,6 +8,7 @@
 
 package programmingtheiot.gda.connection;
 
+import java.lang.reflect.Array;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,7 +23,10 @@ import programmingtheiot.data.SystemPerformanceData;
 import programmingtheiot.common.ResourceNameEnum;
 
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPubSub;
+import redis.clients.jedis.Transaction;
+import redis.clients.jedis.commands.ProtocolCommand;
 import redis.clients.jedis.exceptions.JedisConnectionException;
 
 /**
@@ -41,10 +45,10 @@ public class RedisPersistenceAdapter implements IPersistenceClient
 	private int port = 0;
 	private boolean enableCrypt = false;
 	private Jedis jedis = null;
+	private Jedis jedisSub = null;
 	private DataUtil dataUtil;
-	private Map<String,List<SensorData>> stringSensorDataMap;
-	private Map<String,List<ActuatorData>> stringActuatorDataMap;
 
+	private JedisPubSub subscriber = null;
 
 	// constructor
 	/**
@@ -61,19 +65,23 @@ public class RedisPersistenceAdapter implements IPersistenceClient
 		this.dataUtil = DataUtil.getInstance();
 		this.stringSensorDataMap = new HashMap<>();
 		this.stringActuatorDataMap = new HashMap<>();
-		initClient();
+		this.jedis = this.initClient();
+		this.jedisSub = this.initClient();
 	}
 
 	// public methods
 
-	public void subscribeToChannel(JedisPubSub subscriber, ResourceNameEnum resource){
+	public Runnable subscribeToChannel(JedisPubSub sub, ResourceNameEnum... resource){
+		this.subscriber = sub;
+		String[] channels = Arrays.stream(resource).map(x -> x.getResourceName()).toArray(String[]::new);
 		Runnable runnable =	() -> {
-			_Logger.log(Level.INFO, String.format("Redis client is subscribing to channel: %s...", resource.getResourceName()));
-			jedis.subscribe(subscriber, resource.getResourceName());
-			_Logger.log(Level.INFO, String.format("Redis client succeeded to subscribe to channel: %s.", resource.getResourceName()));
+			_Logger.log(Level.INFO, "Redis client is subscribing to channel: {0}", Arrays.toString(channels));
+			this.jedisSub.subscribe(sub, channels);
+			_Logger.log(Level.INFO, String.format("Redis client succeeded to subscribe to channels."));
 		};
 		Thread thread = new Thread(runnable);
 		thread.start();
+		return runnable;
 	}
 
 	// implement methods for IPersistenceClient begin
@@ -87,7 +95,8 @@ public class RedisPersistenceAdapter implements IPersistenceClient
 		else{
 			try {
 				_Logger.log(Level.INFO,"Redis client is connecting to server...");
-				jedis.connect();
+				this.jedis.connect();
+				this.jedisSub.connect();
 				_Logger.log(Level.INFO,"Redis client succeeded to connect to server!");
 				return true;
 			}
@@ -109,7 +118,13 @@ public class RedisPersistenceAdapter implements IPersistenceClient
 			try {
 				_Logger.log(Level.INFO,"Redis client is disconnecting to server...");
 				String quitRet = this.jedis.quit();
-				_Logger.log(Level.INFO,"Redis client succeeded to disconnect to server, " + quitRet);
+				if(this.subscriber != null){
+					this.subscriber.unsubscribe();
+					this.subscriber = null;
+				}
+				this.jedis.disconnect();
+				this.jedisSub.disconnect();
+				_Logger.log(Level.INFO,"Redis client succeeded to disconnect to server" );
 				return true;
 			}
 			catch (JedisConnectionException jedisConnectionException){
@@ -165,7 +180,9 @@ public class RedisPersistenceAdapter implements IPersistenceClient
 	public boolean storeData(String topic, int qos, ActuatorData... data)
 	{
 		for (ActuatorData oneData : data){
-			this.jedis.zadd(topic,oneData.getTimeStampMillis(),dataUtil.actuatorDataToJson(oneData));
+			Transaction t = jedis.multi();
+			t.zadd(topic,oneData.getTimeStampMillis(),dataUtil.actuatorDataToJson(oneData));
+			t.exec();
 		}
 		return true;
 	}
@@ -174,7 +191,10 @@ public class RedisPersistenceAdapter implements IPersistenceClient
 	public boolean storeData(String topic, int qos, SensorData... data)
 	{
 		for (SensorData oneData : data){
-			this.jedis.zadd(topic,oneData.getTimeStampMillis(),dataUtil.sensorDataToJson(oneData));
+			Transaction t = jedis.multi();
+			t.zadd(topic,oneData.getTimeStampMillis(),dataUtil.sensorDataToJson(oneData));
+			t.exec();
+			_Logger.log(Level.INFO, String.format("ZADD score: %s data: %s", oneData.getTimeStampMillis(),dataUtil.sensorDataToJson(oneData)));
 		}
 		return true;
 	}
@@ -183,7 +203,9 @@ public class RedisPersistenceAdapter implements IPersistenceClient
 	public boolean storeData(String topic, int qos, SystemPerformanceData... data)
 	{
 		for (SystemPerformanceData oneData : data){
-			this.jedis.zadd(topic,oneData.getTimeStampMillis(),dataUtil.systemPerformanceDataToJson(oneData));
+			Transaction t = jedis.multi();
+			t.zadd(topic,oneData.getTimeStampMillis(),dataUtil.systemPerformanceDataToJson(oneData));
+			t.exec();
 		}
 		return true;
 	}
@@ -228,12 +250,13 @@ public class RedisPersistenceAdapter implements IPersistenceClient
 		return key;
 	}
 	
-	private void initClient()
+	private Jedis initClient()
 	{
-		this.jedis = new Jedis(this.host, this.port);
+		Jedis newJedis = new Jedis(this.host, this.port);
 		if (this.enableCrypt){
 			// TODO: Encryption related implementation
 		}
+		return newJedis;
 	}
 	
 	private Long updateRedisDataElement(String topic, double score, String payload)

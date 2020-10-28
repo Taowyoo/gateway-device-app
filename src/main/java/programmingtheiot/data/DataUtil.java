@@ -15,6 +15,7 @@ import java.util.List;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.apache.commons.lang.StringEscapeUtils;
 
 /**
  * Shell representation of class for student implementation.
@@ -23,7 +24,7 @@ import com.google.gson.GsonBuilder;
 public class DataUtil
 {
 	// static
-	
+
 	private static final DataUtil _Instance = new DataUtil();
 
 	/**
@@ -49,10 +50,9 @@ public class DataUtil
 	private DataUtil()
 	{
 		super();
-//		gson = new Gson();
 		gson = new GsonBuilder().setPrettyPrinting().create();
 	}
-	
+
 	
 	// public methods
 	
@@ -82,26 +82,36 @@ public class DataUtil
 	
 	public ActuatorData jsonToActuatorData(String jsonData)
 	{
+		jsonData = this.preProcess(jsonData);
 		ActuatorData actuatorData = gson.fromJson(jsonData, ActuatorData.class);
 		return actuatorData;
 	}
 	
 	public SensorData jsonToSensorData(String jsonData)
 	{
+		jsonData = this.preProcess(jsonData);
 		SensorData sensorData = gson.fromJson(jsonData, SensorData.class);
 		return sensorData;
 	}
 	
 	public SystemPerformanceData jsonToSystemPerformanceData(String jsonData)
 	{
+		jsonData = this.preProcess(jsonData);
 		SystemPerformanceData systemPerformanceData = gson.fromJson(jsonData, SystemPerformanceData.class);
 		return systemPerformanceData;
 	}
 	
 	public SystemStateData jsonToSystemStateData(String jsonData)
 	{
+		jsonData = this.preProcess(jsonData);
 		SystemStateData systemStateData = gson.fromJson(jsonData, SystemStateData.class);
 		return systemStateData;
 	}
-	
+
+	private String preProcess(String jsonData){
+		if(jsonData.charAt(0) == '"' && jsonData.charAt(jsonData.length() - 1) == '"'){
+			jsonData = jsonData.substring(1,jsonData.length() - 1);
+		}
+		return  StringEscapeUtils.unescapeJava(jsonData);
+	}
 }

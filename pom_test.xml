@@ -141,10 +141,9 @@
 				</executions>
 				<configuration>
 					<includes>
-						<include>**/part02/integration/data/**</include>
-						<include>**/part02/integration/connection/*Persistence*.*</include>
-						<include>**/part02/integration/app/**</include>
-						<include>**/part01/integration/app/**</include>
+						<include>**/part02/integration/connection/PersistenceClientAdapterTest.java</include>
+						<include>**/part02/integration/app/DeviceDataManagerNoCommsTest.java</include>
+						<include>**/part01/integration/app/GatewayDeviceAppTest.java</include>
 					</includes>
 				</configuration>
 			</plugin>

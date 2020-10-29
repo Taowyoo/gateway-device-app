@@ -82,6 +82,15 @@ public class RedisPersistenceAdapter implements IPersistenceClient
 		return runnable;
 	}
 
+	public boolean isConnected(){
+		if(this.jedis != null){
+			return this.jedis.isConnected();
+		}
+		else{
+			return false;
+		}
+	}
+
 	// implement methods for IPersistenceClient begin
 	@Override
 	public boolean connectClient()
@@ -147,7 +156,7 @@ public class RedisPersistenceAdapter implements IPersistenceClient
 				_Logger.log(Level.WARNING, "Bypass a broken ActuatorData: " + data);
 			}
 		}
-		return (ActuatorData[])ans.toArray();
+		return ans.toArray(new ActuatorData[ans.size()]);
 	}
 
 	@Override
@@ -165,7 +174,7 @@ public class RedisPersistenceAdapter implements IPersistenceClient
 				_Logger.log(Level.WARNING, "Bypass a broken SensorData: " + data);
 			}
 		}
-		return (SensorData[])ans.toArray();
+		return ans.toArray(new SensorData[ans.size()]);
 	}
 
 	@Override

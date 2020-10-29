@@ -11,6 +11,7 @@
 - Create a `DataUtil` class to help convert Json string between data instance.
 - Finish implementation of `BaseSystemUtilTask` class.
 - Implement `RedisPersistenceAdapter` class as a client to communicate with Redis server.
+- Implement `PersistenceClientAdapterTest` for testing `RedisPersistenceAdapter`.
 - Implement the `DeviceDataManager` class and integrate `RedisPersistenceAdapter` into it.
 - Integrate `DeviceDataManager` into `GatewayDeviceApp` class.
 - 
@@ -28,6 +29,12 @@
   - Create two `Jedis` instance to avoid blocking problems when use a `Jedis` instance to subscribe channels.
   - Use `zadd()`(Redis command: `ZADD`) to store data to Redis by using number of milliseconds of timestamp of each data as score for Redis sorted set.
   - Similarly, use `zrangeByScore()`(Redis command: `ZRANGEBYSCORE`) to got data between `startDate` and `endDate`(java.util.Date), using number of milliseconds of two date as range.
+- In regard to `PersistenceClientAdapterTest`:
+  - Create customized test data to test `storeData()` methods.
+  - To test `getActuatorData()` and `getSensorData()`:
+    - First, store data as what I did before when testing `storeData()`.
+    - Second, get data array with in date range of [`startDate`, `stopDate`], and then test whether its size is equals to the size of data array just stored.
+      *Notes: `startDate` == the date of first data element in data array, `endDate` == the date of last data element in data array.*
 - Create `DeviceDataManager` class:
   - Add related start and stop logic.
   - Add config loading logic.
@@ -56,5 +63,6 @@ The [class diagram](../../doc/uml/Lab05.svg) for all classes edited so far:
 ### Integration Tests Executed
 
 - src/test/java/programmingtheiot/part02/integration/data/DataIntegrationTest
+- src/test/java/programmingtheiot/part02/integration/connection/PersistenceClientAdapterTest
 - src/test/java/programmingtheiot/part02/integration/app/DeviceDataManagerNoCommsTest
 - src/test/java/programmingtheiot/part01/integration/app/GatewayDeviceAppTest

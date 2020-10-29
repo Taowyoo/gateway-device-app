@@ -2,48 +2,59 @@
 
 ## Lab Module 05
 
-Be sure to implement all the PIOT-GDA-* issues (requirements) listed at [PIOT-INF-05-001 - Chapter 05](https://github.com/orgs/programming-the-iot/projects/1#column-10488421).
 
 ### Description
 
-NOTE: Include two full paragraphs describing your implementation approach by answering the questions listed below.
+#### What does your implementation do? 
 
-What does your implementation do? 
+- Create data containers classes for sensor and actuator data.
+- Create a `DataUtil` class to help convert Json string between data instance.
+- Finish implementation of `BaseSystemUtilTask` class.
+- Implement `RedisPersistenceAdapter` class as a client to communicate with Redis server.
+- Implement the `DeviceDataManager` class and integrate `RedisPersistenceAdapter` into it.
+- Integrate `DeviceDataManager` into `GatewayDeviceApp` class.
+- 
+#### How does your implementation work?
 
-How does your implementation work?
+- Create classes: `SensorData`, `ActuatorData`, `SystemPerformanceData`, `SystemStateData` as data container to hold data send from CDA.
+- Use `Gson` to convert Json to java object or convert java object to Json string.
+  - Use `toJson()` to convert java object to Json string.
+  - Use `fromJson()` to convert Json string to java object.
+  - Because, the json string send from CDA by python has some little compatibility problems, Create a `preProcess()` method to pre-process received string:
+    - Remove leading and ending extra `"`.
+    - Use `StringEscapeUtils.unescapeJava()` to unescape all escape characters.
+- Add `SensorData` generation functions on `BaseSystemUtilTask`.
+- Use `Jedis` to connect to Redis Server:
+  - Create two `Jedis` instance to avoid blocking problems when use a `Jedis` instance to subscribe channels.
+  - Use `zadd()`(Redis command: `ZADD`) to store data to Redis by using number of milliseconds of timestamp of each data as score for Redis sorted set.
+  - Similarly, use `zrangeByScore()`(Redis command: `ZRANGEBYSCORE`) to got data between `startDate` and `endDate`(java.util.Date), using number of milliseconds of two date as range.
+- Create `DeviceDataManager` class:
+  - Add related start and stop logic.
+  - Add config loading logic.
+  - Add initialization of `SystemPerformanceManager`, `RedisPersistenceAdapter`.
+- Add `DeviceDataManager` instance creation , start and stop logic into `GatewayDeviceApp`.
 
 ### Code Repository and Branch
 
-NOTE: Be sure to include the branch (e.g. https://github.com/programming-the-iot/python-components/tree/alpha001).
-
-URL: 
+URL: https://github.com/NU-CSYE6530-Fall2020/gateway-device-app-Taowyoo/tree/alpha001 
 
 ### UML Design Diagram(s)
 
-NOTE: Include one or more UML designs representing your solution. It's expected each
-diagram you provide will look similar to, but not the same as, its counterpart in the
-book [Programming the IoT](https://learning.oreilly.com/library/view/programming-the-internet/9781492081401/).
-
+The [class diagram](../../doc/uml/Lab05.svg) for all classes edited so far:
+![Class Diagram](../../doc/uml/Lab05.svg)
 
 ### Unit Tests Executed
 
-NOTE: TA's will execute your unit tests. You only need to list each test case below
-(e.g. ConfigUtilTest, DataUtilTest, etc). Be sure to include all previous tests, too,
-since you need to ensure you haven't introduced regressions.
-
-- 
-- 
-- 
+- src/test/java/programmingtheiot/part02/unit/data/ActuatorDataTest
+- src/test/java/programmingtheiot/part02/unit/data/SensorDataTest
+- src/test/java/programmingtheiot/part02/unit/data/SystemPerformanceDataTest
+- src/test/java/programmingtheiot/part02/unit/data/SystemStateDataTest
+- src/test/java/programmingtheiot/part02/unit/data/DataUtilTest
+- src/test/java/programmingtheiot/part01/unit/system/SystemCpuUtilTaskTest
+- src/test/java/programmingtheiot/part01/unit/system/SystemMemUtilTaskTest
 
 ### Integration Tests Executed
 
-NOTE: TA's will execute most of your integration tests using their own environment, with
-some exceptions (such as your cloud connectivity tests). In such cases, they'll review
-your code to ensure it's correct. As for the tests you execute, you only need to list each
-test case below (e.g. SensorSimAdapterManagerTest, DeviceDataManagerTest, etc.)
-
-- 
-- 
-- 
-
-EOF.
+- src/test/java/programmingtheiot/part02/integration/data/DataIntegrationTest
+- src/test/java/programmingtheiot/part02/integration/app/DeviceDataManagerNoCommsTest
+- src/test/java/programmingtheiot/part01/integration/app/GatewayDeviceAppTest

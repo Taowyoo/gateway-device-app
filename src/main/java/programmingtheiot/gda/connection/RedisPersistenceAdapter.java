@@ -63,8 +63,6 @@ public class RedisPersistenceAdapter implements IPersistenceClient
 		this.port = configUtil.getInteger(ConfigConst.DATA_GATEWAY_SERVICE, ConfigConst.PORT_KEY);
 		this.enableCrypt = configUtil.getBoolean(ConfigConst.DATA_GATEWAY_SERVICE, ConfigConst.ENABLE_CRYPT_KEY);
 		this.dataUtil = DataUtil.getInstance();
-		this.stringSensorDataMap = new HashMap<>();
-		this.stringActuatorDataMap = new HashMap<>();
 		this.jedis = this.initClient();
 		this.jedisSub = this.initClient();
 	}
@@ -180,9 +178,7 @@ public class RedisPersistenceAdapter implements IPersistenceClient
 	public boolean storeData(String topic, int qos, ActuatorData... data)
 	{
 		for (ActuatorData oneData : data){
-			Transaction t = jedis.multi();
-			t.zadd(topic,oneData.getTimeStampMillis(),dataUtil.actuatorDataToJson(oneData));
-			t.exec();
+			jedis.zadd(topic,oneData.getTimeStampMillis(),dataUtil.actuatorDataToJson(oneData));
 		}
 		return true;
 	}
@@ -191,9 +187,7 @@ public class RedisPersistenceAdapter implements IPersistenceClient
 	public boolean storeData(String topic, int qos, SensorData... data)
 	{
 		for (SensorData oneData : data){
-			Transaction t = jedis.multi();
-			t.zadd(topic,oneData.getTimeStampMillis(),dataUtil.sensorDataToJson(oneData));
-			t.exec();
+			jedis.zadd(topic,oneData.getTimeStampMillis(),dataUtil.sensorDataToJson(oneData));
 			_Logger.log(Level.INFO, String.format("ZADD score: %s data: %s", oneData.getTimeStampMillis(),dataUtil.sensorDataToJson(oneData)));
 		}
 		return true;
@@ -203,9 +197,7 @@ public class RedisPersistenceAdapter implements IPersistenceClient
 	public boolean storeData(String topic, int qos, SystemPerformanceData... data)
 	{
 		for (SystemPerformanceData oneData : data){
-			Transaction t = jedis.multi();
-			t.zadd(topic,oneData.getTimeStampMillis(),dataUtil.systemPerformanceDataToJson(oneData));
-			t.exec();
+			jedis.zadd(topic,oneData.getTimeStampMillis(),dataUtil.systemPerformanceDataToJson(oneData));
 		}
 		return true;
 	}

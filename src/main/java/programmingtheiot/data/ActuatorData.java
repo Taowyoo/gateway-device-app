@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 public class ActuatorData extends BaseIotData implements Serializable
 {
 	// static
-	private static final Logger _Logger = Logger.getLogger(SystemStateData.class.getName());
+	private static final Logger _Logger = Logger.getLogger(ActuatorData.class.getName());
 
 	public static final int DEFAULT_COMMAND = 0;
 	public static final int COMMAND_OFF = DEFAULT_COMMAND;

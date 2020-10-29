@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 public class SystemPerformanceData extends BaseIotData implements Serializable
 {
 	// static
-	private static final Logger _Logger = Logger.getLogger(SystemStateData.class.getName());
+	private static final Logger _Logger = Logger.getLogger(SystemPerformanceData.class.getName());
 
 	public static final float DEFAULT_VAL = 0.0f;
 

@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 public class SensorData extends BaseIotData implements Serializable
 {
 	// static
-	private static final Logger _Logger = Logger.getLogger(SystemStateData.class.getName());
+	private static final Logger _Logger = Logger.getLogger(SensorData.class.getName());
 
 	public static final int DEFAULT_SENSOR_TYPE = 0;
 

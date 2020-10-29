@@ -83,3 +83,7 @@ fabric.properties
 .idea/libraries/Maven__org_hamcrest_hamcrest_core_1_3.xml
 .idea/libraries/Maven__org_slf4j_slf4j_api_1_7_25.xml
 .idea/libraries/Maven__redis_clients_jedis_3_2_0.xml
+
+.classpath
+
+.settings/

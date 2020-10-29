@@ -10,7 +10,12 @@
 package programmingtheiot.part02.integration.connection;
 
 import static org.junit.Assert.*;
+import static programmingtheiot.common.ConfigConst.DEFAULT_QOS;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Random;
 import java.util.logging.Logger;
 
 import org.junit.After;
@@ -19,6 +24,10 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import programmingtheiot.common.ResourceNameEnum;
+import programmingtheiot.data.ActuatorData;
+import programmingtheiot.data.SensorData;
+import programmingtheiot.data.SystemPerformanceData;
 import programmingtheiot.gda.connection.RedisPersistenceAdapter;
 
 /**
@@ -40,7 +49,7 @@ public class PersistenceClientAdapterTest
 	// member var's
 	
 	private RedisPersistenceAdapter rpa = null;
-	
+	private Random random = null;
 	
 	// test setup methods
 	
@@ -66,6 +75,8 @@ public class PersistenceClientAdapterTest
 	@Before
 	public void setUp() throws Exception
 	{
+		this.random = new Random();
+		this.rpa = new RedisPersistenceAdapter();
 	}
 	
 	/**
@@ -84,7 +95,9 @@ public class PersistenceClientAdapterTest
 	@Test
 	public void testConnectClient()
 	{
-		fail("Not yet implemented"); // TODO
+		assertNotNull("Fail to construct RedisPersistenceAdapter instance!",this.rpa);
+		this.rpa.connectClient();
+		assertTrue("RedisPersistenceAdapter fail to connect to Redis server!",this.rpa.isConnected());
 	}
 	
 	/**
@@ -93,7 +106,10 @@ public class PersistenceClientAdapterTest
 	@Test
 	public void testDisconnectClient()
 	{
-		fail("Not yet implemented"); // TODO
+		assertNotNull("Fail to construct RedisPersistenceAdapter instance!",this.rpa);
+		this.rpa.connectClient();
+		this.rpa.disconnectClient();
+		assertFalse("RedisPersistenceAdapter fail to disconnect to Redis server!",this.rpa.isConnected());
 	}
 	
 	/**
@@ -102,7 +118,28 @@ public class PersistenceClientAdapterTest
 	@Test
 	public void testGetActuatorData()
 	{
-		fail("Not yet implemented"); // TODO
+		// prepare data array
+		List<ActuatorData> dataList = new ArrayList<>();
+		String dataName = "TestActuatorData";
+		for (int i = 0; i < 5; i++) {
+			ActuatorData data = new ActuatorData();
+			data.setName(dataName);
+			data.setValue(this.random.nextFloat());
+			data.setStateData("This is a " + dataName);
+			dataList.add(data);
+		}
+		this.rpa.connectClient();
+		// store data
+		this.rpa.storeData(dataName+"Topic", DEFAULT_QOS, dataList.toArray(new ActuatorData[dataList.size()]));
+		// get data
+		Date startDate = new Date();
+		startDate.setTime(dataList.get(0).getTimeStampMillis());
+		Date endDate = new Date();
+		endDate.setTime(dataList.get(dataList.size()-1).getTimeStampMillis());
+		ActuatorData[] retDataArray = this.rpa.getActuatorData(dataName+"Topic",startDate,endDate);
+		assertNotNull("Fail to get ActuatorDataArray from Redis Server!",retDataArray);
+		assertEquals("Get DataArray with wrong size!",retDataArray.length,dataList.size());
+		this.rpa.disconnectClient();
 	}
 	
 	/**
@@ -111,7 +148,28 @@ public class PersistenceClientAdapterTest
 	@Test
 	public void testGetSensorData()
 	{
-		fail("Not yet implemented"); // TODO
+		// prepare data array
+		List<SensorData> dataList = new ArrayList<>();
+		String dataName = "TestSensorData";
+		for (int i = 0; i < 5; i++) {
+			SensorData data = new SensorData();
+			data.setName(dataName);
+			data.setValue(this.random.nextFloat());
+			dataList.add(data);
+		}
+
+		this.rpa.connectClient();
+		// store data
+		this.rpa.storeData(dataName+"Topic", DEFAULT_QOS, dataList.toArray(new SensorData[dataList.size()]));
+		// get data
+		Date startDate = new Date();
+		startDate.setTime(dataList.get(0).getTimeStampMillis());
+		Date endDate = new Date();
+		endDate.setTime(dataList.get(dataList.size()-1).getTimeStampMillis());
+		SensorData[] retDataArray = this.rpa.getSensorData(dataName+"Topic",startDate,endDate);
+		assertNotNull("Fail to get SensorDataArray from Redis Server!",retDataArray);
+		assertEquals("Get DataArray with wrong size!",retDataArray.length,dataList.size());
+		this.rpa.disconnectClient();
 	}
 	
 	/**
@@ -120,7 +178,21 @@ public class PersistenceClientAdapterTest
 	@Test
 	public void testStoreDataStringIntActuatorDataArray()
 	{
-		fail("Not yet implemented"); // TODO
+		// prepare data array
+		List<ActuatorData> dataList = new ArrayList<>();
+		String dataName = "TestActuatorData";
+		for (int i = 0; i < 5; i++) {
+			ActuatorData data = new ActuatorData();
+			data.setName(dataName);
+			data.setValue(this.random.nextFloat());
+			data.setStateData("This is a " + dataName);
+			dataList.add(data);
+		}
+		// store data array
+		this.rpa.connectClient();
+		boolean ret = this.rpa.storeData(dataName+"Topic", DEFAULT_QOS, dataList.toArray(new ActuatorData[dataList.size()]));
+		assertTrue("Fail to store ActuatorDataArray to Redis Server", ret);
+		this.rpa.disconnectClient();
 	}
 	
 	/**
@@ -129,7 +201,20 @@ public class PersistenceClientAdapterTest
 	@Test
 	public void testStoreDataStringIntSensorDataArray()
 	{
-		fail("Not yet implemented"); // TODO
+		// prepare data array
+		List<SensorData> dataList = new ArrayList<>();
+		String dataName = "TestSensorData";
+		for (int i = 0; i < 5; i++) {
+			SensorData data = new SensorData();
+			data.setName(dataName);
+			data.setValue(this.random.nextFloat());
+			dataList.add(data);
+		}
+		// store data array
+		this.rpa.connectClient();
+		boolean ret = this.rpa.storeData(dataName+"Topic", DEFAULT_QOS, dataList.toArray(new SensorData[dataList.size()]));
+		assertTrue("Fail to store SensorDataArray to Redis Server", ret);
+		this.rpa.disconnectClient();
 	}
 	
 	/**
@@ -138,7 +223,22 @@ public class PersistenceClientAdapterTest
 	@Test
 	public void testStoreDataStringIntSystemPerformanceDataArray()
 	{
-		fail("Not yet implemented"); // TODO
+		// prepare data array
+		List<SystemPerformanceData> dataList = new ArrayList<>();
+		String dataName = "TestSystemPerformanceData";
+		for (int i = 0; i < 5; i++) {
+			SystemPerformanceData data = new SystemPerformanceData();
+			data.setName(dataName);
+			data.setCpuUtilization(this.random.nextFloat());
+			data.setMemoryUtilization(this.random.nextFloat());
+			data.setDiskUtilization(this.random.nextFloat());
+			dataList.add(data);
+		}
+		// store data array
+		this.rpa.connectClient();
+		boolean ret = this.rpa.storeData(dataName+"Topic", DEFAULT_QOS, dataList.toArray(new SystemPerformanceData[dataList.size()]));
+		assertTrue("Fail to store SystemPerformanceDataArray to Redis Server", ret);
+		this.rpa.disconnectClient();
 	}
 	
 }

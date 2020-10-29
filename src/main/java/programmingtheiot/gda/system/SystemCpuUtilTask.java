@@ -26,6 +26,7 @@ public class SystemCpuUtilTask extends BaseSystemUtilTask
 	public SystemCpuUtilTask()
 	{
 		super();
+		this.dataName = "SystemCpuUtil";
 	}
 	
 	

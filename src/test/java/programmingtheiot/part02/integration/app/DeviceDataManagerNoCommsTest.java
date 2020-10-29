@@ -86,7 +86,7 @@ public class DeviceDataManagerNoCommsTest
 		boolean enableCoap = false;
 		boolean enableCloud = false;
 		boolean enableSmtp = false;
-		boolean enablePersistence = false;
+		boolean enablePersistence = true;
 
 		DeviceDataManager devDataMgr =
 			new DeviceDataManager(enableMqtt, enableCoap, enableCloud, enableSmtp, enablePersistence);
@@ -94,7 +94,7 @@ public class DeviceDataManagerNoCommsTest
 		devDataMgr.startManager();
 		
 		try {
-			Thread.sleep(60000L);
+			Thread.sleep(65000L);
 		} catch (InterruptedException e) {
 			// ignore
 		}

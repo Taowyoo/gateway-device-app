@@ -120,6 +120,7 @@
 				<configuration>
 					<includes>
 						<include>**/part01/unit/**</include>
+						<include>**/part02/unit/**</include>
 					</includes>
 				</configuration>
 			</plugin>
@@ -136,12 +137,13 @@
 							<goal>integration-test</goal>
 							<goal>verify</goal>
 						</goals>
-
 					</execution>
 				</executions>
 				<configuration>
 					<includes>
-						<include>**/part01/integration/**</include>
+						<include>**/part02/integration/connection/PersistenceClientAdapterTest.java</include>
+						<include>**/part02/integration/app/DeviceDataManagerNoCommsTest.java</include>
+						<include>**/part01/integration/app/GatewayDeviceAppTest.java</include>
 					</includes>
 				</configuration>
 			</plugin>

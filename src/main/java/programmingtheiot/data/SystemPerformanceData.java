@@ -9,6 +9,8 @@
 package programmingtheiot.data;
 
 import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Shell representation of class for student implementation.
@@ -17,10 +19,15 @@ import java.io.Serializable;
 public class SystemPerformanceData extends BaseIotData implements Serializable
 {
 	// static
-	
+	private static final Logger _Logger = Logger.getLogger(SystemPerformanceData.class.getName());
+
+	public static final float DEFAULT_VAL = 0.0f;
+
 	
 	// private var's
-	
+	private float cpuUtil = DEFAULT_VAL;
+	private float diskUtil = DEFAULT_VAL;
+	private float memUtil = DEFAULT_VAL;
     
 	// constructors
 	
@@ -34,47 +41,61 @@ public class SystemPerformanceData extends BaseIotData implements Serializable
 	
 	public float getCpuUtilization()
 	{
-		return 0.0f;
+		return cpuUtil;
 	}
 	
 	public float getDiskUtilization()
 	{
-		return 0.0f;
+		return diskUtil;
 	}
 	
 	public float getMemoryUtilization()
 	{
-		return 0.0f;
+		return memUtil;
 	}
 	
 	public void setCpuUtilization(float val)
 	{
+		this.cpuUtil = val;
 	}
 	
 	public void setDiskUtilization(float val)
 	{
+		this.diskUtil = val;
 	}
 	
 	public void setMemoryUtilization(float val)
 	{
+		this.memUtil = val;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return "SystemPerformanceData{" +
+				"cpuUtil=" + cpuUtil +
+				", diskUtil=" + diskUtil +
+				", memUtil=" + memUtil +
+				"} " + super.toString();
+	}
+
 	// protected methods
-	
-	/* (non-Javadoc)
-	 * @see programmingtheiot.data.BaseIotData#handleToString()
-	 */
-	protected String handleToString()
-	{
-		return null;
-	}
-	
-	/* (non-Javadoc)
-	 * @see programmingtheiot.data.BaseIotData#handleUpdateData(programmingtheiot.data.BaseIotData)
+
+	/**
+	 * Use given data to update current instance
+	 * @param data While the parameter must implement this method,
 	 */
 	protected void handleUpdateData(BaseIotData data)
 	{
+		if (data instanceof SystemPerformanceData){
+			SystemPerformanceData sysData = (SystemPerformanceData)data;
+			this.diskUtil = sysData.diskUtil;
+			this.cpuUtil = sysData.cpuUtil;
+			this.memUtil = sysData.memUtil;
+		}
+		else{
+			_Logger.log(Level.WARNING, "Got invalid data when handleUpdateData!");
+		}
+
 	}
 	
 }

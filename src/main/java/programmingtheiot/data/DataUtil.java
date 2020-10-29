@@ -14,6 +14,8 @@ import java.nio.file.Path;
 import java.util.List;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import org.apache.commons.lang.StringEscapeUtils;
 
 /**
  * Shell representation of class for student implementation.
@@ -22,7 +24,7 @@ import com.google.gson.Gson;
 public class DataUtil
 {
 	// static
-	
+
 	private static final DataUtil _Instance = new DataUtil();
 
 	/**
@@ -37,7 +39,7 @@ public class DataUtil
 	
 	
 	// private var's
-	
+	Gson gson = null;
 	
 	// constructors
 	
@@ -48,49 +50,68 @@ public class DataUtil
 	private DataUtil()
 	{
 		super();
+		gson = new GsonBuilder().setPrettyPrinting().create();
 	}
-	
+
 	
 	// public methods
 	
 	public String actuatorDataToJson(ActuatorData actuatorData)
 	{
-		return null;
+		String jsonData = gson.toJson(actuatorData);
+		return jsonData;
 	}
 	
 	public String sensorDataToJson(SensorData sensorData)
 	{
-		return null;
+		String jsonData = gson.toJson(sensorData);
+		return jsonData;
 	}
 	
 	public String systemPerformanceDataToJson(SystemPerformanceData sysPerfData)
 	{
-		return null;
+		String jsonData = gson.toJson(sysPerfData);
+		return jsonData;
 	}
 	
 	public String systemStateDataToJson(SystemStateData sysStateData)
 	{
-		return null;
+		String jsonData = gson.toJson(sysStateData);
+		return jsonData;
 	}
 	
 	public ActuatorData jsonToActuatorData(String jsonData)
 	{
-		return null;
+		jsonData = this.preProcess(jsonData);
+		ActuatorData actuatorData = gson.fromJson(jsonData, ActuatorData.class);
+		return actuatorData;
 	}
 	
 	public SensorData jsonToSensorData(String jsonData)
 	{
-		return null;
+		jsonData = this.preProcess(jsonData);
+		SensorData sensorData = gson.fromJson(jsonData, SensorData.class);
+		return sensorData;
 	}
 	
 	public SystemPerformanceData jsonToSystemPerformanceData(String jsonData)
 	{
-		return null;
+		jsonData = this.preProcess(jsonData);
+		SystemPerformanceData systemPerformanceData = gson.fromJson(jsonData, SystemPerformanceData.class);
+		return systemPerformanceData;
 	}
 	
 	public SystemStateData jsonToSystemStateData(String jsonData)
 	{
-		return null;
+		jsonData = this.preProcess(jsonData);
+		SystemStateData systemStateData = gson.fromJson(jsonData, SystemStateData.class);
+		return systemStateData;
 	}
-	
+
+	private String preProcess(String jsonData){
+		if(jsonData.charAt(0) == '"' && jsonData.charAt(jsonData.length() - 1) == '"'){
+			jsonData = jsonData.substring(1,jsonData.length() - 1);
+		}
+		return  StringEscapeUtils.unescapeJava(jsonData);
+	}
 }

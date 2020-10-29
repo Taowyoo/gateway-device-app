@@ -199,6 +199,7 @@ public class DataIntegrationTest
 		
 		try {
 			Path   filePath = FileSystems.getDefault().getPath(fileName);
+			_Logger.info("Reading ActuatorData JSON from path: " + filePath);
 			String dataStr  = Files.readString(filePath, StandardCharsets.UTF_8);
 			
 			ActuatorData dataObj = DataUtil.getInstance().jsonToActuatorData(dataStr);
@@ -225,6 +226,7 @@ public class DataIntegrationTest
 		
 		try {
 			Path   filePath = FileSystems.getDefault().getPath(fileName);
+			_Logger.info("Reading ActuatorData JSON from path: " + filePath);
 			String dataStr  = Files.readString(filePath, StandardCharsets.UTF_8);
 			
 			SensorData dataObj = DataUtil.getInstance().jsonToSensorData(dataStr);
@@ -251,6 +253,7 @@ public class DataIntegrationTest
 		
 		try {
 			Path   filePath = FileSystems.getDefault().getPath(fileName);
+			_Logger.info("Reading ActuatorData JSON from path: " + filePath);
 			String dataStr  = Files.readString(filePath, StandardCharsets.UTF_8);
 			
 			SystemPerformanceData dataObj = DataUtil.getInstance().jsonToSystemPerformanceData(dataStr);

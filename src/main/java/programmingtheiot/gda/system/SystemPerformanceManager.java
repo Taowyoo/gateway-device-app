@@ -15,6 +15,8 @@ import java.util.concurrent.TimeUnit;
 
 import programmingtheiot.common.ConfigConst;
 import programmingtheiot.common.IDataMessageListener;
+import programmingtheiot.common.ResourceNameEnum;
+import programmingtheiot.data.SensorData;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -35,6 +37,8 @@ public class SystemPerformanceManager
 	private ScheduledExecutorService schedExecSvc = null;
 	private SystemCpuUtilTask cpuUtilTask = null;
 	private SystemMemUtilTask memUtilTask = null;
+
+	private IDataMessageListener dataMessageListener;
 
 	private Runnable taskRunner = null;
 	private boolean isStarted = false;
@@ -68,6 +72,7 @@ public class SystemPerformanceManager
 					ConfigConst.DEFAULT_POLL_CYCLES);
 			this.pollSecs = ConfigConst.DEFAULT_POLL_CYCLES;
 		}
+
 		this.schedExecSvc = Executors.newScheduledThreadPool(1);
 		this.cpuUtilTask = new SystemCpuUtilTask();
 		this.memUtilTask = new SystemMemUtilTask();
@@ -85,13 +90,16 @@ public class SystemPerformanceManager
 	 */
 	public void handleTelemetry()
 	{
-		float cpuUtilPct = this.cpuUtilTask.getTelemetryValue();
-		float memUtilPct = this.memUtilTask.getTelemetryValue();
-		_Logger.log(Level.INFO, "Got system util values, CPU: {0}, Mem: {1}.", new Object[]{cpuUtilPct, memUtilPct});
+		SensorData cpuSensorData = this.cpuUtilTask.generateTelemetry();
+		SensorData memSensorData = this.memUtilTask.generateTelemetry();
+		_Logger.log(Level.INFO, "Got system util values, CPU: {0}, Mem: {1}.", new Object[]{cpuSensorData.getValue(), memSensorData.getValue()});
+		this.dataMessageListener.handleSensorMessage(ResourceNameEnum.GDA_MGMT_STATUS_MSG_RESOURCE, cpuSensorData);
+		this.dataMessageListener.handleSensorMessage(ResourceNameEnum.GDA_MGMT_STATUS_MSG_RESOURCE, memSensorData);
 	}
 	
 	public void setDataMessageListener(IDataMessageListener listener)
 	{
+		this.dataMessageListener = listener;
 	}
 
 	/**

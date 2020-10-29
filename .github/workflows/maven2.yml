@@ -9,6 +9,7 @@ on:
       - 'src/**'
       - 'config/**'
       - '.github/workflows/**'
+      - 'pom*.xml'
     branches:
       - alpha001
       - 'chapter**'
@@ -17,6 +18,7 @@ on:
       - 'src/**'
       - 'config/**'
       - '.github/workflows/**'
+      - 'pom*.xml'
     branches:
       - alpha001
       - 'chapter**'

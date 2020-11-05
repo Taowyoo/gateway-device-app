@@ -12,6 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.google.gson.JsonParseException;
+import org.eclipse.paho.client.mqttv3.MqttException;
 import programmingtheiot.common.ConfigConst;
 import programmingtheiot.common.ConfigUtil;
 import programmingtheiot.common.IDataMessageListener;
@@ -19,11 +20,7 @@ import programmingtheiot.common.ResourceNameEnum;
 
 import programmingtheiot.data.*;
 
-import programmingtheiot.gda.connection.CoapServerGateway;
-import programmingtheiot.gda.connection.IPersistenceClient;
-import programmingtheiot.gda.connection.IPubSubClient;
-import programmingtheiot.gda.connection.IRequestResponseClient;
-import programmingtheiot.gda.connection.RedisPersistenceAdapter;
+import programmingtheiot.gda.connection.*;
 import programmingtheiot.gda.system.SystemPerformanceManager;
 import redis.clients.jedis.JedisPubSub;
 
@@ -56,11 +53,12 @@ public class DeviceDataManager extends JedisPubSub implements IDataMessageListen
 	private DataUtil dataUtil = DataUtil.getInstance();
 
 	private RedisPersistenceAdapter redisClient = null;
+//	private MqttClientConnector mqttClient;
 	private SystemPerformanceManager sysPerfManager;
 	private Thread subCDAThread;
 
 //	private int cloudQos = configUtil.getInteger(ConfigConst.CLOUD_GATEWAY_SERVICE,ConfigConst.DEFAULT_QOS_KEY);
-//	private int mqttQos = configUtil.getInteger(ConfigConst.MQTT_GATEWAY_SERVICE,ConfigConst.DEFAULT_QOS_KEY);
+	private int mqttQos = configUtil.getInteger(ConfigConst.MQTT_GATEWAY_SERVICE,ConfigConst.DEFAULT_QOS_KEY);
 
 	// constructors
 	public DeviceDataManager()
@@ -202,6 +200,7 @@ public class DeviceDataManager extends JedisPubSub implements IDataMessageListen
 		}
 		String jsonData = this.dataUtil.sensorDataToJson(data);
 		if (jsonData != null){
+			this.handleIncomingDataAnalysis(resourceName, data);
 			this.handleUpstreamTransmission(resourceName, jsonData);
 			return true;
 		}
@@ -220,6 +219,7 @@ public class DeviceDataManager extends JedisPubSub implements IDataMessageListen
 		}
 		String jsonData = this.dataUtil.systemPerformanceDataToJson(data);
 		if (jsonData != null){
+			this.handleIncomingDataAnalysis(resourceName, data);
 			this.handleUpstreamTransmission(resourceName, jsonData);
 			return true;
 		}
@@ -234,6 +234,9 @@ public class DeviceDataManager extends JedisPubSub implements IDataMessageListen
 	{
 		_Logger.log(Level.INFO, "DeviceDataManager starting...");
 		this.sysPerfManager.startManager();
+		if (this.enableMqttClient){
+			this.mqttClient.connectClient();
+		}
 		if (this.enablePersistenceClient){
 			this.redisClient.connectClient();
 			Runnable toRun = this.redisClient.subscribeToChannel(this, new ResourceNameEnum[]{ResourceNameEnum.CDA_SENSOR_MSG_RESOURCE, ResourceNameEnum.CDA_ACTUATOR_CMD_RESOURCE});
@@ -247,6 +250,9 @@ public class DeviceDataManager extends JedisPubSub implements IDataMessageListen
 	{
 		_Logger.log(Level.INFO, "DeviceDataManager stopping...");
 		this.sysPerfManager.stopManager();
+		if (this.enableMqttClient){
+			this.mqttClient.disconnectClient();
+		}
 		if (this.enablePersistenceClient){
 			this.redisClient.disconnectClient();
 		}
@@ -266,10 +272,32 @@ public class DeviceDataManager extends JedisPubSub implements IDataMessageListen
 		if (this.enablePersistenceClient){
 			this.redisClient = new RedisPersistenceAdapter();
 		}
+		if (this.enableMqttClient){
+			this.mqttClient = new MqttClientConnector();
+		}
+	}
+	private void handleIncomingDataAnalysis(ResourceNameEnum resourceName, SensorData data){
+		_Logger.log(Level.FINE, String.format("Analyze an Incoming SensorData from %s.", resourceName.getResourceName()));
+		if(resourceName == ResourceNameEnum.CDA_SENSOR_MSG_RESOURCE){
+			String responseMsg = generateMeetThresholdResponse(data);
+			if(responseMsg != null){
+				this.mqttClient.publishMessage(ResourceNameEnum.CDA_ACTUATOR_CMD_RESOURCE, responseMsg, mqttQos);
+			}
+		}
 	}
 
 	private void handleIncomingDataAnalysis(ResourceNameEnum resourceName, ActuatorData data){
 		_Logger.log(Level.FINE, String.format("Analyze an Incoming ActuatorData from %s.", resourceName.getResourceName()));
+	}
+
+	private void handleIncomingDataAnalysis(ResourceNameEnum resourceName, SystemPerformanceData data){
+		_Logger.log(Level.FINE, String.format("Analyze an Incoming SystemPerformanceData from %s.", resourceName.getResourceName()));
+		if(resourceName == ResourceNameEnum.CDA_SENSOR_MSG_RESOURCE){
+			String responseMsg = generateMeetThresholdResponse(data);
+			if(responseMsg != null){
+				this.mqttClient.publishMessage(ResourceNameEnum.CDA_ACTUATOR_CMD_RESOURCE, responseMsg, mqttQos);
+			}
+		}
 	}
 
 	private void handleIncomingDataAnalysis(ResourceNameEnum resourceName, SystemStateData data){
@@ -279,5 +307,19 @@ public class DeviceDataManager extends JedisPubSub implements IDataMessageListen
 	private void handleUpstreamTransmission(ResourceNameEnum resourceName, String msg){
 		_Logger.log(Level.FINE, String.format("Upstream a msg: %s from %s.", msg, resourceName.getResourceName()));
 		// TODO: publish to the cloud service. We'll revisit this in Part 03.
+	}
+
+	private String generateMeetThresholdResponse(SensorData data){
+		String ret = null;
+		// TODO: check meet threshold crossing
+		// TODO: if meet, generate response cmd msg
+		return ret;
+	}
+
+	private String generateMeetThresholdResponse(SystemPerformanceData data){
+		String ret = null;
+		// TODO: check meet threshold crossing
+		// TODO: if meet, generate response cmd msg
+		return ret;
 	}
 }

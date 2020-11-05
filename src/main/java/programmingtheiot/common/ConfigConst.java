@@ -123,7 +123,7 @@ public class ConfigConst
 	public static final String USE_WEB_ACCESS_KEY   = "useWebAccess";
 	public static final String POLL_CYCLES_KEY      = "pollCycleSecs";
 	public static final String KEEP_ALIVE_KEY       = "keepAlive";
-	public static final String DEFAULT_QOS_KEY      = "defaultQos";
+	public static final String DEFAULT_QOS_KEY      = "defaultQoS";
 	
 	public static final String IMAGE_PREPROCESS_PATH_KEY = "imgPreprocessPath";
 	

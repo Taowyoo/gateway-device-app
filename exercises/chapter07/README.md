@@ -2,48 +2,37 @@
 
 ## Lab Module 07
 
-Be sure to implement all the PIOT-GDA-* issues (requirements) listed at [PIOT-INF-07-001 - Chapter 07](https://github.com/orgs/programming-the-iot/projects/1#column-10488499).
-
 ### Description
 
-NOTE: Include two full paragraphs describing your implementation approach by answering the questions listed below.
+#### What does your implementation do? 
 
-What does your implementation do? 
+1. Create `MqttClientConnector` class as a client for GDA to communicate with broker.
+2. Integrate `MqttClientConnector` into `DeviceDataManager`.
 
-How does your implementation work?
+#### How does your implementation work?
+
+1. Implement `MqttClientConnector` class:
+   1. Implement all necessary callback functions for MQTT client.
+   2. Implement methods for `IPubSubClient` interface.
+2. Add `MqttClientConnector` instance and related logic code in `DeviceDataManager` class:
+   1. Add instance initialization, config setup code for `MqttClientConnector`.
+   2. Add related `SensorData`, `SystemPerformanceData`, `ActuationData` receiving or forwarding code for `MqttClientConnector`.
+
 
 ### Code Repository and Branch
 
-NOTE: Be sure to include the branch (e.g. https://github.com/programming-the-iot/python-components/tree/alpha001).
-
-URL: 
+URL: https://github.com/NU-CSYE6530-Fall2020/gateway-device-app-Taowyoo/tree/alpha001
 
 ### UML Design Diagram(s)
 
-NOTE: Include one or more UML designs representing your solution. It's expected each
-diagram you provide will look similar to, but not the same as, its counterpart in the
-book [Programming the IoT](https://learning.oreilly.com/library/view/programming-the-internet/9781492081401/).
-
+Here is latest class diagram of current code:
+![Class Diagram](./../../doc/UML/Lab07.svg)
 
 ### Unit Tests Executed
 
-NOTE: TA's will execute your unit tests. You only need to list each test case below
-(e.g. ConfigUtilTest, DataUtilTest, etc). Be sure to include all previous tests, too,
-since you need to ensure you haven't introduced regressions.
-
-- 
-- 
-- 
+- All unit tests in part01
+- All unit tests in part02
 
 ### Integration Tests Executed
 
-NOTE: TA's will execute most of your integration tests using their own environment, with
-some exceptions (such as your cloud connectivity tests). In such cases, they'll review
-your code to ensure it's correct. As for the tests you execute, you only need to list each
-test case below (e.g. SensorSimAdapterManagerTest, DeviceDataManagerTest, etc.)
-
-- 
-- 
-- 
-
-EOF.
+-  src\test\java\programmingtheiot\part03\integration\connection\MqttClientConnectorTest

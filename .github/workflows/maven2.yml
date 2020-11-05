@@ -38,5 +38,9 @@ jobs:
       # You may pin to the exact commit or the version.
       # uses: shogo82148/actions-setup-redis@f168880de5407eeb262957436a2ed697af41cdb4
       uses: shogo82148/actions-setup-redis@v1.9.1
+    - name: Mosquitto MQTT Broker in GitHub Actions
+      # You may pin to the exact commit or the version.
+      # uses: Namoshek/mosquitto-github-action@2ff373e4962a64948356341d1e3a059de23481db
+      uses: Namoshek/mosquitto-github-action@v0.1.0
     - name: Build with Maven
       run: mvn -B verify --file pom_test.xml

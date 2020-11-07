@@ -25,7 +25,7 @@ URL: https://github.com/NU-CSYE6530-Fall2020/gateway-device-app-Taowyoo/tree/alp
 ### UML Design Diagram(s)
 
 Here is latest class diagram of current code:
-![Class Diagram](./../../doc/UML/Lab07.svg)
+![Class Diagram](./../../doc/uml/Lab07.svg)
 
 ### Unit Tests Executed
 

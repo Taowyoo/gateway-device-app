@@ -34,7 +34,7 @@ public class ConfigConst
 	public static final int    DEFAULT_KEEP_ALIVE       = 60;
 	public static final int    DEFAULT_POLL_CYCLES      = 60;
 
-	public static final String PRODUCT_NAME = "ProgrammingIoT";
+	public static final String PRODUCT_NAME = "PIOT";
 	public static final String CLOUD        = "Cloud";
 	public static final String GATEWAY      = "Gateway";
 	public static final String CONSTRAINED  = "Constrained";

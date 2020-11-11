@@ -30,13 +30,14 @@ import programmingtheiot.gda.connection.*;
 
 /**
  * This test case class contains very basic integration tests for
- * CoapClientToServerConnectorTest. It should not be considered complete,
+ * CoapClientConnector. It should not be considered complete,
  * but serve as a starting point for the student implementing
  * additional functionality within their Programming the IoT
  * environment.
- *
+ * 
+ * NOTE: The CoAP server must be running before executing these tests.
  */
-public class CoapClientToServerConnectorTest
+public class CoapClientConnectorTest
 {
 	// static
 	
@@ -44,14 +45,12 @@ public class CoapClientToServerConnectorTest
 	public static final boolean USE_DEFAULT_RESOURCES = true;
 	
 	private static final Logger _Logger =
-		Logger.getLogger(CoapClientToServerConnectorTest.class.getName());
-	
-	private static CoapServerGateway _Csg = null;
+		Logger.getLogger(CoapClientConnectorTest.class.getName());
 	
 	// member var's
 	
-	private CoapClientConnector ccc = null;
-	private IDataMessageListener dml = null;
+	private CoapClientConnector coapClient = null;
+	private IDataMessageListener dataMsgListener = null;
 	
 	
 	// test setup methods
@@ -62,9 +61,6 @@ public class CoapClientToServerConnectorTest
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception
 	{
-		_Csg = new CoapServerGateway(USE_DEFAULT_RESOURCES);
-		
-		assertTrue(_Csg.startServer());
 	}
 	
 	/**
@@ -73,7 +69,6 @@ public class CoapClientToServerConnectorTest
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception
 	{
-		assertTrue(_Csg.stopServer());
 	}
 	
 	/**
@@ -82,10 +77,10 @@ public class CoapClientToServerConnectorTest
 	@Before
 	public void setUp() throws Exception
 	{
-		this.ccc = new CoapClientConnector();
-		this.dml = new DefaultDataMessageListener();
+		this.coapClient = new CoapClientConnector();
+		this.dataMsgListener = new DefaultDataMessageListener();
 		
-		this.ccc.setDataMessageListener(this.dml);
+		this.coapClient.setDataMessageListener(this.dataMsgListener);
 	}
 	
 	/**
@@ -104,7 +99,7 @@ public class CoapClientToServerConnectorTest
 	@Test
 	public void testConnectAndDiscover()
 	{
-		assertTrue(this.ccc.sendDiscoveryRequest(DEFAULT_TIMEOUT));
+		assertTrue(this.coapClient.sendDiscoveryRequest(DEFAULT_TIMEOUT));
 	}
 	
 	/**
@@ -115,7 +110,7 @@ public class CoapClientToServerConnectorTest
 	{
 		// TODO: issue request and validate response
 		
-		assertTrue(this.ccc.sendGetRequest(ResourceNameEnum.GDA_MGMT_STATUS_MSG_RESOURCE, true, DEFAULT_TIMEOUT));
+		assertTrue(this.coapClient.sendGetRequest(ResourceNameEnum.GDA_MGMT_STATUS_MSG_RESOURCE, true, DEFAULT_TIMEOUT));
 	}
 	
 	/**
@@ -126,7 +121,7 @@ public class CoapClientToServerConnectorTest
 	{
 		// TODO: issue request and validate response
 		
-		assertTrue(this.ccc.sendGetRequest(ResourceNameEnum.GDA_MGMT_STATUS_MSG_RESOURCE, false, DEFAULT_TIMEOUT));
+		assertTrue(this.coapClient.sendGetRequest(ResourceNameEnum.GDA_MGMT_STATUS_MSG_RESOURCE, false, DEFAULT_TIMEOUT));
 	}
 	
 	/**
@@ -144,7 +139,7 @@ public class CoapClientToServerConnectorTest
 		
 		String ssdJson = DataUtil.getInstance().systemStateDataToJson(ssd);
 		
-		assertTrue(this.ccc.sendPostRequest(ResourceNameEnum.GDA_MGMT_STATUS_MSG_RESOURCE, true, ssdJson, DEFAULT_TIMEOUT));
+		assertTrue(this.coapClient.sendPostRequest(ResourceNameEnum.GDA_MGMT_STATUS_MSG_RESOURCE, true, ssdJson, DEFAULT_TIMEOUT));
 	}
 	
 	/**
@@ -162,7 +157,7 @@ public class CoapClientToServerConnectorTest
 		
 		String ssdJson = DataUtil.getInstance().systemStateDataToJson(ssd);
 		
-		assertTrue(this.ccc.sendPostRequest(ResourceNameEnum.GDA_MGMT_STATUS_MSG_RESOURCE, false, ssdJson, DEFAULT_TIMEOUT));
+		assertTrue(this.coapClient.sendPostRequest(ResourceNameEnum.GDA_MGMT_STATUS_MSG_RESOURCE, false, ssdJson, DEFAULT_TIMEOUT));
 	}
 	
 	/**
@@ -180,7 +175,7 @@ public class CoapClientToServerConnectorTest
 		
 		String ssdJson = DataUtil.getInstance().systemStateDataToJson(ssd);
 		
-		assertTrue(this.ccc.sendPutRequest(ResourceNameEnum.GDA_MGMT_STATUS_MSG_RESOURCE, true, ssdJson, DEFAULT_TIMEOUT));
+		assertTrue(this.coapClient.sendPutRequest(ResourceNameEnum.GDA_MGMT_STATUS_MSG_RESOURCE, true, ssdJson, DEFAULT_TIMEOUT));
 	}
 	
 	/**
@@ -198,7 +193,7 @@ public class CoapClientToServerConnectorTest
 		
 		String ssdJson = DataUtil.getInstance().systemStateDataToJson(ssd);
 		
-		assertTrue(this.ccc.sendPutRequest(ResourceNameEnum.GDA_MGMT_STATUS_MSG_RESOURCE, false, ssdJson, DEFAULT_TIMEOUT));
+		assertTrue(this.coapClient.sendPutRequest(ResourceNameEnum.GDA_MGMT_STATUS_MSG_RESOURCE, false, ssdJson, DEFAULT_TIMEOUT));
 	}
 	
 	/**
@@ -209,7 +204,7 @@ public class CoapClientToServerConnectorTest
 	{
 		// TODO: issue request and validate response
 		
-		assertTrue(this.ccc.sendDeleteRequest(ResourceNameEnum.GDA_MGMT_STATUS_CMD_RESOURCE, true, DEFAULT_TIMEOUT));
+		assertTrue(this.coapClient.sendDeleteRequest(ResourceNameEnum.GDA_MGMT_STATUS_CMD_RESOURCE, true, DEFAULT_TIMEOUT));
 	}
 	
 	/**
@@ -220,7 +215,7 @@ public class CoapClientToServerConnectorTest
 	{
 		// TODO: issue request and validate response
 		
-		assertTrue(this.ccc.sendDeleteRequest(ResourceNameEnum.GDA_MGMT_STATUS_CMD_RESOURCE, false, DEFAULT_TIMEOUT));
+		assertTrue(this.coapClient.sendDeleteRequest(ResourceNameEnum.GDA_MGMT_STATUS_CMD_RESOURCE, false, DEFAULT_TIMEOUT));
 	}
 	
 }

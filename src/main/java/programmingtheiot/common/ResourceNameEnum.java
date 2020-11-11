@@ -3,11 +3,8 @@
  * project, and is available via the MIT License, which can be
  * found in the LICENSE file at the top level of this repository.
  * 
- * You may find it more helpful to your design to adjust the
- * functionality, constants and interfaces (if there are any)
- * provided within in order to meet the needs of your specific
- * Programming the Internet of Things project.
- */ 
+ * Copyright (c) 2020 by Andrew D. King
+ */
 
 package programmingtheiot.common;
 
@@ -24,13 +21,16 @@ public enum ResourceNameEnum
 {
 	// static
 	
-	CDA_SENSOR_MSG_RESOURCE(ConfigConst.CDA_SENSOR_DATA_MSG_RESOURCE),
-	CDA_ACTUATOR_CMD_RESOURCE(ConfigConst.CDA_ACTUATOR_CMD_MSG_RESOURCE),
-	CDA_MGMT_STATUS_MSG_RESOURCE(ConfigConst.CDA_MGMT_STATUS_MSG_RESOURCE),
-	CDA_MGMT_STATUS_CMD_RESOURCE(ConfigConst.CDA_MGMT_CMD_MSG_RESOURCE),
-	GDA_MGMT_STATUS_MSG_RESOURCE(ConfigConst.GDA_MGMT_STATUS_MSG_RESOURCE),
-	GDA_MGMT_STATUS_CMD_RESOURCE(ConfigConst.GDA_MGMT_CMD_MSG_RESOURCE);
+	CDA_SENSOR_MSG_RESOURCE(ConfigConst.CDA_SENSOR_DATA_MSG_RESOURCE, false),
+	CDA_ACTUATOR_CMD_RESOURCE(ConfigConst.CDA_ACTUATOR_CMD_MSG_RESOURCE, false),
+	CDA_ACTUATOR_RESPONSE_RESOURCE(ConfigConst.CDA_ACTUATOR_RESPONSE_MSG_RESOURCE, false),
+	CDA_MGMT_STATUS_MSG_RESOURCE(ConfigConst.CDA_MGMT_STATUS_MSG_RESOURCE, false),
+	CDA_SYSTEM_PERF_MSG_RESOURCE(ConfigConst.CDA_SYSTEM_PERF_MSG_RESOURCE, false),
+	CDA_MGMT_STATUS_CMD_RESOURCE(ConfigConst.CDA_MGMT_CMD_MSG_RESOURCE, false),
 	
+	GDA_MGMT_STATUS_MSG_RESOURCE(ConfigConst.GDA_MGMT_STATUS_MSG_RESOURCE, true),
+	GDA_MGMT_STATUS_CMD_RESOURCE(ConfigConst.GDA_MGMT_CMD_MSG_RESOURCE, true),
+	GDA_SYSTEM_PERF_MSG_RESOURCE(ConfigConst.GDA_SYSTEM_PERF_MSG_RESOURCE, true);
 	
 	private static final HashMap<String, ResourceNameEnum> _ResourceNameLookupMap = new HashMap<>();
 	
@@ -67,6 +67,7 @@ public enum ResourceNameEnum
 	// private var's
 	
 	private String resourceName = "";
+	private boolean isLocalToGDA = false;
 	
 	
 	// constructor
@@ -75,10 +76,12 @@ public enum ResourceNameEnum
 	 * Constructor.
 	 * 
 	 * @param resourceName
+	 * @param isLocalToGda
 	 */
-	private ResourceNameEnum(String resourceName)
+	private ResourceNameEnum(String resourceName, boolean isLocalToGda)
 	{
 		this.resourceName = resourceName;
+		this.isLocalToGDA = isLocalToGda;
 	}
 	
 	
@@ -110,4 +113,16 @@ public enum ResourceNameEnum
 		
 		return nameList;
 	}
+	
+	/**
+	 * 
+	 * @return boolean True if this resource is local to the GDA (meaning any
+	 * use of the resource is internal to the GDA); false if it's not (meaning
+	 * it's a resource used by the CDA).
+	 */
+	public boolean isLocalToGda()
+	{
+		return this.isLocalToGDA;
+	}
+	
 }

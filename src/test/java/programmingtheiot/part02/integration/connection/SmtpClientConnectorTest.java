@@ -42,7 +42,8 @@ public class SmtpClientConnectorTest
 	
 	public static final int DEFAULT_TIMEOUT = 5;
 	public static final boolean USE_DEFAULT_RESOURCES = true;
-	
+	public static final boolean DEFAULT_ENABLE_CON = false;
+
 	private static final Logger _Logger =
 		Logger.getLogger(SmtpClientConnectorTest.class.getName());
 	
@@ -107,8 +108,8 @@ public class SmtpClientConnectorTest
 		
 		String ssdJson = DataUtil.getInstance().systemStateDataToJson(ssd);
 		
-		assertTrue(this.smtpClient.sendPostRequest(ResourceNameEnum.GDA_MGMT_STATUS_MSG_RESOURCE, ssdJson, DEFAULT_TIMEOUT));
-		assertTrue(this.smtpClient.sendGetRequest(ResourceNameEnum.GDA_MGMT_STATUS_MSG_RESOURCE, DEFAULT_TIMEOUT));
+		assertTrue(this.smtpClient.sendPostRequest(ResourceNameEnum.GDA_MGMT_STATUS_MSG_RESOURCE, this.DEFAULT_ENABLE_CON, ssdJson, DEFAULT_TIMEOUT));
+		assertTrue(this.smtpClient.sendGetRequest(ResourceNameEnum.GDA_MGMT_STATUS_MSG_RESOURCE, this.DEFAULT_ENABLE_CON, DEFAULT_TIMEOUT));
 	}
 	
 	/**
@@ -126,8 +127,8 @@ public class SmtpClientConnectorTest
 		
 		String ssdJson = DataUtil.getInstance().systemStateDataToJson(ssd);
 		
-		assertTrue(this.smtpClient.sendPutRequest(ResourceNameEnum.GDA_MGMT_STATUS_MSG_RESOURCE, ssdJson, DEFAULT_TIMEOUT));
-		assertTrue(this.smtpClient.sendGetRequest(ResourceNameEnum.GDA_MGMT_STATUS_MSG_RESOURCE, DEFAULT_TIMEOUT));
+		assertTrue(this.smtpClient.sendPutRequest(ResourceNameEnum.GDA_MGMT_STATUS_MSG_RESOURCE, this.DEFAULT_ENABLE_CON, ssdJson, DEFAULT_TIMEOUT));
+		assertTrue(this.smtpClient.sendGetRequest(ResourceNameEnum.GDA_MGMT_STATUS_MSG_RESOURCE, this.DEFAULT_ENABLE_CON, DEFAULT_TIMEOUT));
 	}
 	
 }

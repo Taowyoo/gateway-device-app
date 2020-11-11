@@ -80,7 +80,7 @@ public class SmtpClientConnector implements IRequestResponseClient
 	 * IGNORE THIS METHOD.
 	 */
 	@Override
-	public boolean sendDeleteRequest(ResourceNameEnum resource, int timeout)
+	public boolean sendDeleteRequest(ResourceNameEnum resource, boolean enableCON, int timeout)
 	{
 		// NOTE: No need to implement this!
 		
@@ -93,7 +93,7 @@ public class SmtpClientConnector implements IRequestResponseClient
 	 * IGNORE THIS METHOD.
 	 */
 	@Override
-	public boolean sendGetRequest(ResourceNameEnum resource, int timeout)
+	public boolean sendGetRequest(ResourceNameEnum resource, boolean enableCON, int timeout)
 	{
 		// NOTE: No need to implement this!
 		
@@ -103,13 +103,13 @@ public class SmtpClientConnector implements IRequestResponseClient
 	}
 
 	@Override
-	public boolean sendPostRequest(ResourceNameEnum resource, String payload, int timeout)
+	public boolean sendPostRequest(ResourceNameEnum resource, boolean enableCON, String payload, int timeout)
 	{
 		return configureAndSendMessage(resource, payload.getBytes());
 	}
 
 	@Override
-	public boolean sendPutRequest(ResourceNameEnum resource, String payload, int timeout)
+	public boolean sendPutRequest(ResourceNameEnum resource, boolean enableCON, String payload, int timeout)
 	{
 		return configureAndSendMessage(resource, payload.getBytes());
 	}

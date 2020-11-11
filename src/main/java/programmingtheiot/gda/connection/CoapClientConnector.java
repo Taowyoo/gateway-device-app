@@ -70,25 +70,25 @@ public class CoapClientConnector implements IRequestResponseClient
 	}
 
 	@Override
-	public boolean sendDeleteRequest(ResourceNameEnum resource, int timeout)
+	public boolean sendDeleteRequest(ResourceNameEnum resource, boolean enableCON, int timeout)
 	{
 		return false;
 	}
 
 	@Override
-	public boolean sendGetRequest(ResourceNameEnum resource, int timeout)
+	public boolean sendGetRequest(ResourceNameEnum resource, boolean enableCON, int timeout)
 	{
 		return false;
 	}
 
 	@Override
-	public boolean sendPostRequest(ResourceNameEnum resource, String payload, int timeout)
+	public boolean sendPostRequest(ResourceNameEnum resource, boolean enableCON, String payload, int timeout)
 	{
 		return false;
 	}
 
 	@Override
-	public boolean sendPutRequest(ResourceNameEnum resource, String payload, int timeout)
+	public boolean sendPutRequest(ResourceNameEnum resource, boolean enableCON, String payload, int timeout)
 	{
 		return false;
 	}

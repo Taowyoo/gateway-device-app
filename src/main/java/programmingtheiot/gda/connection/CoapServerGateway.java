@@ -59,8 +59,7 @@ public class CoapServerGateway
 	 * 
 	 * @param resources
 	 */
-	public CoapServerGateway(
-		ResourceNameEnum ...resources)
+	public CoapServerGateway(ResourceNameEnum ...resources)
 	{
 		super();
 	}

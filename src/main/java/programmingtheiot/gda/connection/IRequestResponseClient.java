@@ -3,10 +3,7 @@
  * project, and is available via the MIT License, which can be
  * found in the LICENSE file at the top level of this repository.
  * 
- * You may find it more helpful to your design to adjust the
- * functionality, constants and interfaces (if there are any)
- * provided within in order to meet the needs of your specific
- * Programming the Internet of Things project.
+ * Copyright (c) 2020 by Andrew D. King
  */ 
 
 package programmingtheiot.gda.connection;
@@ -35,42 +32,46 @@ public interface IRequestResponseClient
 	 * IDataMessageListener callback must be set to receive response.
 	 * 
 	 * @param resource The resource enum containing the resource path string.
+	 * @param enableCON If true, CON (confirmed) messaging will be used; otherwise use NON (non-confirmed).
 	 * @param timeout The number of seconds to wait for a response before returning (default is 5).
 	 * @return boolean True on success; False otherwise.
 	 */
-	public boolean sendDeleteRequest(ResourceNameEnum resource, int timeout);
+	public boolean sendDeleteRequest(ResourceNameEnum resource, boolean enableCON, int timeout);
 
 	/**
 	 * Connects to the server and sends GET request for resource at path.
 	 * IDataMessageListener callback must be set to receive response.
 	 * 
 	 * @param resource The resource enum containing the resource path string.
+	 * @param enableCON If true, CON (confirmed) messaging will be used; otherwise use NON (non-confirmed).
 	 * @param timeout The number of seconds to wait for a response before returning (default is 5).
 	 * @return boolean True on success; False otherwise.
 	 */
-	public boolean sendGetRequest(ResourceNameEnum resource, int timeout);
+	public boolean sendGetRequest(ResourceNameEnum resource, boolean enableCON, int timeout);
 
 	/**
 	 * Connects to the server and sends POST request of payload to resource at path.
 	 * IDataMessageListener callback must be set to receive response.
 	 * 
 	 * @param resource The resource enum containing the resource path string.
+	 * @param enableCON If true, CON (confirmed) messaging will be used; otherwise use NON (non-confirmed).
 	 * @param payload The JSON payload to send.
 	 * @param timeout The number of seconds to wait for a response before returning (default is 5).
 	 * @return boolean True on success; False otherwise.
 	 */
-	public boolean sendPostRequest(ResourceNameEnum resource, String payload, int timeout);
+	public boolean sendPostRequest(ResourceNameEnum resource, boolean enableCON, String payload, int timeout);
 
 	/**
 	 * Connects to the server and sends GET request for resource at path.
 	 * IDataMessageListener callback must be set to receive response.
 	 * 
 	 * @param resource The resource enum containing the resource path string.
+	 * @param enableCON If true, CON (confirmed) messaging will be used; otherwise use NON (non-confirmed).
 	 * @param payload The JSON payload to send.
 	 * @param timeout The number of seconds to wait for a response before returning (default is 5).
 	 * @return boolean True on success; False otherwise.
 	 */
-	public boolean sendPutRequest(ResourceNameEnum resource, String payload, int timeout);
+	public boolean sendPutRequest(ResourceNameEnum resource, boolean enableCON, String payload, int timeout);
 
 	/**
 	 * Sets the data message listener reference, assuming listener is non-null.

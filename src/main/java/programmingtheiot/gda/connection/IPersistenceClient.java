@@ -62,7 +62,7 @@ public interface IPersistenceClient
 	public SensorData[] getSensorData(String topic, Date startDate, Date endDate);
 	
 	/**
-	 * Registers the specified {@link programmingtheiot.gda.connection.IPersistenceListener}
+	 * Registers the specified {@link programmingtheiot.gda.connection.labbenchstudios.data.IPersistenceListener}
 	 * for all {@link #storeData()} calls for the named data type.
 	 * 
 	 * @param cType The data type to use for storage notifications.

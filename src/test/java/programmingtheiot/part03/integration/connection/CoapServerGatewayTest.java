@@ -44,7 +44,7 @@ public class CoapServerGatewayTest
 {
 	// static
 	
-	public static final int DEFAULT_TIMEOUT = 300 * 1000;
+	public static final int DEFAULT_TIMEOUT = 3 * 60 * 1000;
 	public static final boolean USE_DEFAULT_RESOURCES = true;
 	
 	private static final Logger _Logger =
@@ -102,31 +102,37 @@ public class CoapServerGatewayTest
 					_Logger.info(" --> WebLink: " + wl.getURI() + ". Attributes: " + wl.getAttributes());
 				}
 			}
-			
+			String responseStr;
 			clientConn.setURI(
 				url + "/" + ConfigConst.PRODUCT_NAME);
-			clientConn.get();
+			responseStr = clientConn.get().getResponseText();
+			_Logger.info(String.format("Request GET to %s, response: %s", clientConn.getURI(),responseStr));
 			
 			clientConn.setURI(
 				url + "/" + ConfigConst.PRODUCT_NAME + "/" + ConfigConst.CONSTRAINED_DEVICE);
-			clientConn.get();
+			responseStr = clientConn.get().getResponseText();
+			_Logger.info(String.format("Request GET to %s, response: %s", clientConn.getURI(),responseStr));
 			
 			clientConn.setURI(
 				url + "/" + ConfigConst.PRODUCT_NAME + "/" + ConfigConst.GATEWAY_DEVICE);
-			clientConn.get();
-			
+			responseStr = clientConn.get().getResponseText();
+			_Logger.info(String.format("Request GET to %s, response: %s", clientConn.getURI(),responseStr));
+
 			clientConn.setURI(
 				url + "/" + ResourceNameEnum.GDA_MGMT_STATUS_CMD_RESOURCE.getResourceName());
-			clientConn.get();
-			
+			responseStr = clientConn.get().getResponseText();
+			_Logger.info(String.format("Request GET to %s, response: %s", clientConn.getURI(),responseStr));
+
 			clientConn.setURI(
 				url + "/" + ResourceNameEnum.GDA_MGMT_STATUS_MSG_RESOURCE.getResourceName());
-			clientConn.get();
-			
+			responseStr = clientConn.get().getResponseText();
+			_Logger.info(String.format("Request GET to %s, response: %s", clientConn.getURI(),responseStr));
+
 			clientConn.setURI(
 				url + "/" + ResourceNameEnum.GDA_SYSTEM_PERF_MSG_RESOURCE.getResourceName());
-			clientConn.get();
-			
+			responseStr = clientConn.get().getResponseText();
+			_Logger.info(String.format("Request GET to %s, response: %s", clientConn.getURI(),responseStr));
+
 			Thread.sleep(DEFAULT_TIMEOUT);
 			
 			this.csg.stopServer();

@@ -32,8 +32,9 @@ public class GenericCoapResourceHandler extends CoapResource
 		Logger.getLogger(GenericCoapResourceHandler.class.getName());
 	
 	// params
-	
-	
+
+	private IDataMessageListener dataMsgListener = null;
+
 	// constructors
 	
 	/**
@@ -62,25 +63,85 @@ public class GenericCoapResourceHandler extends CoapResource
 	@Override
 	public void handleDELETE(CoapExchange context)
 	{
+		_Logger.info(String.format("Receive a DELETE from %s with text: %s, payload: %s",
+				context.getSourceAddress().toString(),
+				context.getRequestText(),
+				new String(context.getRequestPayload())));
+		// TODO: validate 'context'
+
+		// accept the request
+		context.accept();
+
+		// TODO: retrieve the requested data and generate a response message: 'msg'
+		String msg = "Default response to DELETE"; // fill this in
+
+		// send an appropriate response
+		context.respond(ResponseCode.DELETED, msg);
 	}
 	
 	@Override
 	public void handleGET(CoapExchange context)
 	{
+		_Logger.info(String.format("Receive a GET from %s with text: %s, payload: %s",
+				context.getSourceAddress().toString(),
+				context.getRequestText(),
+				new String(context.getRequestPayload())));
+		// TODO: validate 'context'
+
+		// accept the request
+		context.accept();
+
+		// TODO: retrieve the requested data and generate a response message: 'msg'
+		String msg = "Default response to GET"; // fill this in
+
+		// send an appropriate response
+		context.respond(ResponseCode.VALID, msg);
 	}
 	
 	@Override
 	public void handlePOST(CoapExchange context)
 	{
+		_Logger.info(String.format("Receive a POST from %s with text: %s, payload: %s",
+				context.getSourceAddress().toString(),
+				context.getRequestText(),
+				new String(context.getRequestPayload())));
+		// TODO: validate 'context'
+
+		// accept the request
+		context.accept();
+
+		// TODO: create (or update) the resource with the payload
+		String payload = context.getRequestText();
+
+		// TODO: generate a response message: 'msg'
+		String msg = "Default response to POST"; // fill this in
+
+		// send an appropriate response
+		context.respond(ResponseCode.CREATED, msg);
 	}
 	
 	@Override
 	public void handlePUT(CoapExchange context)
 	{
+		_Logger.info(String.format("Receive a PUT from %s with text: %s, payload: %s",
+				context.getSourceAddress().toString(),
+				context.getRequestText(),
+				new String(context.getRequestPayload())));
+		// TODO: validate 'context'
+
+		// accept the request
+		context.accept();
+
+		// TODO: retrieve the requested data and generate a response message: 'msg'
+		String msg = "Default response to PUT"; // fill this in
+
+		// send an appropriate response
+		context.respond(ResponseCode.CHANGED, msg);
 	}
 	
 	public void setDataMessageListener(IDataMessageListener listener)
 	{
+		this.dataMsgListener = listener;
 	}
 	
 }

@@ -8,6 +8,9 @@
 
 package programmingtheiot.gda.connection;
 
+import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.ArrayBlockingQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -31,17 +34,17 @@ public class CoapServerGateway
 		Logger.getLogger(CoapServerGateway.class.getName());
 	
 	// params
-	
-	
+	private CoapServer coapServer = null;
+	private IDataMessageListener dataMsgListener = null;
+
 	// constructors
-	
 	/**
 	 * Default.
 	 * 
 	 */
 	public CoapServerGateway()
 	{
-		this((ResourceNameEnum[]) null);
+		this(ResourceNameEnum.values());
 	}
 
 	/**
@@ -61,7 +64,7 @@ public class CoapServerGateway
 	 */
 	public CoapServerGateway(ResourceNameEnum ...resources)
 	{
-		super();
+		initServer(resources);
 	}
 
 	
@@ -69,6 +72,14 @@ public class CoapServerGateway
 	
 	public void addResource(ResourceNameEnum resource)
 	{
+		if (resource != null) {
+			// break out the hierarchy of names and build the resource
+			// handler generation(s) as needed, checking if any parent already
+			// exists - and if so, add to the existing resource
+			_Logger.info("Adding server resource handler chain: " + resource.getResourceName());
+
+			createAndAddResourceChain(resource);
+		}
 	}
 	
 	public boolean hasResource(String name)
@@ -78,27 +89,68 @@ public class CoapServerGateway
 	
 	public void setDataMessageListener(IDataMessageListener listener)
 	{
+		this.dataMsgListener = listener;
 	}
 	
 	public boolean startServer()
 	{
-		return false;
+		_Logger.info("CoAP server is starting...");
+		this.coapServer.start();
+		_Logger.info("CoAP server is started!");
+		return true;
 	}
 	
 	public boolean stopServer()
 	{
-		return false;
+		_Logger.info("CoAP server is stopping...");
+		this.coapServer.stop();
+		_Logger.info("CoAP server is stopped!");
+		return true;
 	}
 	
 	
 	// private methods
 	
-	private Resource createResourceChain(ResourceNameEnum resource)
+	private void createAndAddResourceChain(ResourceNameEnum resource)
 	{
-		return null;
+		List<String> resourceNames = resource.getResourceNameChain();
+		Queue<String> queue = new ArrayBlockingQueue<>(resourceNames.size());
+
+		queue.addAll(resourceNames);
+
+		// check if we have a parent resource
+		Resource parentResource = this.coapServer.getRoot();
+
+		// if no parent resource, add it in now (should be named "PIOT")
+		if (parentResource == null) {
+			parentResource = new GenericCoapResourceHandler(queue.poll());
+			this.coapServer.add(parentResource);
+		}
+
+		while (! queue.isEmpty()) {
+			// get the next resource name
+			String   resourceName = queue.poll();
+			Resource nextResource = parentResource.getChild(resourceName);
+
+			if (nextResource == null) {
+				// TODO: if this is the last entry, use a custom resource handler implementation that
+				// is specific to the resource's implementation needs (e.g. SensorData, ActuatorData, etc.)
+				nextResource = new GenericCoapResourceHandler(resourceName);
+				parentResource.add(nextResource);
+			}
+
+			parentResource = nextResource;
+		}
+
 	}
 	
 	private void initServer(ResourceNameEnum ...resources)
 	{
+		this.coapServer = new CoapServer();
+		if (resources != null){
+			for(ResourceNameEnum resource : resources){
+				this.addResource(resource);
+			}
+		}
 	}
 }

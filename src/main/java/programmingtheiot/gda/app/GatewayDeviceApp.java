@@ -11,6 +11,8 @@
 
 package programmingtheiot.gda.app;
 
+import programmingtheiot.common.ConfigConst;
+import programmingtheiot.common.ConfigUtil;
 import programmingtheiot.gda.system.SystemPerformanceManager;
 
 import java.util.logging.Level;
@@ -26,9 +28,10 @@ public class GatewayDeviceApp
 	
 	private static final Logger _Logger =
 		Logger.getLogger(GatewayDeviceApp.class.getName());
-	
-	public static final long DEFAULT_TEST_RUNTIME = 200000L;
-	
+
+	public static final long DEFAULT_TEST_RUNTIME =
+			ConfigUtil.getInstance().getInteger(ConfigConst.GATEWAY_DEVICE,ConfigConst.TEST_GDA_RUN_TIME_KEY, 0) * 1000;
+
 	// private var's
 	private DeviceDataManager devDataMgr = null;
 	// constructors
@@ -62,7 +65,12 @@ public class GatewayDeviceApp
 		gwApp.startApp();
 		
 		try {
-			Thread.sleep(DEFAULT_TEST_RUNTIME);
+			if(DEFAULT_TEST_RUNTIME > 0){
+				Thread.sleep(DEFAULT_TEST_RUNTIME);
+			}
+			else{
+				Thread.currentThread().join();
+			}
 		} catch (InterruptedException e) {
 			// ignore
 		}

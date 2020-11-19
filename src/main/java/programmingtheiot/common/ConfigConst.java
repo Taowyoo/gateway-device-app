@@ -79,6 +79,7 @@ public class ConfigConst
 	
 	public static final String TEST_GDA_DATA_PATH_KEY = "testGdaDataPath";
 	public static final String TEST_CDA_DATA_PATH_KEY = "testCdaDataPath";
+	public static final String TEST_GDA_RUN_TIME_KEY = "testGdaRunTime";
 
 	public static final String LOCAL   = "Local";
 	public static final String MQTT    = "Mqtt";

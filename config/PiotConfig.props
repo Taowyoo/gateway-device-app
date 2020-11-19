@@ -59,13 +59,13 @@ enableCrypt    = False
 enableLogging           = True
 pollCycleSecs           = 60
 enableMqttClient        = True
-enableCoapServer        = False
+enableCoapServer        = True
 enableCloudClient       = False
 enableSmtpClient        = False
 enablePersistenceClient = True
-testGdaDataPath = /tmp/gda-data
-testCdaDataPath = /tmp/cda-data
-
+testGdaDataPath         = /tmp/gda-data
+testCdaDataPath         = /tmp/cda-data
+testGdaRunTime          = 200
 #
 # Persistence client configuration information
 #

@@ -2,48 +2,335 @@
 
 ## Lab Module 09
 
-Be sure to implement all the PIOT-CDA-* issues (requirements) listed at [PIOT-INF-09-001 - Chapter 09](https://github.com/orgs/programming-the-iot/projects/1#column-10488503).
-
 ### Description
 
-NOTE: Include two full paragraphs describing your implementation approach by answering the questions listed below.
+#### What does your implementation do? 
 
-What does your implementation do? 
+1. Update CoAP Client class for GDA.
+2. Test and use Wireshark to capture CoAP packets.
 
-How does your implementation work?
+#### How does your implementation work?
+
+1. Implement the [`CoapClientConnector`](../../src/main/java/programmingtheiot/gda/connection/CoapClientConnector.java) class and [`GenericCoapResponseHandler`](../../src/main/java/programmingtheiot/gda/connection/handlers/GenericCoapResponseHandler.java) class as a CoAP client to send GET, PUT, POST, DELETE and DISCOVERY to CoAP server.
+2. Update [`CoapClientConnectorTest`](../../src/test/java/programmingtheiot/part03/integration/connection/CoapClientConnectorTest.java) and validate code with these tests.
+   Before run tests, run wireshark to capture CoAP packets.
 
 ### Code Repository and Branch
 
-NOTE: Be sure to include the branch (e.g. https://github.com/programming-the-iot/python-components/tree/alpha001).
-
-URL: 
+URL: https://github.com/NU-CSYE6530-Fall2020/gateway-device-app-Taowyoo/tree/alpha001
 
 ### UML Design Diagram(s)
 
-NOTE: Include one or more UML designs representing your solution. It's expected each
-diagram you provide will look similar to, but not the same as, its counterpart in the
-book [Programming the IoT](https://learning.oreilly.com/library/view/programming-the-internet/9781492081401/).
-
+Here is latest class diagram of current code:
+![Class Diagram](./../../doc/uml/Lab09.svg)
 
 ### Unit Tests Executed
 
-NOTE: TA's will execute your unit tests. You only need to list each test case below
-(e.g. ConfigUtilTest, DataUtilTest, etc). Be sure to include all previous tests, too,
-since you need to ensure you haven't introduced regressions.
-
-- 
-- 
-- 
+- All unit tests in part01
+- All unit tests in part02
 
 ### Integration Tests Executed
 
-NOTE: TA's will execute most of your integration tests using their own environment, with
-some exceptions (such as your cloud connectivity tests). In such cases, they'll review
-your code to ensure it's correct. As for the tests you execute, you only need to list each
-test case below (e.g. SensorSimAdapterManagerTest, DeviceDataManagerTest, etc.)
+- **/part02/integration/connection/PersistenceClientAdapterTest.java
+- **/part03/integration/connection/MqttClientConnectorTest.java
+- **/part03/integration/connection/CoapServerGatewayTest.java
+- **/part03/integration/connection/CoapClientConnectorTest.java
+- **/part02/integration/app/DeviceDataManagerNoCommsTest.java
+- **/part01/integration/app/GatewayDeviceAppTest.java
 
-- 
-- 
-- 
+### Captured CoAP Packets
 
-EOF.
+#### DISCOVERY
+
+```
+Constrained Application Protocol, Confirmable, GET, MID:23112
+    01.. .... = Version: 1
+    ..00 .... = Type: Confirmable (0)
+    .... 1000 = Token Length: 8
+    Code: GET (1)
+    Message ID: 23112
+    Token: 6f2fbe84267ebca6
+    Opt Name: #1: Uri-Host: localhost
+    Opt Name: #2: Uri-Path: .well-known
+    Opt Name: #3: Uri-Path: core
+    [Uri-Path: coap://localhost/.well-known/core]
+    [Response In: 238]
+```
+```
+Constrained Application Protocol, Acknowledgement, 2.05 Content, MID:23112
+    01.. .... = Version: 1
+    ..10 .... = Type: Acknowledgement (2)
+    .... 1000 = Token Length: 8
+    Code: 2.05 Content (69)
+    Message ID: 23112
+    Token: 6f2fbe84267ebca6
+    Opt Name: #1: Content-Format: application/link-format
+    End of options marker: 255
+    [Uri-Path: coap://localhost/.well-known/core]
+    [Request In: 237]
+    [Response Time: 0.014102282 seconds]
+    Payload: Payload Content-Format: application/link-format, Length: 420
+```
+
+#### PUT
+
+1. CON
+
+```
+Constrained Application Protocol, Confirmable, PUT, MID:23113
+    01.. .... = Version: 1
+    ..00 .... = Type: Confirmable (0)
+    .... 1000 = Token Length: 8
+    Code: PUT (3)
+    Message ID: 23113
+    Token: 662ef55d4bc98651
+    Opt Name: #1: Uri-Host: localhost
+    Opt Name: #2: Uri-Path: PIOT
+    Opt Name: #3: Uri-Path: GatewayDevice
+    Opt Name: #4: Uri-Path: MgmtStatusMsg
+    Opt Name: #5: Content-Format: text/plain; charset=utf-8
+    End of options marker: 255
+    [Uri-Path: coap://localhost/PIOT/GatewayDevice/MgmtStatusMsg]
+    Payload: Payload Content-Format: text/plain; charset=utf-8, Length: 200
+```
+```
+Constrained Application Protocol, Confirmable, 2.04 Changed, MID:57437
+    01.. .... = Version: 1
+    ..00 .... = Type: Confirmable (0)
+    .... 1000 = Token Length: 8
+    Code: 2.04 Changed (68)
+    Message ID: 57437
+    Token: 662ef55d4bc98651
+    Opt Name: #1: Content-Format: text/plain; charset=utf-8
+    End of options marker: 255
+    [Uri-Path: coap://localhost/PIOT/GatewayDevice/MgmtStatusMsg]
+    Payload: Payload Content-Format: text/plain; charset=utf-8, Length: 23
+```
+
+2. NON
+
+```
+Constrained Application Protocol, Non-Confirmable, PUT, MID:23114
+    01.. .... = Version: 1
+    ..01 .... = Type: Non-Confirmable (1)
+    .... 0010 = Token Length: 2
+    Code: PUT (3)
+    Message ID: 23114
+    Token: e325
+    Opt Name: #1: Uri-Host: localhost
+    Opt Name: #2: Uri-Path: PIOT
+    Opt Name: #3: Uri-Path: GatewayDevice
+    Opt Name: #4: Uri-Path: MgmtStatusMsg
+    Opt Name: #5: Content-Format: text/plain; charset=utf-8
+    End of options marker: 255
+    [Uri-Path: coap://localhost/PIOT/GatewayDevice/MgmtStatusMsg]
+    Payload: Payload Content-Format: text/plain; charset=utf-8, Length: 200
+```
+```
+Constrained Application Protocol, Non-Confirmable, 2.04 Changed, MID:57438
+    01.. .... = Version: 1
+    ..01 .... = Type: Non-Confirmable (1)
+    .... 0010 = Token Length: 2
+    Code: 2.04 Changed (68)
+    Message ID: 57438
+    Token: e325
+    Opt Name: #1: Content-Format: text/plain; charset=utf-8
+    End of options marker: 255
+    [Uri-Path: coap://localhost/PIOT/GatewayDevice/MgmtStatusMsg]
+    Payload: Payload Content-Format: text/plain; charset=utf-8, Length: 23
+```
+
+#### POST
+
+1. CON
+
+```
+Constrained Application Protocol, Confirmable, POST, MID:23115
+    01.. .... = Version: 1
+    ..00 .... = Type: Confirmable (0)
+    .... 0100 = Token Length: 4
+    Code: POST (2)
+    Message ID: 23115
+    Token: 56abb114
+    Opt Name: #1: Uri-Host: localhost
+    Opt Name: #2: Uri-Path: PIOT
+    Opt Name: #3: Uri-Path: GatewayDevice
+    Opt Name: #4: Uri-Path: MgmtStatusMsg
+    Opt Name: #5: Content-Format: text/plain; charset=utf-8
+    End of options marker: 255
+    [Uri-Path: coap://localhost/PIOT/GatewayDevice/MgmtStatusMsg]
+    Payload: Payload Content-Format: text/plain; charset=utf-8, Length: 200
+```
+```
+Constrained Application Protocol, Confirmable, 2.01 Created, MID:57439
+    01.. .... = Version: 1
+    ..00 .... = Type: Confirmable (0)
+    .... 0100 = Token Length: 4
+    Code: 2.01 Created (65)
+    Message ID: 57439
+    Token: 56abb114
+    Opt Name: #1: Content-Format: text/plain; charset=utf-8
+    End of options marker: 255
+    [Uri-Path: coap://localhost/PIOT/GatewayDevice/MgmtStatusMsg]
+    Payload: Payload Content-Format: text/plain; charset=utf-8, Length: 24
+```
+
+2. NON
+
+```
+Constrained Application Protocol, Non-Confirmable, POST, MID:23116
+    01.. .... = Version: 1
+    ..01 .... = Type: Non-Confirmable (1)
+    .... 0101 = Token Length: 5
+    Code: POST (2)
+    Message ID: 23116
+    Token: 6598593eb6
+    Opt Name: #1: Uri-Host: localhost
+    Opt Name: #2: Uri-Path: PIOT
+    Opt Name: #3: Uri-Path: GatewayDevice
+    Opt Name: #4: Uri-Path: MgmtStatusMsg
+    Opt Name: #5: Content-Format: text/plain; charset=utf-8
+    End of options marker: 255
+    [Uri-Path: coap://localhost/PIOT/GatewayDevice/MgmtStatusMsg]
+    Payload: Payload Content-Format: text/plain; charset=utf-8, Length: 200
+
+```
+```
+Constrained Application Protocol, Non-Confirmable, 2.01 Created, MID:57440
+    01.. .... = Version: 1
+    ..01 .... = Type: Non-Confirmable (1)
+    .... 0101 = Token Length: 5
+    Code: 2.01 Created (65)
+    Message ID: 57440
+    Token: 6598593eb6
+    Opt Name: #1: Content-Format: text/plain; charset=utf-8
+    End of options marker: 255
+    [Uri-Path: coap://localhost/PIOT/GatewayDevice/MgmtStatusMsg]
+    Payload: Payload Content-Format: text/plain; charset=utf-8, Length: 24
+```
+
+#### GET
+
+1. CON
+
+```
+Constrained Application Protocol, Confirmable, GET, MID:23117
+    01.. .... = Version: 1
+    ..00 .... = Type: Confirmable (0)
+    .... 0111 = Token Length: 7
+    Code: GET (1)
+    Message ID: 23117
+    Token: 3de5d42e0065db
+    Opt Name: #1: Uri-Host: localhost
+    Opt Name: #2: Uri-Path: PIOT
+    Opt Name: #3: Uri-Path: GatewayDevice
+    Opt Name: #4: Uri-Path: MgmtStatusMsg
+    [Uri-Path: coap://localhost/PIOT/GatewayDevice/MgmtStatusMsg]
+```
+```
+Constrained Application Protocol, Confirmable, 2.03 Valid, MID:57441
+    01.. .... = Version: 1
+    ..00 .... = Type: Confirmable (0)
+    .... 0111 = Token Length: 7
+    Code: 2.03 Valid (67)
+    Message ID: 57441
+    Token: 3de5d42e0065db
+    Opt Name: #1: Content-Format: text/plain; charset=utf-8
+    End of options marker: 255
+    [Uri-Path: coap://localhost/PIOT/GatewayDevice/MgmtStatusMsg]
+    Payload: Payload Content-Format: text/plain; charset=utf-8, Length: 23
+
+```
+
+2. NON
+
+```
+Constrained Application Protocol, Non-Confirmable, GET, MID:23118
+    01.. .... = Version: 1
+    ..01 .... = Type: Non-Confirmable (1)
+    .... 0011 = Token Length: 3
+    Code: GET (1)
+    Message ID: 23118
+    Token: 2b491f
+    Opt Name: #1: Uri-Host: localhost
+    Opt Name: #2: Uri-Path: PIOT
+    Opt Name: #3: Uri-Path: GatewayDevice
+    Opt Name: #4: Uri-Path: MgmtStatusMsg
+    [Uri-Path: coap://localhost/PIOT/GatewayDevice/MgmtStatusMsg]
+
+```
+```
+Constrained Application Protocol, Non-Confirmable, 2.03 Valid, MID:57442
+    01.. .... = Version: 1
+    ..01 .... = Type: Non-Confirmable (1)
+    .... 0011 = Token Length: 3
+    Code: 2.03 Valid (67)
+    Message ID: 57442
+    Token: 2b491f
+    Opt Name: #1: Content-Format: text/plain; charset=utf-8
+    End of options marker: 255
+    [Uri-Path: coap://localhost/PIOT/GatewayDevice/MgmtStatusMsg]
+    Payload: Payload Content-Format: text/plain; charset=utf-8, Length: 23
+```
+
+#### DELETE
+
+1. CON
+
+```
+Constrained Application Protocol, Confirmable, DELETE, MID:23119
+    01.. .... = Version: 1
+    ..00 .... = Type: Confirmable (0)
+    .... 0110 = Token Length: 6
+    Code: DELETE (4)
+    Message ID: 23119
+    Token: 9d52946a5385
+    Opt Name: #1: Uri-Host: localhost
+    Opt Name: #2: Uri-Path: PIOT
+    Opt Name: #3: Uri-Path: GatewayDevice
+    Opt Name: #4: Uri-Path: MgmtStatusCmd
+    [Uri-Path: coap://localhost/PIOT/GatewayDevice/MgmtStatusCmd]
+```
+```
+Constrained Application Protocol, Confirmable, 2.02 Deleted, MID:57443
+    01.. .... = Version: 1
+    ..00 .... = Type: Confirmable (0)
+    .... 0110 = Token Length: 6
+    Code: 2.02 Deleted (66)
+    Message ID: 57443
+    Token: 9d52946a5385
+    Opt Name: #1: Content-Format: text/plain; charset=utf-8
+    End of options marker: 255
+    [Uri-Path: coap://localhost/PIOT/GatewayDevice/MgmtStatusCmd]
+    Payload: Payload Content-Format: text/plain; charset=utf-8, Length: 26
+```
+
+2. NON
+
+```
+Constrained Application Protocol, Non-Confirmable, DELETE, MID:23120
+    01.. .... = Version: 1
+    ..01 .... = Type: Non-Confirmable (1)
+    .... 0111 = Token Length: 7
+    Code: DELETE (4)
+    Message ID: 23120
+    Token: bc353ecd93894b
+    Opt Name: #1: Uri-Host: localhost
+    Opt Name: #2: Uri-Path: PIOT
+    Opt Name: #3: Uri-Path: GatewayDevice
+    Opt Name: #4: Uri-Path: MgmtStatusCmd
+    [Uri-Path: coap://localhost/PIOT/GatewayDevice/MgmtStatusCmd]
+```
+```
+Constrained Application Protocol, Non-Confirmable, 2.02 Deleted, MID:57444
+    01.. .... = Version: 1
+    ..01 .... = Type: Non-Confirmable (1)
+    .... 0111 = Token Length: 7
+    Code: 2.02 Deleted (66)
+    Message ID: 57444
+    Token: bc353ecd93894b
+    Opt Name: #1: Content-Format: text/plain; charset=utf-8
+    End of options marker: 255
+    [Uri-Path: coap://localhost/PIOT/GatewayDevice/MgmtStatusCmd]
+    Payload: Payload Content-Format: text/plain; charset=utf-8, Length: 26
+```

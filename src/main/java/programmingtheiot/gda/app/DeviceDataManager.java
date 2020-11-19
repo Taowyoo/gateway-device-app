@@ -237,6 +237,9 @@ public class DeviceDataManager extends JedisPubSub implements IDataMessageListen
 		if (this.enableMqttClient){
 			this.mqttClient.connectClient();
 		}
+		if (this.enableCoapServer){
+			this.coapServer.startServer();
+		}
 		if (this.enablePersistenceClient){
 			this.redisClient.connectClient();
 			Runnable toRun = this.redisClient.subscribeToChannel(this, new ResourceNameEnum[]{ResourceNameEnum.CDA_SENSOR_MSG_RESOURCE, ResourceNameEnum.CDA_ACTUATOR_CMD_RESOURCE});
@@ -252,6 +255,9 @@ public class DeviceDataManager extends JedisPubSub implements IDataMessageListen
 		this.sysPerfManager.stopManager();
 		if (this.enableMqttClient){
 			this.mqttClient.disconnectClient();
+		}
+		if (this.enableCoapServer){
+			this.coapServer.stopServer();
 		}
 		if (this.enablePersistenceClient){
 			this.redisClient.disconnectClient();
@@ -274,6 +280,9 @@ public class DeviceDataManager extends JedisPubSub implements IDataMessageListen
 		}
 		if (this.enableMqttClient){
 			this.mqttClient = new MqttClientConnector();
+		}
+		if (this.enableCoapServer){
+			this.coapServer = new CoapServerGateway();
 		}
 	}
 	private void handleIncomingDataAnalysis(ResourceNameEnum resourceName, SensorData data){

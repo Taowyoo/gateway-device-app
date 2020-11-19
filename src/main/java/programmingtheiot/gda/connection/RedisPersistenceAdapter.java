@@ -77,8 +77,6 @@ public class RedisPersistenceAdapter implements IPersistenceClient
 			this.jedisSub.subscribe(sub, channels);
 			_Logger.log(Level.INFO, String.format("Redis client succeeded to subscribe to channels."));
 		};
-		Thread thread = new Thread(runnable);
-		thread.start();
 		return runnable;
 	}
 

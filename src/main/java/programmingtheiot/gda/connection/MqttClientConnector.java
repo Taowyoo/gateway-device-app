@@ -8,6 +8,9 @@
 
 package programmingtheiot.gda.connection;
 
+
+
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -22,8 +25,11 @@ import programmingtheiot.common.ConfigUtil;
 import programmingtheiot.common.IDataMessageListener;
 import programmingtheiot.common.ResourceNameEnum;
 
+import javax.net.ssl.SSLSocketFactory;
+import programmingtheiot.common.SimpleCertManagementUtil;
+
 /**
- * Shell representation of class for student implementation.
+ * Simple Mqtt Client implemented by using paho library
  * 
  */
 public class MqttClientConnector implements IPubSubClient, MqttCallbackExtended
@@ -43,6 +49,8 @@ public class MqttClientConnector implements IPubSubClient, MqttCallbackExtended
 	private MemoryPersistence persistence;
 	private  MqttConnectOptions connOpts;
 	private String brokerAddr;
+	private boolean enableEncryption;
+	private String pemFileName;
 	// variables
 	private MqttClient mqttClient;
 	private IDataMessageListener dataMessageListener;
@@ -57,43 +65,7 @@ public class MqttClientConnector implements IPubSubClient, MqttCallbackExtended
 	public MqttClientConnector()
 	{
 		super();
-		ConfigUtil configUtil = ConfigUtil.getInstance();
-
-		this.host =
-				configUtil.getProperty(
-						ConfigConst.MQTT_GATEWAY_SERVICE, ConfigConst.HOST_KEY, ConfigConst.DEFAULT_HOST);
-
-		this.protocol = ConfigConst.DEFAULT_MQTT_PROTOCOL;
-
-		this.port =
-				configUtil.getInteger(
-						ConfigConst.MQTT_GATEWAY_SERVICE, ConfigConst.PORT_KEY, ConfigConst.DEFAULT_MQTT_PORT);
-
-		this.qos =
-				configUtil.getInteger(
-						ConfigConst.MQTT_GATEWAY_SERVICE, ConfigConst.DEFAULT_QOS_KEY, ConfigConst.DEFAULT_QOS);
-
-		this.brokerKeepAlive =
-				configUtil.getInteger(
-						ConfigConst.MQTT_GATEWAY_SERVICE, ConfigConst.KEEP_ALIVE_KEY, ConfigConst.DEFAULT_KEEP_ALIVE);
-
-		// paho Java client requires a client ID
-		this.clientID = MqttClient.generateClientId();
-
-		// these are specific to the MQTT connection which will be used during connect
-		this.persistence = new MemoryPersistence();
-		this.connOpts = new MqttConnectOptions();
-
-		this.connOpts.setKeepAliveInterval(this.brokerKeepAlive);
-		this.connOpts.setCleanSession(false);
-		this.connOpts.setAutomaticReconnect(true);
-
-		// NOTE: URL does not have a protocol handler for "tcp",
-		// so we need to construct the URL manually
-		this.brokerAddr = this.protocol + "://" + this.host + ":" + this.port;
-
-		// store topic subscribed for reconnection
-		this.subscribedTopics = new HashMap<>();
+		initClientParameters(ConfigConst.MQTT_GATEWAY_SERVICE);
 	}
 	
 	
@@ -208,8 +180,11 @@ public class MqttClientConnector implements IPubSubClient, MqttCallbackExtended
 	@Override
 	public boolean setDataMessageListener(IDataMessageListener listener)
 	{
-		this.dataMessageListener = listener;
-		return true;
+		if (listener != null){
+			this.dataMessageListener = listener;
+			return true;
+		}
+		return false;
 	}
 	
 	// callbacks for MqttCallback
@@ -218,6 +193,12 @@ public class MqttClientConnector implements IPubSubClient, MqttCallbackExtended
 	public void connectComplete(boolean reconnect, String serverURI)
 	{
 		_Logger.info(String.format("Complete to %s to broker '%s'", reconnect ? "reconnect" : "connect", serverURI));
+
+		int qos = this.qos;
+
+		this.subscribeToTopic(ResourceNameEnum.CDA_ACTUATOR_RESPONSE_RESOURCE, qos);
+		this.subscribeToTopic(ResourceNameEnum.CDA_SENSOR_MSG_RESOURCE, qos);
+		this.subscribeToTopic(ResourceNameEnum.CDA_SYSTEM_PERF_MSG_RESOURCE, qos);
 	}
 
 	@Override
@@ -275,7 +256,51 @@ public class MqttClientConnector implements IPubSubClient, MqttCallbackExtended
 	 */
 	private void initClientParameters(String configSectionName)
 	{
-		// TODO: implement this
+		ConfigUtil configUtil = ConfigUtil.getInstance();
+
+		this.protocol = ConfigConst.DEFAULT_MQTT_PROTOCOL;
+		this.host =
+				configUtil.getProperty(
+						ConfigConst.MQTT_GATEWAY_SERVICE, ConfigConst.HOST_KEY, ConfigConst.DEFAULT_HOST);
+		this.port =
+				configUtil.getInteger(
+						ConfigConst.MQTT_GATEWAY_SERVICE, ConfigConst.PORT_KEY, ConfigConst.DEFAULT_MQTT_PORT);
+		this.enableEncryption = configUtil.getBoolean(ConfigConst.MQTT_GATEWAY_SERVICE, ConfigConst.ENABLE_CRYPT_KEY);
+		this.pemFileName = configUtil.getProperty(ConfigConst.MQTT_GATEWAY_SERVICE, ConfigConst.CERT_FILE_KEY);
+		this.brokerKeepAlive =
+				configUtil.getInteger(
+						ConfigConst.MQTT_GATEWAY_SERVICE, ConfigConst.KEEP_ALIVE_KEY, ConfigConst.DEFAULT_KEEP_ALIVE);
+		this.qos =
+				configUtil.getInteger(
+						ConfigConst.MQTT_GATEWAY_SERVICE, ConfigConst.DEFAULT_QOS_KEY, ConfigConst.DEFAULT_QOS);
+
+		// paho Java client requires a client ID
+		this.clientID = MqttClient.generateClientId();
+
+		// these are specific to the MQTT connection which will be used during connect
+		this.persistence = new MemoryPersistence();
+		this.connOpts = new MqttConnectOptions();
+
+		this.connOpts.setKeepAliveInterval(this.brokerKeepAlive);
+		this.connOpts.setCleanSession(false);
+		this.connOpts.setAutomaticReconnect(true);
+
+		// if encryption is enabled, try to load and apply the cert(s)
+		if (this.enableEncryption) {
+			initSecureConnectionParameters(configSectionName);
+		}
+
+		// if there's a credential file, try to load and apply them
+		if (configUtil.hasProperty(configSectionName, ConfigConst.CRED_FILE_KEY)) {
+			initCredentialConnectionParameters(configSectionName);
+		}
+
+		// NOTE: URL does not have a protocol handler for "tcp",
+		// so we need to construct the URL manually
+		this.brokerAddr = this.protocol + "://" + this.host + ":" + this.port;
+
+		// store topic subscribed for reconnection
+		this.subscribedTopics = new HashMap<>();
 	}
 	
 	/**
@@ -297,6 +322,42 @@ public class MqttClientConnector implements IPubSubClient, MqttCallbackExtended
 	 */
 	private void initSecureConnectionParameters(String configSectionName)
 	{
-		// TODO: implement this
+		ConfigUtil configUtil = ConfigUtil.getInstance();
+
+		try {
+			_Logger.info("Configuring TLS...");
+
+			if (this.pemFileName != null) {
+				File file = new File(this.pemFileName);
+
+				if (file.exists()) {
+					_Logger.info("PEM file valid. Using secure connection: " + this.pemFileName);
+				} else {
+					this.enableEncryption = false;
+
+					_Logger.log(Level.WARNING, "PEM file invalid. Using insecure connection: " + pemFileName, new Exception());
+
+					return;
+				}
+			}
+
+			SSLSocketFactory sslFactory =
+					SimpleCertManagementUtil.getInstance().loadCertificate(this.pemFileName);
+
+			this.connOpts.setSocketFactory(sslFactory);
+
+			// override current config parameters
+			this.port =
+					configUtil.getInteger(
+							configSectionName, ConfigConst.SECURE_PORT_KEY, ConfigConst.DEFAULT_MQTT_SECURE_PORT);
+
+			this.protocol = ConfigConst.DEFAULT_MQTT_SECURE_PROTOCOL;
+
+			_Logger.info("TLS enabled.");
+		} catch (Exception e) {
+			_Logger.log(Level.SEVERE, "Failed to initialize secure MQTT connection. Using insecure connection.", e);
+
+			this.enableEncryption = false;
+		}
 	}
 }

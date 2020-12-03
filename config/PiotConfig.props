@@ -66,6 +66,15 @@ enablePersistenceClient = True
 testGdaDataPath         = /tmp/gda-data
 testCdaDataPath         = /tmp/cda-data
 testGdaRunTime          = 200
+
+# configurable limits for sensor
+humiditySimFloor   = 35
+humiditySimCeiling = 45
+pressureSimFloor   = 990
+pressureSimCeiling = 1010
+tempSimFloor       = 18
+tempSimCeiling     = 22
+
 #
 # Persistence client configuration information
 #

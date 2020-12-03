@@ -132,7 +132,14 @@ public class ConfigConst
 	public static final String SMTP_PROP_PORT_KEY       = "mail.smtp.port";
 	public static final String SMTP_PROP_AUTH_KEY       = "mail.smtp.auth";
 	public static final String SMTP_PROP_ENABLE_TLS_KEY = "mail.smtp.starttls.enable";
-	
+
+	// limits for sensor
+	public static final String HUMIDITY_SIM_FLOOR_KEY   = "humiditySimFloor";
+	public static final String HUMIDITY_SIM_CEILING_KEY = "humiditySimCeiling";
+	public static final String PRESSURE_SIM_FLOOR_KEY   = "pressureSimFloor";
+	public static final String PRESSURE_SIM_CEILING_KEY = "pressureSimCeiling";
+	public static final String TEMP_SIM_FLOOR_KEY       = "tempSimFloor";
+	public static final String TEMP_SIM_CEILING_KEY     = "tempSimCeiling";
 
 	// Data container names
 	public static final String SYS_PERF_DATA  = "SysPerfData";

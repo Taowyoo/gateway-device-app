@@ -14,6 +14,7 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 import programmingtheiot.common.ConfigConst;
+import programmingtheiot.common.ConfigUtil;
 import programmingtheiot.common.IDataMessageListener;
 import programmingtheiot.common.ResourceNameEnum;
 import programmingtheiot.data.SensorData;
@@ -51,7 +52,8 @@ public class SystemPerformanceManager
 	 */
 	public SystemPerformanceManager()
 	{
-		this(ConfigConst.DEFAULT_POLL_CYCLES);
+		this(ConfigUtil.getInstance().getInteger(ConfigConst.GATEWAY_DEVICE, ConfigConst.POLL_CYCLES_KEY,
+				ConfigConst.DEFAULT_POLL_CYCLES));
 	}
 	
 	/**

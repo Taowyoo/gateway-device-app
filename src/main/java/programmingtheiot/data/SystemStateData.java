@@ -53,6 +53,7 @@ public class SystemStateData extends BaseIotData implements Serializable
 	public SystemStateData()
 	{
 		super();
+		super.setName(ConfigConst.SYS_STATE_DATA);
 		this.sysPerfDataList = new ArrayList<SystemPerformanceData>();
 		this.sensorDataList = new ArrayList<SensorData>();
 	}

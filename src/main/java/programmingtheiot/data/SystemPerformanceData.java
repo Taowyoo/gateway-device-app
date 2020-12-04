@@ -8,6 +8,8 @@
 
 package programmingtheiot.data;
 
+import programmingtheiot.common.ConfigConst;
+
 import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,6 +36,7 @@ public class SystemPerformanceData extends BaseIotData implements Serializable
 	public SystemPerformanceData()
 	{
 		super();
+		super.setName(ConfigConst.SYS_PERF_DATA);
 	}
 	
 	

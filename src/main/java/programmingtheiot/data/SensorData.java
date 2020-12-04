@@ -1,10 +1,10 @@
 /**
  * This class is part of the Programming the Internet of Things project.
- * 
+ *
  * It is provided as a simple shell to guide the student and assist with
  * implementation for the Programming the Internet of Things exercises,
  * and designed to be modified by the student as needed.
- */ 
+ */
 
 package programmingtheiot.data;
 
@@ -22,10 +22,14 @@ public class SensorData extends BaseIotData implements Serializable
 	private static final Logger _Logger = Logger.getLogger(SensorData.class.getName());
 
 	public static final int DEFAULT_SENSOR_TYPE = 0;
+	public static final int HUMIDITY_SENSOR_TYPE = 1;
+	public static final int PRESSURE_SENSOR_TYPE = 2;
+	public static final int TEMP_SENSOR_TYPE = 3;
+	public static final int SYS_UTIL_TYPE = 4;
 
 	// private var's
 	private int sensorType = DEFAULT_SENSOR_TYPE;
-    private  float value = DEFAULT_VAL;
+    private float value = DEFAULT_VAL;
 
 	// constructors
 	public SensorData()

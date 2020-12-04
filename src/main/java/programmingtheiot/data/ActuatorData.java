@@ -28,7 +28,12 @@ public class ActuatorData extends BaseIotData implements Serializable
 	public static final boolean DEFAULT_RESPONSE_FLAG = false;
 	public static final float DEFAULT_VALUE = 0.0f;
 
+	// Actuator types
 	public static final int DEFAULT_ACTUATOR_TYPE = 0;
+	public static final int HVAC_ACTUATOR_TYPE = 1;
+	public static final int HUMIDIFIER_ACTUATOR_TYPE = 2;
+	public static final int LED_DISPLAY_ACTUATOR_TYPE = 100;
+
 	public static final String DEFAULT_STATE_DATA = "Default state data string";
 	// private var's
 

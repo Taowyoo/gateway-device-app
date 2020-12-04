@@ -98,7 +98,8 @@ public class MqttClientConnectorTest
 		int delay = ConfigUtil.getInstance().getInteger(ConfigConst.MQTT_GATEWAY_SERVICE, ConfigConst.KEEP_ALIVE_KEY, ConfigConst.DEFAULT_KEEP_ALIVE);
 		
 		IDataMessageListener listener = new DefaultDataMessageListener();
-		
+		this.mcc.setDataMessageListener(listener);
+
 		assertTrue(this.mcc.connectClient());
 		assertTrue(this.mcc.subscribeToTopic(ResourceNameEnum.GDA_MGMT_STATUS_MSG_RESOURCE, qos));
 		

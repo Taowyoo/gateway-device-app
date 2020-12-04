@@ -38,7 +38,7 @@ host           = localhost
 port           = 1883
 securePort     = 1884
 defaultQoS     = 0
-keepAlive      = 30
+keepAlive      = 60
 enableCrypt    = False
 
 #

@@ -28,6 +28,8 @@ import programmingtheiot.common.ResourceNameEnum;
 import javax.net.ssl.SSLSocketFactory;
 import programmingtheiot.common.SimpleCertManagementUtil;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 /**
  * Simple Mqtt Client implemented by using paho library
  * 
@@ -38,7 +40,9 @@ public class MqttClientConnector implements IPubSubClient, MqttCallbackExtended
 	
 	private static final Logger _Logger =
 		Logger.getLogger(MqttClientConnector.class.getName());
-	
+	// Maximum number of threads in thread pool
+	static final int MAX_T = 2;
+
 	// params
 	private String host;
 	private String protocol;
@@ -47,7 +51,7 @@ public class MqttClientConnector implements IPubSubClient, MqttCallbackExtended
 	private  int qos;
 	private String clientID;
 	private MemoryPersistence persistence;
-	private  MqttConnectOptions connOpts;
+	private MqttConnectOptions connOpts;
 	private String brokerAddr;
 	private boolean enableEncryption;
 	private String pemFileName;
@@ -55,6 +59,7 @@ public class MqttClientConnector implements IPubSubClient, MqttCallbackExtended
 	private MqttClient mqttClient;
 	private IDataMessageListener dataMessageListener;
 	private Map<ResourceNameEnum,Integer> subscribedTopics;
+	private ExecutorService incomingMsgHandlerThreadPool;
 	// constructors
 
 	/**
@@ -66,6 +71,7 @@ public class MqttClientConnector implements IPubSubClient, MqttCallbackExtended
 	{
 		super();
 		initClientParameters(ConfigConst.MQTT_GATEWAY_SERVICE);
+		this.incomingMsgHandlerThreadPool = Executors.newFixedThreadPool(MAX_T);
 	}
 	
 	
@@ -136,11 +142,11 @@ public class MqttClientConnector implements IPubSubClient, MqttCallbackExtended
 		mqttMsg.setPayload(msg.getBytes());
 		mqttMsg.setQos(qos);
 		try {
-			_Logger.info(String.format("Publishing msg '%s' to topic '%s' with QoS %d ...", msg, topicName.name(), qos));
-			this.mqttClient.publish(topicName.name(),mqttMsg);
+			_Logger.info(String.format("Publishing msg '%s' to topic '%s' with QoS %d ...", msg, topicName.getResourceName(), qos));
+			this.mqttClient.publish(topicName.getResourceName(),mqttMsg);
 			return true;
 		} catch (MqttException e) {
-			_Logger.warning(String.format("Fail to publish msg '%s' to topic '%s' with QoS %d, exception:\n%s", msg, topicName.name(), qos, e.toString()));
+			_Logger.warning(String.format("Fail to publish msg '%s' to topic '%s' with QoS %d, exception:\n%s", msg, topicName.getResourceName(), qos, e.toString()));
 		}
 		return false;
 	}
@@ -153,12 +159,12 @@ public class MqttClientConnector implements IPubSubClient, MqttCallbackExtended
 			qos = ConfigConst.DEFAULT_QOS;
 		}
 		try {
-			_Logger.info(String.format("Subscribing to topic '%s' with QoS %d ...", topicName.name(), qos));
-			this.mqttClient.subscribe(topicName.name(), qos);
+			_Logger.info(String.format("Subscribing to topic '%s' with QoS %d ...", topicName.getResourceName(), qos));
+			this.mqttClient.subscribe(topicName.getResourceName(), qos);
 			this.subscribedTopics.put(topicName,qos);
 			return true;
 		} catch (MqttException e) {
-			_Logger.warning(String.format("Fail to subscribe to topic '%s' with QoS %d, exception:\n%s", topicName.name(), qos, e.toString()));
+			_Logger.warning(String.format("Fail to subscribe to topic '%s' with QoS %d, exception:\n%s", topicName.getResourceName(), qos, e.toString()));
 		}
 		return false;
 	}
@@ -167,12 +173,12 @@ public class MqttClientConnector implements IPubSubClient, MqttCallbackExtended
 	public boolean unsubscribeFromTopic(ResourceNameEnum topicName)
 	{
 		try {
-			_Logger.info(String.format("Unsubscribing to topic '%s'...", topicName.name()));
-			this.mqttClient.unsubscribe(topicName.name());
+			_Logger.info(String.format("Unsubscribing to topic '%s'...", topicName.getResourceName()));
+			this.mqttClient.unsubscribe(topicName.getResourceName());
 			this.subscribedTopics.remove(topicName);
 			return true;
 		} catch (MqttException e) {
-			_Logger.warning(String.format("Fail to unsubscribe to topic '%s', exception:\n%s", topicName.name(), e.toString()));
+			_Logger.warning(String.format("Fail to unsubscribe to topic '%s', exception:\n%s", topicName.getResourceName(), e.toString()));
 		}
 		return false;
 	}
@@ -192,7 +198,7 @@ public class MqttClientConnector implements IPubSubClient, MqttCallbackExtended
 	@Override
 	public void connectComplete(boolean reconnect, String serverURI)
 	{
-		_Logger.info(String.format("Complete to %s to broker '%s'", reconnect ? "reconnect" : "connect", serverURI));
+		_Logger.info(String.format("[Callback] Complete to %s to broker '%s'", reconnect ? "reconnect" : "connect", serverURI));
 
 		int qos = this.qos;
 
@@ -204,45 +210,28 @@ public class MqttClientConnector implements IPubSubClient, MqttCallbackExtended
 	@Override
 	public void connectionLost(Throwable t)
 	{
-		_Logger.warning("Lost connection from broker: " + t.getMessage() + ", try to reconnect...");
-		if(!connectClient()){
-			_Logger.warning(" Fail to reconnect to broker!");
-		}
-		else{
-			if (!subscribedTopics.isEmpty()){
-				subscribedTopics.forEach((k,v) -> this.subscribeToTopic(k, v));
-			}
-		}
+		_Logger.warning("[Callback] Lost connection from broker: " + t.getMessage() + ", try to reconnect...");
+
 	}
 	
 	@Override
 	public void deliveryComplete(IMqttDeliveryToken token)
 	{
-		_Logger.info(String.format("Complete to delivery to broker, response: %s", token.getResponse().toString()));
+		_Logger.info(String.format("[Callback] Complete to delivery to broker, response: %s", token.getResponse().toString()));
 	}
 	
 	@Override
 	public void messageArrived(String topic, MqttMessage msg) throws Exception
 	{
 		String msgStr = new String(msg.getPayload());
-		_Logger.info(String.format("Receive a message from topic '%s': %s", topic, msgStr));
-//		ResourceNameEnum resource = ResourceNameEnum.getEnumFromValue(topic);
-//		switch(resource){
-//			// TODO: convert and handle incoming messages
-//			case CDA_SENSOR_MSG_RESOURCE:
-//				break;
-//			case CDA_ACTUATOR_CMD_RESOURCE:
-//				break;
-//			case CDA_MGMT_STATUS_CMD_RESOURCE:
-//				break;
-//			case CDA_MGMT_STATUS_MSG_RESOURCE:
-//				break;
-//			case GDA_MGMT_STATUS_CMD_RESOURCE:
-//				break;
-//			case GDA_MGMT_STATUS_MSG_RESOURCE:
-//				break;
-//			default:
-//		}
+		_Logger.info(String.format("[Callback] Receive a message from topic '%s': %s", topic, msgStr));
+		Runnable handleMsgTask = new Runnable() {
+			@Override
+			public void run() {
+				dataMessageListener.handleIncomingMessage(ResourceNameEnum.getEnumFromValue(topic),msgStr);
+			}
+		};
+		this.incomingMsgHandlerThreadPool.execute(handleMsgTask);
 	}
 
 	

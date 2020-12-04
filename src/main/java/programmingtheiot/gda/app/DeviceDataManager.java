@@ -294,9 +294,11 @@ public class DeviceDataManager extends JedisPubSub implements IDataMessageListen
         }
         if (this.enableMqttClient) {
             this.mqttClient = new MqttClientConnector();
+            this.mqttClient.setDataMessageListener(this);
         }
         if (this.enableCoapServer) {
             this.coapServer = new CoapServerGateway();
+            this.coapServer.setDataMessageListener(this);
         }
     }
 

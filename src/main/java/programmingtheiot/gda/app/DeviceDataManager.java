@@ -59,7 +59,7 @@ public class DeviceDataManager extends JedisPubSub implements IDataMessageListen
     private SystemPerformanceManager sysPerfManager;
 
     private Thread subCDAThread;
-    //	private int cloudQos = configUtil.getInteger(ConfigConst.CLOUD_GATEWAY_SERVICE,ConfigConst.DEFAULT_QOS_KEY);
+    private int cloudQos = configUtil.getInteger(ConfigConst.CLOUD_GATEWAY_SERVICE,ConfigConst.DEFAULT_QOS_KEY);
     private int mqttQos = configUtil.getInteger(ConfigConst.MQTT_GATEWAY_SERVICE, ConfigConst.DEFAULT_QOS_KEY);
 
     // constructors
@@ -197,25 +197,6 @@ public class DeviceDataManager extends JedisPubSub implements IDataMessageListen
         if (this.enablePersistenceClient) {
             this.redisClient.storeData(resourceName.getResourceName(), ConfigConst.DEFAULT_QOS, data);
         }
-        int qos = 1;
-        if (data.getSensorType() == SensorData.HUMIDITY_SENSOR_TYPE) {
-            if (data.getValue() < this.humiditySimFloor) {
-                ActuatorData cmd = new ActuatorData();
-                cmd.setCommand(ActuatorData.COMMAND_ON);
-                cmd.setActuatorType(ActuatorData.HUMIDIFIER_ACTUATOR_TYPE);
-                cmd.setStateData("Humidity too low");
-                this.mqttClient.publishMessage(ResourceNameEnum.CDA_ACTUATOR_CMD_RESOURCE,
-                        this.dataUtil.actuatorDataToJson(cmd), qos);
-            }
-            if (data.getValue() > this.humiditySimCeiling) {
-                ActuatorData cmd = new ActuatorData();
-                cmd.setCommand(ActuatorData.COMMAND_OFF);
-                cmd.setActuatorType(ActuatorData.HUMIDIFIER_ACTUATOR_TYPE);
-                cmd.setStateData("Humidity too high");
-                this.mqttClient.publishMessage(ResourceNameEnum.CDA_ACTUATOR_CMD_RESOURCE,
-                        this.dataUtil.actuatorDataToJson(cmd), qos);
-            }
-        }
         String jsonData = this.dataUtil.sensorDataToJson(data);
         if (jsonData != null) {
             this.handleIncomingDataAnalysis(resourceName, data);
@@ -262,6 +243,9 @@ public class DeviceDataManager extends JedisPubSub implements IDataMessageListen
             this.subCDAThread = new Thread(toRun);
             this.subCDAThread.start();
         }
+        if (this.enableCloudClient){
+            this.cloudClient.connectClient();
+        }
         _Logger.log(Level.INFO, "DeviceDataManager started.");
     }
 
@@ -276,6 +260,9 @@ public class DeviceDataManager extends JedisPubSub implements IDataMessageListen
         }
         if (this.enablePersistenceClient) {
             this.redisClient.disconnectClient();
+        }
+        if (this.enableCloudClient){
+            this.cloudClient.disconnectClient();
         }
         _Logger.log(Level.INFO, "DeviceDataManager stopped.");
     }
@@ -299,6 +286,10 @@ public class DeviceDataManager extends JedisPubSub implements IDataMessageListen
         if (this.enableCoapServer) {
             this.coapServer = new CoapServerGateway();
             this.coapServer.setDataMessageListener(this);
+        }
+        if (this.enableCloudClient){
+            this.cloudClient = new CloudClientConnector();
+            this.cloudClient.setDataMessageListener(this);
         }
     }
 
@@ -332,13 +323,56 @@ public class DeviceDataManager extends JedisPubSub implements IDataMessageListen
 
     private void handleUpstreamTransmission(ResourceNameEnum resourceName, String msg) {
         _Logger.log(Level.FINE, String.format("Upstream a msg: %s from %s.", msg, resourceName.getResourceName()));
-        // TODO: publish to the cloud service. We'll revisit this in Part 03.
+        switch (resourceName){
+            case CDA_SENSOR_MSG_RESOURCE:
+                this.cloudClient.publishMessage(ResourceNameEnum.CLOUD_CDA,msg,cloudQos);
+                break;
+            case CDA_ACTUATOR_CMD_RESOURCE:
+                this.cloudClient.publishMessage(ResourceNameEnum.CLOUD_CDA,msg,cloudQos);
+                break;
+            case CDA_ACTUATOR_RESPONSE_RESOURCE:
+                break;
+            case CDA_MGMT_STATUS_MSG_RESOURCE:
+                this.cloudClient.publishMessage(ResourceNameEnum.CLOUD_CDA,msg,cloudQos);
+                break;
+            case CDA_SYSTEM_PERF_MSG_RESOURCE:
+                this.cloudClient.publishMessage(ResourceNameEnum.CLOUD_CDA,msg,cloudQos);
+                break;
+            case CDA_MGMT_STATUS_CMD_RESOURCE:
+                this.cloudClient.publishMessage(ResourceNameEnum.CLOUD_CDA,msg,cloudQos);
+                break;
+            case GDA_MGMT_STATUS_MSG_RESOURCE:
+                this.cloudClient.publishMessage(ResourceNameEnum.CLOUD_GDA,msg,cloudQos);
+                break;
+            case GDA_MGMT_STATUS_CMD_RESOURCE:
+                this.cloudClient.publishMessage(ResourceNameEnum.CLOUD_GDA,msg,cloudQos);
+                break;
+            case GDA_SYSTEM_PERF_MSG_RESOURCE:
+                this.cloudClient.publishMessage(ResourceNameEnum.CLOUD_GDA,msg,cloudQos);
+                break;
+            case CLOUD_GDA:
+                break;
+            case CLOUD_CDA:
+                break;
+        }
     }
 
     private String generateMeetThresholdResponse(SensorData data) {
         String ret = null;
-        // TODO: check meet threshold crossing
-        // TODO: if meet, generate response cmd msg
+        ActuatorData cmd = new ActuatorData();
+        if (data.getSensorType() == SensorData.HUMIDITY_SENSOR_TYPE) {
+            if (data.getValue() < this.humiditySimFloor) {
+                cmd.setCommand(ActuatorData.COMMAND_ON);
+                cmd.setActuatorType(ActuatorData.HUMIDIFIER_ACTUATOR_TYPE);
+                cmd.setStateData("Humidity too low");
+            }
+            if (data.getValue() > this.humiditySimCeiling) {
+                cmd.setCommand(ActuatorData.COMMAND_OFF);
+                cmd.setActuatorType(ActuatorData.HUMIDIFIER_ACTUATOR_TYPE);
+                cmd.setStateData("Humidity too high");
+            }
+        }
+        ret = this.dataUtil.actuatorDataToJson(cmd);
         return ret;
     }
 

@@ -68,7 +68,7 @@ public class SystemStateDataTest
 	{
 		SystemStateData ssd = new SystemStateData();
 		
-		assertEquals(ssd.getName(), ConfigConst.NOT_SET);
+		assertEquals(ssd.getName(), ConfigConst.SYS_STATE_DATA);
 		assertEquals(ssd.getStatusCode(), SystemStateData.DEFAULT_STATUS);
 		assertEquals(ssd.getLocation(), SystemStateData.DEFAULT_LOCATION);
 		assertTrue(ssd.getActionCommand() == SystemStateData.NO_ACTION);
@@ -105,7 +105,7 @@ public class SystemStateDataTest
 		SystemStateData ssd = new SystemStateData();
 		SystemStateData ssd2 = createTestData();
 		
-		assertEquals(ssd.getName(), ConfigConst.NOT_SET);
+		assertEquals(ssd.getName(), ConfigConst.SYS_STATE_DATA);
 		assertEquals(ssd.getStatusCode(), SystemStateData.DEFAULT_STATUS);
 		assertEquals(ssd.getLocation(), SystemStateData.DEFAULT_LOCATION);
 		assertTrue(ssd.getActionCommand() == SystemStateData.NO_ACTION);

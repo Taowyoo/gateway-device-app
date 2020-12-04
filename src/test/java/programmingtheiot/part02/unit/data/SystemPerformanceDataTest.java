@@ -63,7 +63,7 @@ public class SystemPerformanceDataTest
 	{
 		SystemPerformanceData spd = new SystemPerformanceData();
 		
-		assertEquals(spd.getName(), ConfigConst.NOT_SET);
+		assertEquals(spd.getName(), ConfigConst.SYS_PERF_DATA);
 		assertEquals(spd.getStatusCode(), SystemPerformanceData.DEFAULT_STATUS);
 		
 		assertTrue(spd.getCpuUtilization() == SystemPerformanceData.DEFAULT_VAL);
@@ -90,7 +90,7 @@ public class SystemPerformanceDataTest
 		SystemPerformanceData spd = new SystemPerformanceData();
 		SystemPerformanceData spd2 = createTestData();
 
-		assertEquals(spd.getName(), ConfigConst.NOT_SET);
+		assertEquals(spd.getName(), ConfigConst.SYS_PERF_DATA);
 		assertEquals(spd.getStatusCode(), SystemPerformanceData.DEFAULT_STATUS);
 		
 		assertTrue(spd.getCpuUtilization() == SystemPerformanceData.DEFAULT_VAL);
@@ -98,7 +98,7 @@ public class SystemPerformanceDataTest
 		assertTrue(spd.getMemoryUtilization() == SystemPerformanceData.DEFAULT_VAL);
 		
 		spd.updateData(spd2);
-		
+
 		assertEquals(spd.getName(), DEFAULT_NAME);
 		assertEquals(spd.getStatusCode(), SystemPerformanceData.DEFAULT_STATUS);
 		

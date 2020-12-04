@@ -8,17 +8,10 @@
 
 package programmingtheiot.part03.integration.app;
 
-import static org.junit.Assert.*;
+import org.junit.*;
+import programmingtheiot.gda.app.DeviceDataManager;
 
 import java.util.logging.Logger;
-
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-
-import programmingtheiot.gda.app.DeviceDataManager;
 
 /**
  * This test case class contains very basic integration tests for
@@ -28,12 +21,12 @@ import programmingtheiot.gda.app.DeviceDataManager;
  * environment.
  *
  */
-public class DeviceDataManagerWithCommsTest
+public class DeviceDataManagerIntegrationTest
 {
 	// static
 	
 	private static final Logger _Logger =
-		Logger.getLogger(DeviceDataManagerWithCommsTest.class.getName());
+		Logger.getLogger(DeviceDataManagerIntegrationTest.class.getName());
 	
 
 	// member var's
@@ -42,7 +35,7 @@ public class DeviceDataManagerWithCommsTest
 	// test setup methods
 	
 	/**
-	 * @throws java.lang.Exception
+	 * @throws Exception
 	 */
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception
@@ -50,7 +43,7 @@ public class DeviceDataManagerWithCommsTest
 	}
 	
 	/**
-	 * @throws java.lang.Exception
+	 * @throws Exception
 	 */
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception
@@ -58,7 +51,7 @@ public class DeviceDataManagerWithCommsTest
 	}
 	
 	/**
-	 * @throws java.lang.Exception
+	 * @throws Exception
 	 */
 	@Before
 	public void setUp() throws Exception
@@ -66,7 +59,7 @@ public class DeviceDataManagerWithCommsTest
 	}
 	
 	/**
-	 * @throws java.lang.Exception
+	 * @throws Exception
 	 */
 	@After
 	public void tearDown() throws Exception
@@ -76,33 +69,9 @@ public class DeviceDataManagerWithCommsTest
 	
 	// test methods
 	
-	/**
-	 * Test method for running the DeviceDataManager.
-	 */
-	@Test
-	public void testStartAndStopManagerNoComms()
-	{
-		boolean enableMqtt = false;
-		boolean enableCoap = false;
-		boolean enableCloud = false;
-		boolean enableSmtp = false;
-		boolean enablePersistence = false;
 
-		DeviceDataManager devDataMgr =
-			new DeviceDataManager(enableMqtt, enableCoap, enableCloud, enableSmtp, enablePersistence);
-		
-		devDataMgr.startManager();
-		
-		try {
-			Thread.sleep(60000L);
-		} catch (InterruptedException e) {
-			// ignore
-		}
-		
-		devDataMgr.stopManager();
-	}
 	@Test
-	public void testStartAndStopManagerWithMqtt()
+	public void testDeviceDataManagerIntegration()
 	{
 		boolean enableMqtt = true;
 		boolean enableCoap = false;
@@ -123,15 +92,5 @@ public class DeviceDataManagerWithCommsTest
 
 		devDataMgr.stopManager();
 	}
-	/**
-	def testStartAndStopManagerNoComms(self):
-
-	def testStartAndStopManagerWithMqtt(self):
-
-	def testStartAndStopManagerWithCoap(self):
-
-	def testStartAndStopManagerWithMqttAndCoap(self):
-	 * 
-	 */
 	
 }

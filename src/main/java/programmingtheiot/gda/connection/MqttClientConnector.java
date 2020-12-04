@@ -48,17 +48,18 @@ public class MqttClientConnector implements IPubSubClient, MqttCallbackExtended
 	private String protocol;
 	private int port;
 	private int brokerKeepAlive;
-	private  int qos;
+	private int qos;
 	private String clientID;
 	private MemoryPersistence persistence;
 	private MqttConnectOptions connOpts;
 	private String brokerAddr;
 	private boolean enableEncryption;
 	private String pemFileName;
+	private boolean useCloudGatewayConfig = false;
 	// variables
 	private MqttClient mqttClient;
 	private IDataMessageListener dataMessageListener;
-	private Map<ResourceNameEnum,Integer> subscribedTopics;
+	private Map<String,Integer> subscribedTopics;
 	private ExecutorService incomingMsgHandlerThreadPool;
 	// constructors
 
@@ -69,11 +70,27 @@ public class MqttClientConnector implements IPubSubClient, MqttCallbackExtended
 	 */
 	public MqttClientConnector()
 	{
-		super();
-		initClientParameters(ConfigConst.MQTT_GATEWAY_SERVICE);
-		this.incomingMsgHandlerThreadPool = Executors.newFixedThreadPool(MAX_T);
+		this(false);
 	}
-	
+
+	/**
+	 * MqttClientConnector Constructor with choice of whether use cloud config
+	 * @param useCloudGatewayConfig Whether use Cloud config
+	 */
+	public MqttClientConnector(boolean useCloudGatewayConfig)
+	{
+		super();
+
+		this.incomingMsgHandlerThreadPool = Executors.newFixedThreadPool(MAX_T);
+
+		this.useCloudGatewayConfig = useCloudGatewayConfig;
+
+		if (useCloudGatewayConfig) {
+			initClientParameters(ConfigConst.CLOUD_GATEWAY_SERVICE);
+		} else {
+			initClientParameters(ConfigConst.MQTT_GATEWAY_SERVICE);
+		}
+	}
 	
 	// public methods
 
@@ -126,61 +143,23 @@ public class MqttClientConnector implements IPubSubClient, MqttCallbackExtended
 		}
 		return false;
 	}
-	
+
 	@Override
 	public boolean publishMessage(ResourceNameEnum topicName, String msg, int qos)
 	{
-		if (topicName == null){
-			_Logger.warning("Got a null topic to publish!");
-			return false;
-		}
-		if (qos < 0 || qos > 2){
-			_Logger.warning(String.format("Got an invalid QoS %d, change to use default QoS %d!", qos, ConfigConst.DEFAULT_QOS));
-			qos = ConfigConst.DEFAULT_QOS;
-		}
-		MqttMessage mqttMsg = new MqttMessage();
-		mqttMsg.setPayload(msg.getBytes());
-		mqttMsg.setQos(qos);
-		try {
-			_Logger.info(String.format("Publishing msg '%s' to topic '%s' with QoS %d ...", msg, topicName.getResourceName(), qos));
-			this.mqttClient.publish(topicName.getResourceName(),mqttMsg);
-			return true;
-		} catch (MqttException e) {
-			_Logger.warning(String.format("Fail to publish msg '%s' to topic '%s' with QoS %d, exception:\n%s", msg, topicName.getResourceName(), qos, e.toString()));
-		}
-		return false;
+		return this.publishMessage(topicName.getResourceName(),msg.getBytes(),qos);
 	}
 
 	@Override
 	public boolean subscribeToTopic(ResourceNameEnum topicName, int qos)
 	{
-		if (qos < 0 || qos > 2){
-			_Logger.warning(String.format("Got an invalid QoS %d, change to use default QoS %d!", qos, ConfigConst.DEFAULT_QOS));
-			qos = ConfigConst.DEFAULT_QOS;
-		}
-		try {
-			_Logger.info(String.format("Subscribing to topic '%s' with QoS %d ...", topicName.getResourceName(), qos));
-			this.mqttClient.subscribe(topicName.getResourceName(), qos);
-			this.subscribedTopics.put(topicName,qos);
-			return true;
-		} catch (MqttException e) {
-			_Logger.warning(String.format("Fail to subscribe to topic '%s' with QoS %d, exception:\n%s", topicName.getResourceName(), qos, e.toString()));
-		}
-		return false;
+		return this.subscribeToTopic(topicName.getResourceName(),qos);
 	}
 
 	@Override
 	public boolean unsubscribeFromTopic(ResourceNameEnum topicName)
 	{
-		try {
-			_Logger.info(String.format("Unsubscribing to topic '%s'...", topicName.getResourceName()));
-			this.mqttClient.unsubscribe(topicName.getResourceName());
-			this.subscribedTopics.remove(topicName);
-			return true;
-		} catch (MqttException e) {
-			_Logger.warning(String.format("Fail to unsubscribe to topic '%s', exception:\n%s", topicName.getResourceName(), e.toString()));
-		}
-		return false;
+		return this.unsubscribeFromTopic(topicName.getResourceName());
 	}
 
 	@Override
@@ -199,19 +178,16 @@ public class MqttClientConnector implements IPubSubClient, MqttCallbackExtended
 	public void connectComplete(boolean reconnect, String serverURI)
 	{
 		_Logger.info(String.format("[Callback] Complete to %s to broker '%s'", reconnect ? "reconnect" : "connect", serverURI));
-
-		int qos = this.qos;
-
-		this.subscribeToTopic(ResourceNameEnum.CDA_ACTUATOR_RESPONSE_RESOURCE, qos);
-		this.subscribeToTopic(ResourceNameEnum.CDA_SENSOR_MSG_RESOURCE, qos);
-		this.subscribeToTopic(ResourceNameEnum.CDA_SYSTEM_PERF_MSG_RESOURCE, qos);
+		if (!this.useCloudGatewayConfig){
+			subscribeCdaTopics(this.qos);
+		}
 	}
 
 	@Override
 	public void connectionLost(Throwable t)
 	{
 		_Logger.warning("[Callback] Lost connection from broker: " + t.getMessage() + ", try to reconnect...");
-
+		this.subscribedTopics.clear();
 	}
 	
 	@Override
@@ -234,7 +210,62 @@ public class MqttClientConnector implements IPubSubClient, MqttCallbackExtended
 		this.incomingMsgHandlerThreadPool.execute(handleMsgTask);
 	}
 
-	
+	// protected methods
+
+	protected boolean publishMessage(String topic, byte[] payload, int qos)
+	{
+		if (topic == null){
+			_Logger.warning("Got a null topic to publish!");
+			return false;
+		}
+		if (qos < 0 || qos > 2){
+			_Logger.warning(String.format("Got an invalid QoS %d, change to use default QoS %d!", qos, ConfigConst.DEFAULT_QOS));
+			qos = ConfigConst.DEFAULT_QOS;
+		}
+		MqttMessage message = new MqttMessage(payload);
+		message.setQos(qos);
+		try {
+			_Logger.info(String.format("Publishing msg to topic '%s' with QoS %d ...", topic, qos));
+			this.mqttClient.publish(topic,message);
+			return true;
+		} catch (MqttPersistenceException e) {
+			_Logger.warning("Persistence exception thrown when publishing to topic: " + topic );
+		} catch (MqttException e) {
+			_Logger.warning("MqttException exception thrown when publishing to topic : " + e.toString());
+		}
+		return false;
+	}
+
+	protected boolean subscribeToTopic(String topic, int qos)
+	{
+		if (qos < 0 || qos > 2){
+			_Logger.warning(String.format("Got an invalid QoS %d, change to use default QoS %d!", qos, ConfigConst.DEFAULT_QOS));
+			qos = ConfigConst.DEFAULT_QOS;
+		}
+		try {
+			_Logger.info(String.format("Subscribing to topic '%s' with QoS %d ...", topic, qos));
+			this.mqttClient.subscribe(topic, qos);
+			this.subscribedTopics.put(topic,qos);
+			return true;
+		} catch (MqttException e) {
+			_Logger.warning("Failed to subscribe to topic: " + topic);
+		}
+		return false;
+	}
+
+	protected boolean unsubscribeFromTopic(String topic)
+	{
+		try {
+			_Logger.info(String.format("Unsubscribing to topic '%s'...", topic));
+			this.mqttClient.unsubscribe(topic);
+			this.subscribedTopics.remove(topic);
+			return true;
+		} catch (MqttException e) {
+			_Logger.warning(String.format("Fail to unsubscribe to topic '%s', exception:\n%s", topic, e.toString()));
+		}
+		return false;
+	}
+
 	// private methods
 	
 	/**
@@ -248,20 +279,13 @@ public class MqttClientConnector implements IPubSubClient, MqttCallbackExtended
 		ConfigUtil configUtil = ConfigUtil.getInstance();
 
 		this.protocol = ConfigConst.DEFAULT_MQTT_PROTOCOL;
-		this.host =
-				configUtil.getProperty(
-						ConfigConst.MQTT_GATEWAY_SERVICE, ConfigConst.HOST_KEY, ConfigConst.DEFAULT_HOST);
-		this.port =
-				configUtil.getInteger(
-						ConfigConst.MQTT_GATEWAY_SERVICE, ConfigConst.PORT_KEY, ConfigConst.DEFAULT_MQTT_PORT);
-		this.enableEncryption = configUtil.getBoolean(ConfigConst.MQTT_GATEWAY_SERVICE, ConfigConst.ENABLE_CRYPT_KEY);
-		this.pemFileName = configUtil.getProperty(ConfigConst.MQTT_GATEWAY_SERVICE, ConfigConst.CERT_FILE_KEY);
+		this.host = configUtil.getProperty(configSectionName, ConfigConst.HOST_KEY, ConfigConst.DEFAULT_HOST);
+		this.port =	configUtil.getInteger(configSectionName, ConfigConst.PORT_KEY, ConfigConst.DEFAULT_MQTT_PORT);
+		this.enableEncryption = configUtil.getBoolean(configSectionName, ConfigConst.ENABLE_CRYPT_KEY);
+		this.pemFileName = configUtil.getProperty(configSectionName, ConfigConst.CERT_FILE_KEY);
 		this.brokerKeepAlive =
-				configUtil.getInteger(
-						ConfigConst.MQTT_GATEWAY_SERVICE, ConfigConst.KEEP_ALIVE_KEY, ConfigConst.DEFAULT_KEEP_ALIVE);
-		this.qos =
-				configUtil.getInteger(
-						ConfigConst.MQTT_GATEWAY_SERVICE, ConfigConst.DEFAULT_QOS_KEY, ConfigConst.DEFAULT_QOS);
+				configUtil.getInteger(configSectionName, ConfigConst.KEEP_ALIVE_KEY, ConfigConst.DEFAULT_KEEP_ALIVE);
+		this.qos = configUtil.getInteger(configSectionName, ConfigConst.DEFAULT_QOS_KEY, ConfigConst.DEFAULT_QOS);
 
 		// paho Java client requires a client ID
 		this.clientID = MqttClient.generateClientId();
@@ -300,7 +324,10 @@ public class MqttClientConnector implements IPubSubClient, MqttCallbackExtended
 	 */
 	private void initCredentialConnectionParameters(String configSectionName)
 	{
-		// TODO: implement this
+		ConfigUtil configUtil = ConfigUtil.getInstance();
+		String userToken = configUtil.getCredentials(configSectionName).getProperty("userToken");
+		_Logger.info("Load userToken from credFile: " + userToken);
+		this.connOpts.setUserName(userToken);
 	}
 	
 	/**
@@ -332,7 +359,6 @@ public class MqttClientConnector implements IPubSubClient, MqttCallbackExtended
 
 			SSLSocketFactory sslFactory =
 					SimpleCertManagementUtil.getInstance().loadCertificate(this.pemFileName);
-
 			this.connOpts.setSocketFactory(sslFactory);
 
 			// override current config parameters
@@ -348,5 +374,15 @@ public class MqttClientConnector implements IPubSubClient, MqttCallbackExtended
 
 			this.enableEncryption = false;
 		}
+	}
+
+	/**
+	 * Helper methods to subscribe to cda topics
+	 * @param qos QoS value
+	 */
+	private void subscribeCdaTopics(int qos) {
+		this.subscribeToTopic(ResourceNameEnum.CDA_ACTUATOR_RESPONSE_RESOURCE, qos);
+		this.subscribeToTopic(ResourceNameEnum.CDA_SENSOR_MSG_RESOURCE, qos);
+		this.subscribeToTopic(ResourceNameEnum.CDA_SYSTEM_PERF_MSG_RESOURCE, qos);
 	}
 }

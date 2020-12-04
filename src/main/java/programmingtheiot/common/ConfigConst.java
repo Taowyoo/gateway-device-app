@@ -68,6 +68,7 @@ public class ConfigConst
 	public static final String GDA_MGMT_CMD_MSG_RESOURCE     = PRODUCT_NAME + "/" + GATEWAY_DEVICE + "/" + MGMT_STATUS_CMD;
 	public static final String GDA_SYSTEM_PERF_MSG_RESOURCE  = PRODUCT_NAME + "/" + GATEWAY_DEVICE + "/" + SYSTEM_PERF_MSG;
 
+	public static final String CLOUD_TEST_RESOURCE           = "piot";
 	/*****
 	 * Configuration Sections, Keys and Defaults
 	 */
@@ -125,6 +126,7 @@ public class ConfigConst
 	public static final String POLL_CYCLES_KEY      = "pollCycleSecs";
 	public static final String KEEP_ALIVE_KEY       = "keepAlive";
 	public static final String DEFAULT_QOS_KEY      = "defaultQoS";
+	public static final String BASE_TOPIC_KEY       = "baseTopic";
 	
 	public static final String IMAGE_PREPROCESS_PATH_KEY = "imgPreprocessPath";
 	

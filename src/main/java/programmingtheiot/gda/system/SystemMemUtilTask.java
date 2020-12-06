@@ -8,6 +8,8 @@
 
 package programmingtheiot.gda.system;
 
+import programmingtheiot.common.ConfigConst;
+
 import java.lang.management.ManagementFactory;
 import java.lang.management.MemoryUsage;
 
@@ -26,7 +28,7 @@ public class SystemMemUtilTask extends BaseSystemUtilTask
 	public SystemMemUtilTask()
 	{
 		super();
-		this.dataName = "SystemMemUtil";
+		this.dataName = ConfigConst.MEM_UTIL_NAME;
 	}
 	
 	

@@ -26,7 +26,7 @@ public abstract class BaseSystemUtilTask
 
 	// private
 	private SensorData latestSensorData = null;
-	protected String dataName = "BaseSystemUtil";
+	protected String dataName = ConfigConst.SYS_PERF_DATA;
 
 	// constructors
 	

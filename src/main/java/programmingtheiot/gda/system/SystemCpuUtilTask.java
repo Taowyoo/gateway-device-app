@@ -8,6 +8,8 @@
 
 package programmingtheiot.gda.system;
 
+import programmingtheiot.common.ConfigConst;
+
 import java.lang.management.ManagementFactory;
 
 
@@ -26,7 +28,7 @@ public class SystemCpuUtilTask extends BaseSystemUtilTask
 	public SystemCpuUtilTask()
 	{
 		super();
-		this.dataName = "SystemCpuUtil";
+		this.dataName = ConfigConst.CPU_UTIL_NAME;
 	}
 	
 	

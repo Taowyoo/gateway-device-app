@@ -68,7 +68,7 @@ public class ConfigConst
 	public static final String GDA_MGMT_CMD_MSG_RESOURCE     = PRODUCT_NAME + "/" + GATEWAY_DEVICE + "/" + MGMT_STATUS_CMD;
 	public static final String GDA_SYSTEM_PERF_MSG_RESOURCE  = PRODUCT_NAME + "/" + GATEWAY_DEVICE + "/" + SYSTEM_PERF_MSG;
 
-	public static final String CLOUD_TEST_RESOURCE           = "piot";
+	public static final String CLOUD_PRESSURE_LED_CMD_RESOURCE = (ConfigConst.CONSTRAINED_DEVICE + "/"+ ConfigConst.CLOUD_PRESSURE_LED_NAME).toLowerCase();
 	/*****
 	 * Configuration Sections, Keys and Defaults
 	 */
@@ -150,7 +150,16 @@ public class ConfigConst
 	public static final String CPU_UTIL_NAME  = "CpuUtil";
 	public static final String DISK_UTIL_NAME = "DiskUtil";
 	public static final String MEM_UTIL_NAME  = "MemUtil";
+	public static final String LED_ACTUATOR_NAME = "LedActuator";
+	public static final String HUMIDIFIER_ACTUATOR_NAME = "HumidifierActuator";
+	public static final String HVAC_ACTUATOR_NAME = "HvacActuator";
 
+	public static final String HUMIDITY_SENSOR_NAME = "HumiditySensor";
+	public static final String PRESSURE_SENSOR_NAME = "PressureSensor";
+	public static final String TEMP_SENSOR_NAME = "TempSensor";
+
+	// cloud variable for subscribe
+	public static final String CLOUD_PRESSURE_LED_NAME = "PressureLED";
 	// constructors
 	/**
 	 * 

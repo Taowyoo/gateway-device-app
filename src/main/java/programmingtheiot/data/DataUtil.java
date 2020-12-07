@@ -11,11 +11,14 @@ package programmingtheiot.data;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.apache.commons.lang.StringEscapeUtils;
+import programmingtheiot.common.ConfigConst;
 
 /**
  * Shell representation of class for student implementation.
@@ -67,13 +70,43 @@ public class DataUtil
 		String jsonData = gson.toJson(sensorData);
 		return jsonData;
 	}
-	
+
+	public String sensorDataToJsonCloud(SensorData sensorData)
+	{
+		Map<String, Map<String,Double>> cloudNodes = new HashMap<>();
+		Map<String,Double> node = new HashMap<>();
+		node.put("value", (double) sensorData.getValue());
+		node.put("timestamp", (double) sensorData.getTimeStampMillis());
+		cloudNodes.put(sensorData.getName(),node);
+		String jsonData = gson.toJson(cloudNodes);
+		return jsonData;
+	}
+
 	public String systemPerformanceDataToJson(SystemPerformanceData sysPerfData)
 	{
 		String jsonData = gson.toJson(sysPerfData);
 		return jsonData;
 	}
-	
+
+	public String systemPerformanceDataToJsonCloud(SystemPerformanceData sysPerfData)
+	{
+		Map<String, Map<String,Double>> cloudNodes = new HashMap<>();
+		Map<String,Double> cpuNode = new HashMap<>();
+		cpuNode.put("value", (double) sysPerfData.getCpuUtilization());
+		cpuNode.put("timestamp", (double) sysPerfData.getTimeStampMillis());
+		Map<String,Double> memNode = new HashMap<>();
+		memNode.put("value", (double) sysPerfData.getMemoryUtilization());
+		memNode.put("timestamp", (double) sysPerfData.getTimeStampMillis());
+		Map<String,Double> diskNode = new HashMap<>();
+		diskNode.put("value", (double) sysPerfData.getDiskUtilization());
+		diskNode.put("timestamp", (double) sysPerfData.getTimeStampMillis());
+		cloudNodes.put(ConfigConst.CPU_UTIL_NAME,cpuNode);
+		cloudNodes.put(ConfigConst.MEM_UTIL_NAME,memNode);
+		cloudNodes.put(ConfigConst.DISK_UTIL_NAME,diskNode);
+		String jsonData = gson.toJson(cloudNodes);
+		return jsonData;
+	}
+
 	public String systemStateDataToJson(SystemStateData sysStateData)
 	{
 		String jsonData = gson.toJson(sysStateData);
@@ -114,4 +147,6 @@ public class DataUtil
 		}
 		return  StringEscapeUtils.unescapeJava(jsonData);
 	}
+
+
 }

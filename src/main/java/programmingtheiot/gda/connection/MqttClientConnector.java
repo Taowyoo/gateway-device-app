@@ -17,6 +17,7 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.google.gson.JsonParseException;
 import org.eclipse.paho.client.mqttv3.*;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
@@ -27,6 +28,7 @@ import programmingtheiot.common.ResourceNameEnum;
 
 import javax.net.ssl.SSLSocketFactory;
 import programmingtheiot.common.SimpleCertManagementUtil;
+import programmingtheiot.data.*;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -41,7 +43,7 @@ public class MqttClientConnector implements IPubSubClient, MqttCallbackExtended
 	private static final Logger _Logger =
 		Logger.getLogger(MqttClientConnector.class.getName());
 	// Maximum number of threads in thread pool
-	static final int MAX_T = 2;
+	static final int MAX_T = 1;
 
 	// params
 	private String host;
@@ -58,9 +60,9 @@ public class MqttClientConnector implements IPubSubClient, MqttCallbackExtended
 	private boolean useCloudGatewayConfig = false;
 	// variables
 	private MqttClient mqttClient;
-	private IDataMessageListener dataMessageListener;
+	protected IDataMessageListener dataMessageListener;
 	private Map<String,Integer> subscribedTopics;
-	private ExecutorService incomingMsgHandlerThreadPool;
+	private final ConfigUtil configUtil = ConfigUtil.getInstance();
 	// constructors
 
 	/**
@@ -80,8 +82,6 @@ public class MqttClientConnector implements IPubSubClient, MqttCallbackExtended
 	public MqttClientConnector(boolean useCloudGatewayConfig)
 	{
 		super();
-
-		this.incomingMsgHandlerThreadPool = Executors.newFixedThreadPool(MAX_T);
 
 		this.useCloudGatewayConfig = useCloudGatewayConfig;
 
@@ -178,9 +178,7 @@ public class MqttClientConnector implements IPubSubClient, MqttCallbackExtended
 	public void connectComplete(boolean reconnect, String serverURI)
 	{
 		_Logger.info(String.format("[Callback] Complete to %s to broker '%s'", reconnect ? "reconnect" : "connect", serverURI));
-		if (!this.useCloudGatewayConfig){
-			subscribeCdaTopics(this.qos);
-		}
+		subscribeTopics(this.qos);
 	}
 
 	@Override
@@ -195,23 +193,81 @@ public class MqttClientConnector implements IPubSubClient, MqttCallbackExtended
 	{
 		_Logger.info(String.format("[Callback] Complete to delivery to broker, response: %s", token.getResponse().toString()));
 	}
-	
+
+	/**
+	 * Callback for processing arrived message
+	 * Convert topic to ResourceNameEnum object, then use dataMessageListener to call the corresponding function
+	 * @param topic Topic where mqtt message comes from
+	 * @param msg MqttMessage instance of message
+	 * @throws Exception Any exception meets when processing the msg
+	 */
 	@Override
 	public void messageArrived(String topic, MqttMessage msg) throws Exception
 	{
+		// Get msg string
 		String msgStr = new String(msg.getPayload());
-		_Logger.info(String.format("[Callback] Receive a message from topic '%s': %s", topic, msgStr));
+		_Logger.info(String.format("[Callback] Receive a message from topic '%s':\n%s", topic, msgStr));
+		// Get Resource Name from topic
+		ResourceNameEnum resourceNameEnum = ResourceNameEnum.getEnumFromValue(topic);
+		if (resourceNameEnum == null){
+			_Logger.warning(String.format("[Callback] Invalid topic: '%s' !", topic));
+			return;
+		}
+		DataUtil dataUtil = DataUtil.getInstance();
 		Runnable handleMsgTask = new Runnable() {
 			@Override
 			public void run() {
-				dataMessageListener.handleIncomingMessage(ResourceNameEnum.getEnumFromValue(topic),msgStr);
+				switch (resourceNameEnum) {
+					case CDA_SENSOR_MSG_RESOURCE:
+						try {
+							SensorData data = dataUtil.jsonToSensorData(msgStr);
+							dataMessageListener.handleSensorMessage(resourceNameEnum, data);
+						} catch (JsonParseException ex) {
+							_Logger.log(Level.WARNING,String.format("Fail to convert message to SensorData: %s", ex.toString()));
+							return;
+						}
+						break;
+					case CDA_ACTUATOR_RESPONSE_RESOURCE:
+						try {
+							ActuatorData data = dataUtil.jsonToActuatorData(msgStr);
+							dataMessageListener.handleActuatorCommandResponse(resourceNameEnum, data);
+						} catch (JsonParseException ex) {
+							_Logger.log(Level.WARNING,String.format("Fail to convert message to ActuatorData: %s", ex.toString()));
+							return;
+						}
+						break;
+					case CDA_SYSTEM_PERF_MSG_RESOURCE:
+					case GDA_SYSTEM_PERF_MSG_RESOURCE:
+						try {
+							SystemPerformanceData data = dataUtil.jsonToSystemPerformanceData(msgStr);
+							dataMessageListener.handleSystemPerformanceMessage(resourceNameEnum, data);
+						} catch (JsonParseException ex) {
+							_Logger.log(Level.WARNING,String.format("Fail to convert message to SystemPerformanceData: %s", ex.toString()));
+							return;
+						}
+						break;
+					case CDA_MGMT_STATUS_CMD_RESOURCE:
+					case GDA_MGMT_STATUS_CMD_RESOURCE:
+					case CLOUD_GDA_DEVICE:
+					case CLOUD_CDA_DEVICE:
+					case CDA_MGMT_STATUS_MSG_RESOURCE:
+					case GDA_MGMT_STATUS_MSG_RESOURCE:
+					case CDA_ACTUATOR_CMD_RESOURCE:
+					case CLOUD_PRESSURE_LED_CMD_RESOURCE:
+						dataMessageListener.handleIncomingMessage(resourceNameEnum,msgStr);
+						break;
+					default:
+						_Logger.log(Level.WARNING, String.format("Got a msg from invalid channel, channel: %s", resourceNameEnum.getResourceName()));
+						return;
+				}
 			}
 		};
-		this.incomingMsgHandlerThreadPool.execute(handleMsgTask);
+//		this.incomingMsgHandlerThreadPool.execute(handleMsgTask);
+		Thread thread = new Thread(handleMsgTask);
+		thread.start();
 	}
 
 	// protected methods
-
 	protected boolean publishMessage(String topic, byte[] payload, int qos)
 	{
 		if (topic == null){
@@ -225,7 +281,7 @@ public class MqttClientConnector implements IPubSubClient, MqttCallbackExtended
 		MqttMessage message = new MqttMessage(payload);
 		message.setQos(qos);
 		try {
-			_Logger.info(String.format("Publishing msg to topic '%s' with QoS %d ...", topic, qos));
+			_Logger.info(String.format("Publishing to topic '%s' with QoS %d, msg:\n%s", topic, qos, new String((payload))));
 			this.mqttClient.publish(topic,message);
 			return true;
 		} catch (MqttPersistenceException e) {
@@ -266,18 +322,26 @@ public class MqttClientConnector implements IPubSubClient, MqttCallbackExtended
 		return false;
 	}
 
+	/**
+	 * Helper methods to subscribe to topics
+	 * @param qos QoS value
+	 */
+	protected void subscribeTopics(int qos) {
+		this.subscribeToTopic(ResourceNameEnum.CDA_ACTUATOR_RESPONSE_RESOURCE, qos);
+		this.subscribeToTopic(ResourceNameEnum.CDA_SENSOR_MSG_RESOURCE, qos);
+		this.subscribeToTopic(ResourceNameEnum.CDA_SYSTEM_PERF_MSG_RESOURCE, qos);
+	}
+
 	// private methods
-	
+
 	/**
 	 * Called by the constructor to set the MQTT client parameters to be used for the connection.
-	 * 
+	 *
 	 * @param configSectionName The name of the configuration section to use for
 	 * the MQTT client configuration parameters.
 	 */
 	private void initClientParameters(String configSectionName)
 	{
-		ConfigUtil configUtil = ConfigUtil.getInstance();
-
 		this.protocol = ConfigConst.DEFAULT_MQTT_PROTOCOL;
 		this.host = configUtil.getProperty(configSectionName, ConfigConst.HOST_KEY, ConfigConst.DEFAULT_HOST);
 		this.port =	configUtil.getInteger(configSectionName, ConfigConst.PORT_KEY, ConfigConst.DEFAULT_MQTT_PORT);
@@ -315,31 +379,28 @@ public class MqttClientConnector implements IPubSubClient, MqttCallbackExtended
 		// store topic subscribed for reconnection
 		this.subscribedTopics = new HashMap<>();
 	}
-	
+
 	/**
 	 * Called by {@link #initClientParameters(String)} to load credentials.
-	 * 
+	 *
 	 * @param configSectionName The name of the configuration section to use for
 	 * the MQTT client configuration parameters.
 	 */
 	private void initCredentialConnectionParameters(String configSectionName)
 	{
-		ConfigUtil configUtil = ConfigUtil.getInstance();
 		String userToken = configUtil.getCredentials(configSectionName).getProperty("userToken");
 		_Logger.info("Load userToken from credFile: " + userToken);
 		this.connOpts.setUserName(userToken);
 	}
-	
+
 	/**
 	 * Called by {@link #initClientParameters(String)} to enable encryption.
-	 * 
+	 *
 	 * @param configSectionName The name of the configuration section to use for
 	 * the MQTT client configuration parameters.
 	 */
 	private void initSecureConnectionParameters(String configSectionName)
 	{
-		ConfigUtil configUtil = ConfigUtil.getInstance();
-
 		try {
 			_Logger.info("Configuring TLS...");
 
@@ -376,13 +437,4 @@ public class MqttClientConnector implements IPubSubClient, MqttCallbackExtended
 		}
 	}
 
-	/**
-	 * Helper methods to subscribe to cda topics
-	 * @param qos QoS value
-	 */
-	private void subscribeCdaTopics(int qos) {
-		this.subscribeToTopic(ResourceNameEnum.CDA_ACTUATOR_RESPONSE_RESOURCE, qos);
-		this.subscribeToTopic(ResourceNameEnum.CDA_SENSOR_MSG_RESOURCE, qos);
-		this.subscribeToTopic(ResourceNameEnum.CDA_SYSTEM_PERF_MSG_RESOURCE, qos);
-	}
 }

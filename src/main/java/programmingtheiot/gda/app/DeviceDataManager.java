@@ -11,8 +11,6 @@ package programmingtheiot.gda.app;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.google.gson.JsonParseException;
-import org.eclipse.paho.client.mqttv3.MqttException;
 import programmingtheiot.common.ConfigConst;
 import programmingtheiot.common.ConfigUtil;
 import programmingtheiot.common.IDataMessageListener;
@@ -117,6 +115,35 @@ public class DeviceDataManager extends JedisPubSub implements IDataMessageListen
     // implement methods for JedisPubSub end
 
     // implement methods for IDataMessageListener begin
+
+    /**
+     * Handle all SensorData mgs arrived from CDA/GDA/Cloud
+     * @param resourceName The enum representing the String resource name.
+     * @param data The SensorData data - this will usually be the decoded payload
+     * from a connection using either MQTT or CoAP.
+     * @return if success to handle the message
+     */
+    @Override
+    public boolean handleSensorMessage(ResourceNameEnum resourceName, SensorData data) {
+        _Logger.log(Level.INFO, "Handling a SensorMessage: " + data.toString());
+        // Redis
+        if (this.enablePersistenceClient) {
+            this.redisClient.storeData(resourceName.getResourceName(), ConfigConst.DEFAULT_QOS, data);
+        }
+        // process data and make reaction if necessary
+        this.handleIncomingDataAnalysis(resourceName, data);
+        // upstream SensorData to cloud
+        this.handleUpstreamTransmission(resourceName, data);
+        return true;
+    }
+
+    /**
+     * Handle all ActuatorData msg arrived from CDA/GDA/Cloud
+     * @param resourceName The enum representing the String resource name.
+     * @param data The ActuatorData data - this will usually be the decoded payload
+     * from a connection using either MQTT or CoAP.
+     * @return if success to handle the message
+     */
     @Override
     public boolean handleActuatorCommandResponse(ResourceNameEnum resourceName, ActuatorData data) {
         if (data.isResponseFlagEnabled() && data.isResponse()) {
@@ -128,7 +155,7 @@ public class DeviceDataManager extends JedisPubSub implements IDataMessageListen
                 return true;
             } else {
                 _Logger.log(Level.WARNING, String.format("Got an error response! code: %d, statusData: %s", data.getStatusCode(), data.getStateData()));
-                // TODO: handle error
+                // TODO: handle error and do some reaction
                 return false;
             }
         } else {
@@ -137,98 +164,57 @@ public class DeviceDataManager extends JedisPubSub implements IDataMessageListen
         }
     }
 
-    @Override
-    public boolean handleIncomingMessage(ResourceNameEnum resourceName, String msg) {
-        _Logger.log(Level.INFO, String.format("Handling an IncomingMessage '%s' from '%s'", msg ,resourceName.getResourceName()));
-        switch (resourceName) {
-            case CDA_SENSOR_MSG_RESOURCE:
-                try {
-                    SensorData data = this.dataUtil.jsonToSensorData(msg);
-                    handleSensorMessage(ResourceNameEnum.CDA_SENSOR_MSG_RESOURCE, data);
-                } catch (JsonParseException ex) {
-                    _Logger.log(Level.WARNING, String.format("Fail to convert subscribed message to SensorData! JsonParseException:\n%s\nmsg:\n%s", ex.toString(), msg));
-                    return false;
-                }
-                break;
-            case CDA_ACTUATOR_CMD_RESOURCE:
-                try {
-                    ActuatorData data = this.dataUtil.jsonToActuatorData(msg);
-                    handleActuatorCommandResponse(ResourceNameEnum.CDA_ACTUATOR_CMD_RESOURCE, data);
-                    this.handleIncomingDataAnalysis(resourceName, data);
-                } catch (JsonParseException ex) {
-                    _Logger.log(Level.WARNING, String.format("Fail to convert subscribed message to ActuatorData! JsonParseException:\n%s\nmsg:\n%s", ex.toString(), msg));
-                    return false;
-                }
-                break;
-            case CDA_MGMT_STATUS_MSG_RESOURCE:
-                try {
-                    SystemPerformanceData data = this.dataUtil.jsonToSystemPerformanceData(msg);
-                    handleSystemPerformanceMessage(ResourceNameEnum.CDA_MGMT_STATUS_MSG_RESOURCE, data);
-                } catch (JsonParseException ex) {
-                    _Logger.log(Level.WARNING,String.format("Fail to convert subscribed message to SystemPerformanceData! JsonParseException:\n%s\nmsg:\n%s", ex.toString(), msg));
-                    return false;
-                }
-                break;
-            case CDA_MGMT_STATUS_CMD_RESOURCE:
-                break;
-            case GDA_MGMT_STATUS_MSG_RESOURCE:
-                try {
-                    SystemStateData data = this.dataUtil.jsonToSystemStateData(msg);
-                    this.handleIncomingDataAnalysis(resourceName, data);
-                } catch (JsonParseException ex2) {
-                    _Logger.log(Level.WARNING, "Fail to convert IncomingMessage to SystemStateData: " + ex2.toString());
-                    return false;
-                }
-                break;
-            case GDA_MGMT_STATUS_CMD_RESOURCE:
-                break;
-            default:
-                _Logger.log(Level.WARNING, String.format("Got a msg from invalid channel, channel: %s msg: %s", resourceName.getResourceName(), msg));
-                return false;
-        }
-        return true;
-    }
-
-    @Override
-    public boolean handleSensorMessage(ResourceNameEnum resourceName, SensorData data) {
-        _Logger.log(Level.INFO, "Handling a SensorMessage: " + data.toString());
-
-
-        if (this.enablePersistenceClient) {
-            this.redisClient.storeData(resourceName.getResourceName(), ConfigConst.DEFAULT_QOS, data);
-        }
-        String jsonData = this.dataUtil.sensorDataToJson(data);
-        if (jsonData != null) {
-            this.handleIncomingDataAnalysis(resourceName, data);
-            this.handleUpstreamTransmission(resourceName, jsonData);
-            return true;
-        } else {
-            _Logger.log(Level.WARNING, "Fail to convert SensorData to Json string!");
-            return false;
-        }
-    }
-
+    /**
+     * Handle all SystemPerformanceData msg arrived from CDA/GDA
+     * @param resourceName The enum representing the String resource name.
+     * @param data The SystemPerformanceData data - this will usually be the decoded payload
+     * from a connection using either MQTT or CoAP.
+     * @return if success to handle the message
+     */
     @Override
     public boolean handleSystemPerformanceMessage(ResourceNameEnum resourceName, SystemPerformanceData data) {
         _Logger.log(Level.INFO, "Handling a SystemPerformanceMessage: " + data.toString());
         if (this.enablePersistenceClient) {
             this.redisClient.storeData(resourceName.getResourceName(), ConfigConst.DEFAULT_QOS, data);
         }
-        String jsonData = this.dataUtil.systemPerformanceDataToJson(data);
-        if (jsonData != null) {
-            this.handleIncomingDataAnalysis(resourceName, data);
-            this.handleUpstreamTransmission(resourceName, jsonData);
+        this.handleIncomingDataAnalysis(resourceName, data);
+        this.handleUpstreamTransmission(resourceName, data);
+        return true;
+    }
+
+    /**
+     * Handle all other msg except SensorData/ActuatorData/SystemPerformanceData msg
+     * @param resourceName The enum representing the String resource name.
+     * @param msg The String message - this will usually be the decoded payload
+     * from a connection using either MQTT or CoAP.
+     * @return if success to handle the message
+     */
+    @Override
+    public boolean handleIncomingMessage(ResourceNameEnum resourceName, String msg) {
+        _Logger.log(Level.INFO, String.format("Handling an IncomingMessage '%s' from '%s'", msg ,resourceName.getResourceName()));
+        // only cloud connector will subscribe to CDA_ACTUATOR_CMD_RESOURCE
+        if(resourceName == ResourceNameEnum.CLOUD_PRESSURE_LED_CMD_RESOURCE) {
+            int val =(int) Double.parseDouble(msg);
+            ActuatorData data = new ActuatorData();
+            data.setActuatorType(ActuatorData.LED_DISPLAY_ACTUATOR_TYPE);
+            if (val == 1) {
+                data.setCommand(ActuatorData.COMMAND_ON);
+                data.setStateData("Pressure too high");
+            } else {
+                data.setCommand(ActuatorData.COMMAND_OFF);
+            }
+            String cmdMsg = dataUtil.actuatorDataToJson(data);
+            this.mqttClient.publishMessage(ResourceNameEnum.CDA_ACTUATOR_CMD_RESOURCE, cmdMsg, mqttQos);
             return true;
-        } else {
-            _Logger.log(Level.WARNING, "Fail to convert SensorData to Json string!");
-            return false;
         }
+        // TODO: Handle msg from other channels
+        return false;
     }
     // Implement methods for IDataMessageListener end
 
     public void startManager() {
         _Logger.log(Level.INFO, "DeviceDataManager starting...");
-        this.sysPerfManager.startManager();
+
         if (this.enableMqttClient) {
             this.mqttClient.connectClient();
         }
@@ -246,6 +232,7 @@ public class DeviceDataManager extends JedisPubSub implements IDataMessageListen
         if (this.enableCloudClient){
             this.cloudClient.connectClient();
         }
+        this.sysPerfManager.startManager();
         _Logger.log(Level.INFO, "DeviceDataManager started.");
     }
 
@@ -296,7 +283,7 @@ public class DeviceDataManager extends JedisPubSub implements IDataMessageListen
     private void handleIncomingDataAnalysis(ResourceNameEnum resourceName, SensorData data) {
         _Logger.log(Level.FINE, String.format("Analyze an Incoming SensorData from %s.", resourceName.getResourceName()));
         if (resourceName == ResourceNameEnum.CDA_SENSOR_MSG_RESOURCE) {
-            String responseMsg = generateMeetThresholdResponse(data);
+            String responseMsg = generateMeetHumidityThresholdResponse(data);
             if (responseMsg != null) {
                 this.mqttClient.publishMessage(ResourceNameEnum.CDA_ACTUATOR_CMD_RESOURCE, responseMsg, mqttQos);
             }
@@ -321,43 +308,46 @@ public class DeviceDataManager extends JedisPubSub implements IDataMessageListen
         _Logger.log(Level.FINE, String.format("Analyze an Incoming SystemStateData from %s.", resourceName.getResourceName()));
     }
 
-    private void handleUpstreamTransmission(ResourceNameEnum resourceName, String msg) {
-        _Logger.log(Level.FINE, String.format("Upstream a msg: %s from %s.", msg, resourceName.getResourceName()));
-        switch (resourceName){
-            case CDA_SENSOR_MSG_RESOURCE:
-                this.cloudClient.publishMessage(ResourceNameEnum.CLOUD_CDA,msg,cloudQos);
-                break;
-            case CDA_ACTUATOR_CMD_RESOURCE:
-                this.cloudClient.publishMessage(ResourceNameEnum.CLOUD_CDA,msg,cloudQos);
-                break;
-            case CDA_ACTUATOR_RESPONSE_RESOURCE:
-                break;
-            case CDA_MGMT_STATUS_MSG_RESOURCE:
-                this.cloudClient.publishMessage(ResourceNameEnum.CLOUD_CDA,msg,cloudQos);
-                break;
-            case CDA_SYSTEM_PERF_MSG_RESOURCE:
-                this.cloudClient.publishMessage(ResourceNameEnum.CLOUD_CDA,msg,cloudQos);
-                break;
-            case CDA_MGMT_STATUS_CMD_RESOURCE:
-                this.cloudClient.publishMessage(ResourceNameEnum.CLOUD_CDA,msg,cloudQos);
-                break;
-            case GDA_MGMT_STATUS_MSG_RESOURCE:
-                this.cloudClient.publishMessage(ResourceNameEnum.CLOUD_GDA,msg,cloudQos);
-                break;
-            case GDA_MGMT_STATUS_CMD_RESOURCE:
-                this.cloudClient.publishMessage(ResourceNameEnum.CLOUD_GDA,msg,cloudQos);
-                break;
-            case GDA_SYSTEM_PERF_MSG_RESOURCE:
-                this.cloudClient.publishMessage(ResourceNameEnum.CLOUD_GDA,msg,cloudQos);
-                break;
-            case CLOUD_GDA:
-                break;
-            case CLOUD_CDA:
-                break;
+    private void handleUpstreamTransmission(ResourceNameEnum resourceName, SensorData data){
+        if (enableCloudClient){
+            // convert data
+            String msg = this.dataUtil.sensorDataToJsonCloud(data);
+            // upload data
+            if (resourceName.getResourceName().contains(ConfigConst.CONSTRAINED_DEVICE)){
+                resourceName = ResourceNameEnum.CLOUD_CDA_DEVICE;
+            }
+            else if(resourceName.getResourceName().contains(ConfigConst.GATEWAY_DEVICE)){
+                resourceName = ResourceNameEnum.CLOUD_GDA_DEVICE;
+            }else {
+                resourceName = ResourceNameEnum.CLOUD_OTHER;
+            }
+            this.cloudClient.publishMessage(resourceName, msg, cloudQos);
         }
     }
+    private void handleUpstreamTransmission(ResourceNameEnum resourceName, ActuatorData data){
+        _Logger.log(Level.FINE, String.format("Upstreaming an ActuatorData to %s", resourceName.getResourceName()));
+    }
+    private void handleUpstreamTransmission(ResourceNameEnum resourceName, SystemPerformanceData data){
+        if (enableCloudClient){
+            // convert data
+            String msg = this.dataUtil.systemPerformanceDataToJsonCloud(data);
+            // upload data
+            if (resourceName.getResourceName().contains(ConfigConst.CONSTRAINED_DEVICE)){
+                resourceName = ResourceNameEnum.CLOUD_CDA_DEVICE;
+            }
+            else if(resourceName.getResourceName().contains(ConfigConst.GATEWAY_DEVICE)){
+                resourceName = ResourceNameEnum.CLOUD_GDA_DEVICE;
+            }else {
+                resourceName = ResourceNameEnum.CLOUD_OTHER;
+            }
+            this.cloudClient.publishMessage(resourceName, msg, cloudQos);
+        }
+    }
+    private void handleUpstreamTransmission(ResourceNameEnum resourceName, SystemStateData data){
+        _Logger.log(Level.FINE, String.format("Upstreaming a SystemStateData to %s", resourceName.getResourceName()));
+    }
 
-    private String generateMeetThresholdResponse(SensorData data) {
+    private String generateMeetHumidityThresholdResponse(SensorData data) {
         String ret = null;
         ActuatorData cmd = new ActuatorData();
         if (data.getSensorType() == SensorData.HUMIDITY_SENSOR_TYPE) {
@@ -365,15 +355,18 @@ public class DeviceDataManager extends JedisPubSub implements IDataMessageListen
                 cmd.setCommand(ActuatorData.COMMAND_ON);
                 cmd.setActuatorType(ActuatorData.HUMIDIFIER_ACTUATOR_TYPE);
                 cmd.setStateData("Humidity too low");
+                ret = this.dataUtil.actuatorDataToJson(cmd);
+                return ret;
             }
             if (data.getValue() > this.humiditySimCeiling) {
                 cmd.setCommand(ActuatorData.COMMAND_OFF);
                 cmd.setActuatorType(ActuatorData.HUMIDIFIER_ACTUATOR_TYPE);
                 cmd.setStateData("Humidity too high");
+                ret = this.dataUtil.actuatorDataToJson(cmd);
+                return ret;
             }
         }
-        ret = this.dataUtil.actuatorDataToJson(cmd);
-        return ret;
+        return null;
     }
 
     private String generateMeetThresholdResponse(SystemPerformanceData data) {

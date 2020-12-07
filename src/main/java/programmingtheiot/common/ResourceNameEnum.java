@@ -31,9 +31,10 @@ public enum ResourceNameEnum
 	GDA_MGMT_STATUS_MSG_RESOURCE(ConfigConst.GDA_MGMT_STATUS_MSG_RESOURCE, true),
 	GDA_MGMT_STATUS_CMD_RESOURCE(ConfigConst.GDA_MGMT_CMD_MSG_RESOURCE, true),
 	GDA_SYSTEM_PERF_MSG_RESOURCE(ConfigConst.GDA_SYSTEM_PERF_MSG_RESOURCE, true),
-	CLOUD_GDA("gda",false),
-	CLOUD_CDA("cda",false);
-
+	CLOUD_GDA_DEVICE(ConfigConst.GATEWAY_DEVICE,false),
+	CLOUD_CDA_DEVICE(ConfigConst.CONSTRAINED_DEVICE,false),
+	CLOUD_OTHER("other",false),
+	CLOUD_PRESSURE_LED_CMD_RESOURCE(ConfigConst.CLOUD_PRESSURE_LED_CMD_RESOURCE,false);
 
 
 	private static final HashMap<String, ResourceNameEnum> _ResourceNameLookupMap = new HashMap<>();

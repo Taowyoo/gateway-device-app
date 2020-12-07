@@ -39,3 +39,27 @@ Here is latest class diagram of current code:
 - MqttClientConnectorTest
 - CloudClientConnectorTest
 - DeviceDataManagerIntegrationTest
+
+### Test Record:
+
+#### Ubidots Devices and data:
+
+![Devices](devices.png)
+
+![GDA Data](gda.png)
+
+![CDA Data](cda.png)
+
+#### Ubidots Event :
+
+![Event Log](event_log.png)
+
+#### Data Flow:
+
+Cloud topic value -> GDA -> CDA -> Emulator
+
+![Cloud and GDA](dataflow_gda.png)
+
+![CDA and Emulator](dataflow_cda.png)
+
+

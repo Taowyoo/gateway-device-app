@@ -22,6 +22,9 @@ import programmingtheiot.common.ConfigUtil;
 import programmingtheiot.common.DefaultDataMessageListener;
 import programmingtheiot.common.IDataMessageListener;
 import programmingtheiot.common.ResourceNameEnum;
+import programmingtheiot.data.DataUtil;
+import programmingtheiot.data.SensorData;
+import programmingtheiot.data.SystemPerformanceData;
 import programmingtheiot.gda.connection.*;
 
 /**
@@ -43,7 +46,7 @@ public class CloudClientConnectorTest
 	// member var's
 	
 	private CloudClientConnector cloudClient = null;
-	
+	private DataUtil dataUtil = DataUtil.getInstance();
 	
 	// test setup methods
 	
@@ -100,23 +103,35 @@ public class CloudClientConnectorTest
 		IDataMessageListener listener = new DefaultDataMessageListener();
 		
 		assertTrue(this.cloudClient.connectClient());
-		assertTrue(this.cloudClient.subscribeToTopic(ResourceNameEnum.GDA_MGMT_STATUS_MSG_RESOURCE, qos));
+		assertTrue(this.cloudClient.subscribeToTopic(ResourceNameEnum.CLOUD_PRESSURE_LED_CMD_RESOURCE, qos));
 		
 		try {
 			Thread.sleep(5000);
 		} catch (Exception e) {
 			// ignore
 		}
-		
-		assertTrue(this.cloudClient.publishMessage(ResourceNameEnum.GDA_MGMT_STATUS_MSG_RESOURCE, "{\"test\":10}", qos));
-		
+		SensorData sensorData = new SensorData();
+		sensorData.setName("testSensor");
+		sensorData.setValue((float) 12.34);
+		String msg1 = this.dataUtil.sensorDataToJsonCloud(sensorData);
+		// upload data
+		assertTrue(this.cloudClient.publishMessage(ResourceNameEnum.CLOUD_CDA_DEVICE, msg1, qos));
+
+		SystemPerformanceData systemPerformanceData = new SystemPerformanceData();
+		systemPerformanceData.setName("TestSysPerf");
+		systemPerformanceData.setCpuUtilization(11.11f);
+		systemPerformanceData.setMemoryUtilization(2222.2222f);
+		systemPerformanceData.setDiskUtilization(333333.33f);
+		String msg2 = this.dataUtil.systemPerformanceDataToJsonCloud(systemPerformanceData);
+		// upload data
+		assertTrue(this.cloudClient.publishMessage(ResourceNameEnum.CLOUD_CDA_DEVICE, msg2, qos));
 		try {
 			Thread.sleep(5000);
 		} catch (Exception e) {
 			// ignore
 		}
 		
-		assertTrue(this.cloudClient.unsubscribeFromTopic(ResourceNameEnum.GDA_MGMT_STATUS_MSG_RESOURCE));
+		assertTrue(this.cloudClient.unsubscribeFromTopic(ResourceNameEnum.CLOUD_PRESSURE_LED_CMD_RESOURCE));
 
 		try {
 			Thread.sleep(5000);

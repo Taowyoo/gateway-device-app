@@ -34,12 +34,12 @@ enableCrypt    = True
 # MQTT client configuration information
 #
 [Mqtt.GatewayService]
-credFile       = ../keys/local_mqtt/client.key
-certFile       = ../keys/local_mqtt/client.crt
+# credFile       = ../keys/local_mqtt/client.key
+# certFile       = ../keys/local_mqtt/client.crt
 host           = localhost
 port           = 1883
 securePort     = 1884
-defaultQoS     = 0
+defaultQoS     = 1
 keepAlive      = 30
 enableCrypt    = False
 
@@ -59,15 +59,15 @@ enableCrypt    = False
 #
 [GatewayDevice]
 enableLogging           = True
-pollCycleSecs           = 60
+pollCycleSecs           = 30
 enableMqttClient        = True
-enableCoapServer        = True
-enableCloudClient       = False
+enableCoapServer        = False
+enableCloudClient       = True
 enableSmtpClient        = False
-enablePersistenceClient = True
+enablePersistenceClient = False
 testGdaDataPath         = /tmp/gda-data
 testCdaDataPath         = /tmp/cda-data
-testGdaRunTime          = 200
+testGdaRunTime          = -1
 
 # configurable limits for sensor
 humiditySimFloor   = 35

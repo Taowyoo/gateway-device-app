@@ -2,12 +2,12 @@ package programmingtheiot.gda.connection.handlers;
 
 import programmingtheiot.common.ResourceNameEnum;
 
-public class ActuatorResourceHandler extends GenericCoapResourceHandler{
-    public ActuatorResourceHandler(ResourceNameEnum resource) {
+public class SysPerfResourceHandler extends GenericCoapResourceHandler{
+    public SysPerfResourceHandler(ResourceNameEnum resource) {
         super(resource);
     }
 
-    public ActuatorResourceHandler(String resourceName) {
+    public SysPerfResourceHandler(String resourceName) {
         super(resourceName);
     }
 }

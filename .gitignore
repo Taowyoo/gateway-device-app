@@ -89,3 +89,5 @@ fabric.properties
 .settings/
 
 Californium.properties
+
+.idea/misc.xml

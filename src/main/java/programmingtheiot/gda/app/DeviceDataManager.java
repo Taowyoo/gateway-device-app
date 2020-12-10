@@ -151,17 +151,15 @@ public class DeviceDataManager extends JedisPubSub implements IDataMessageListen
             if (this.enablePersistenceClient) {
                 this.redisClient.storeData(resourceName.getResourceName(), ConfigConst.DEFAULT_QOS, data);
             }
-            if (data.getStatusCode() == ActuatorData.DEFAULT_STATUS) {
-                return true;
-            } else {
+            this.handleIncomingDataAnalysis(resourceName, data);
+            if (data.hasErrorFlag()) {
                 _Logger.log(Level.WARNING, String.format("Got an error response! code: %d, statusData: %s", data.getStatusCode(), data.getStateData()));
-                // TODO: handle error and do some reaction
-                return false;
+                this.handleUpstreamTransmission(resourceName, data);
             }
         } else {
             _Logger.log(Level.INFO, "Bypass an non-responsive ActuatorCommand.");
-            return true;
         }
+        return true;
     }
 
     /**
@@ -208,7 +206,7 @@ public class DeviceDataManager extends JedisPubSub implements IDataMessageListen
             return true;
         }
         // TODO: Handle msg from other channels
-        return false;
+        return true;
     }
     // Implement methods for IDataMessageListener end
 
@@ -313,34 +311,22 @@ public class DeviceDataManager extends JedisPubSub implements IDataMessageListen
             // convert data
             String msg = this.dataUtil.sensorDataToJsonCloud(data);
             // upload data
-            if (resourceName.getResourceName().contains(ConfigConst.CONSTRAINED_DEVICE)){
-                resourceName = ResourceNameEnum.CLOUD_CDA_DEVICE;
-            }
-            else if(resourceName.getResourceName().contains(ConfigConst.GATEWAY_DEVICE)){
-                resourceName = ResourceNameEnum.CLOUD_GDA_DEVICE;
-            }else {
-                resourceName = ResourceNameEnum.CLOUD_OTHER;
-            }
-            this.cloudClient.publishMessage(resourceName, msg, cloudQos);
+            this.cloudClient.publishMessage(resourceName.getCloudEnum(), msg, cloudQos);
         }
     }
     private void handleUpstreamTransmission(ResourceNameEnum resourceName, ActuatorData data){
         _Logger.log(Level.FINE, String.format("Upstreaming an ActuatorData to %s", resourceName.getResourceName()));
+        // convert data
+        String msg = this.dataUtil.actuatorDataToJsonCloud(data);
+        // upload data
+        this.cloudClient.publishMessage(resourceName.getCloudEnum(), msg, cloudQos);
     }
     private void handleUpstreamTransmission(ResourceNameEnum resourceName, SystemPerformanceData data){
         if (enableCloudClient){
             // convert data
             String msg = this.dataUtil.systemPerformanceDataToJsonCloud(data);
             // upload data
-            if (resourceName.getResourceName().contains(ConfigConst.CONSTRAINED_DEVICE)){
-                resourceName = ResourceNameEnum.CLOUD_CDA_DEVICE;
-            }
-            else if(resourceName.getResourceName().contains(ConfigConst.GATEWAY_DEVICE)){
-                resourceName = ResourceNameEnum.CLOUD_GDA_DEVICE;
-            }else {
-                resourceName = ResourceNameEnum.CLOUD_OTHER;
-            }
-            this.cloudClient.publishMessage(resourceName, msg, cloudQos);
+            this.cloudClient.publishMessage(resourceName.getCloudEnum(), msg, cloudQos);
         }
     }
     private void handleUpstreamTransmission(ResourceNameEnum resourceName, SystemStateData data){

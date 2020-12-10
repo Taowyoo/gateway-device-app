@@ -64,7 +64,19 @@ public class DataUtil
 		String jsonData = gson.toJson(actuatorData);
 		return jsonData;
 	}
-	
+	public String actuatorDataToJsonCloud(ActuatorData actuatorData)
+	{
+		Map<String, Map> cloudNode = new HashMap<>();
+		Map<String,Object> node = new HashMap<>();
+		node.put("value", (double) actuatorData.getStatusCode());
+		node.put("timestamp", (double) actuatorData.getTimeStampMillis());
+		Map<String,Object> context = new HashMap<>();
+		context.put("state-data",actuatorData.getStateData());
+		node.put("context",context);
+		cloudNode.put(actuatorData.getName(),node);
+		String jsonData = gson.toJson(cloudNode);
+		return jsonData;
+	}
 	public String sensorDataToJson(SensorData sensorData)
 	{
 		String jsonData = gson.toJson(sensorData);

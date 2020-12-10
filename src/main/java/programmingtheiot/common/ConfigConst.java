@@ -45,6 +45,7 @@ public class ConfigConst
 	public static final String GATEWAY_DEVICE     = GATEWAY + DEVICE;
 	public static final String GATEWAY_SERVICE    = GATEWAY + SERVICE;
 	public static final String CLOUD_SERVICE      = CLOUD + SERVICE;
+	public static final String OTHER      		  = "Other";
 
 	/*****
 	 * Resource and Topic Names
@@ -69,6 +70,7 @@ public class ConfigConst
 	public static final String GDA_SYSTEM_PERF_MSG_RESOURCE  = PRODUCT_NAME + "/" + GATEWAY_DEVICE + "/" + SYSTEM_PERF_MSG;
 
 	public static final String CLOUD_PRESSURE_LED_CMD_RESOURCE = (ConfigConst.CONSTRAINED_DEVICE + "/"+ ConfigConst.CLOUD_PRESSURE_LED_NAME).toLowerCase();
+
 	/*****
 	 * Configuration Sections, Keys and Defaults
 	 */

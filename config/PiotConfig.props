@@ -49,7 +49,7 @@ enableCrypt    = False
 [Coap.GatewayService]
 credFile       = ./cred/PiotCoapCred.props
 certFile       = ./cert/PiotCoapLocalCertFile.pem
-host           = localhost
+host           = 10.1.10.209
 port           = 5683
 securePort     = 5684
 enableCrypt    = False
@@ -70,12 +70,12 @@ testCdaDataPath         = /tmp/cda-data
 testGdaRunTime          = -1
 
 # configurable limits for sensor
-humiditySimFloor   = 35
-humiditySimCeiling = 45
-pressureSimFloor   = 990
-pressureSimCeiling = 1010
+humiditySimFloor   = 30
+humiditySimCeiling = 60
+pressureSimFloor   = 950
+pressureSimCeiling = 1100
 tempSimFloor       = 18
-tempSimCeiling     = 22
+tempSimCeiling     = 28
 
 #
 # Persistence client configuration information

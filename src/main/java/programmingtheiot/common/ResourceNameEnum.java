@@ -31,9 +31,10 @@ public enum ResourceNameEnum
 	GDA_MGMT_STATUS_MSG_RESOURCE(ConfigConst.GDA_MGMT_STATUS_MSG_RESOURCE, true),
 	GDA_MGMT_STATUS_CMD_RESOURCE(ConfigConst.GDA_MGMT_CMD_MSG_RESOURCE, true),
 	GDA_SYSTEM_PERF_MSG_RESOURCE(ConfigConst.GDA_SYSTEM_PERF_MSG_RESOURCE, true),
+
 	CLOUD_GDA_DEVICE(ConfigConst.GATEWAY_DEVICE,false),
 	CLOUD_CDA_DEVICE(ConfigConst.CONSTRAINED_DEVICE,false),
-	CLOUD_OTHER("other",false),
+	CLOUD_OTHER(ConfigConst.OTHER,false),
 	CLOUD_PRESSURE_LED_CMD_RESOURCE(ConfigConst.CLOUD_PRESSURE_LED_CMD_RESOURCE,false);
 
 
@@ -118,7 +119,18 @@ public enum ResourceNameEnum
 		
 		return nameList;
 	}
-	
+
+	public ResourceNameEnum getCloudEnum(){
+		if (this.getResourceName().contains(ConfigConst.CONSTRAINED_DEVICE)){
+			return ResourceNameEnum.CLOUD_CDA_DEVICE;
+		}
+		else if(this.getResourceName().contains(ConfigConst.GATEWAY_DEVICE)){
+			return ResourceNameEnum.CLOUD_GDA_DEVICE;
+		}else {
+			return ResourceNameEnum.CLOUD_OTHER;
+		}
+	}
+
 	/**
 	 * 
 	 * @return boolean True if this resource is local to the GDA (meaning any

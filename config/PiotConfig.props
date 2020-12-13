@@ -36,7 +36,7 @@ enableCrypt    = True
 [Mqtt.GatewayService]
 # credFile       = ../keys/local_mqtt/client.key
 # certFile       = ../keys/local_mqtt/client.crt
-host           = localhost
+host           = 10.1.10.209
 port           = 1883
 securePort     = 1884
 defaultQoS     = 1
@@ -64,7 +64,7 @@ enableMqttClient        = True
 enableCoapServer        = False
 enableCloudClient       = True
 enableSmtpClient        = False
-enablePersistenceClient = False
+enablePersistenceClient = True
 testGdaDataPath         = /tmp/gda-data
 testCdaDataPath         = /tmp/cda-data
 testGdaRunTime          = -1
@@ -76,6 +76,9 @@ pressureSimFloor   = 950
 pressureSimCeiling = 1100
 tempSimFloor       = 18
 tempSimCeiling     = 28
+
+triggerHumidifierFloor   = 35
+triggerHumidifierCeiling = 60
 
 #
 # Persistence client configuration information

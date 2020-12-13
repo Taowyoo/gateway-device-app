@@ -170,7 +170,7 @@ public class CloudClientConnector extends MqttClientConnector implements ICloudC
 			@Override
 			public void run() {
 				switch (resourceNameEnum) {
-					case CLOUD_PRESSURE_LED_CMD_RESOURCE:
+					case CLOUD_CO2_LED_CMD_RESOURCE:
 						dataMessageListener.handleIncomingMessage(resourceNameEnum,msgStr);
 						break;
 					default:
@@ -192,7 +192,7 @@ public class CloudClientConnector extends MqttClientConnector implements ICloudC
 	@Override
 	protected void subscribeTopics(int qos) {
 		if (isConnected()) {
-			this.subscribeToTopic(this.topicPrefix+ResourceNameEnum.CLOUD_PRESSURE_LED_CMD_RESOURCE.getResourceName()+"/lv",qos);
+			this.subscribeToTopic(this.topicPrefix+ResourceNameEnum.CLOUD_CO2_LED_CMD_RESOURCE.getResourceName()+"/lv",qos);
 		}
 	}
 

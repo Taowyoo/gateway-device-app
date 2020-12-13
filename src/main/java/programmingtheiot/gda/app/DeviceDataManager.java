@@ -49,8 +49,8 @@ public class DeviceDataManager extends JedisPubSub implements IDataMessageListen
     private ConfigUtil configUtil = ConfigUtil.getInstance();
     private DataUtil dataUtil = DataUtil.getInstance();
 
-    private float humiditySimFloor;
-    private float humiditySimCeiling;
+    private float triggerHumidifierFloor;
+    private float triggerHumidifierCeiling;
 
     private RedisPersistenceAdapter redisClient = null;
     //	private MqttClientConnector mqttClient;
@@ -69,8 +69,8 @@ public class DeviceDataManager extends JedisPubSub implements IDataMessageListen
         this.enableSmtpClient = configUtil.getBoolean(ConfigConst.GATEWAY_DEVICE, ConfigConst.ENABLE_SMTP_CLIENT_KEY);
         this.enablePersistenceClient = configUtil.getBoolean(ConfigConst.GATEWAY_DEVICE, ConfigConst.ENABLE_PERSISTENCE_CLIENT_KEY);
 
-        this.humiditySimFloor = configUtil.getFloat(ConfigConst.GATEWAY_DEVICE, ConfigConst.HUMIDITY_SIM_FLOOR_KEY);
-        this.humiditySimCeiling = configUtil.getFloat(ConfigConst.GATEWAY_DEVICE, ConfigConst.HUMIDITY_SIM_CEILING_KEY);
+        this.triggerHumidifierFloor = configUtil.getFloat(ConfigConst.GATEWAY_DEVICE, ConfigConst.TRIGGER_HUMIDITY_FLOOR_KEY);
+        this.triggerHumidifierCeiling = configUtil.getFloat(ConfigConst.GATEWAY_DEVICE, ConfigConst.TRIGGER_HUMIDIT_CEILING_KEY);
 
         _Logger.log(Level.INFO, "Get config enablePersistenceClient: " + this.enablePersistenceClient);
         this.sysPerfManager = new SystemPerformanceManager();
@@ -91,8 +91,8 @@ public class DeviceDataManager extends JedisPubSub implements IDataMessageListen
         this.enableSmtpClient = enableSmtpClient;
         this.enablePersistenceClient = enablePersistenceClient;
 
-        this.humiditySimFloor = configUtil.getInteger(ConfigConst.GATEWAY_DEVICE, ConfigConst.HUMIDITY_SIM_FLOOR_KEY);
-        this.humiditySimCeiling = configUtil.getInteger(ConfigConst.GATEWAY_DEVICE, ConfigConst.HUMIDITY_SIM_CEILING_KEY);
+        this.triggerHumidifierFloor = configUtil.getFloat(ConfigConst.GATEWAY_DEVICE, ConfigConst.TRIGGER_HUMIDITY_FLOOR_KEY);
+        this.triggerHumidifierCeiling = configUtil.getFloat(ConfigConst.GATEWAY_DEVICE, ConfigConst.TRIGGER_HUMIDIT_CEILING_KEY);
 
         _Logger.log(Level.INFO, "Get config enablePersistenceClient: " + this.enablePersistenceClient);
         this.sysPerfManager = new SystemPerformanceManager();
@@ -191,13 +191,13 @@ public class DeviceDataManager extends JedisPubSub implements IDataMessageListen
     public boolean handleIncomingMessage(ResourceNameEnum resourceName, String msg) {
         _Logger.log(Level.INFO, String.format("Handling an IncomingMessage '%s' from '%s'", msg ,resourceName.getResourceName()));
         // only cloud connector will subscribe to CDA_ACTUATOR_CMD_RESOURCE
-        if(resourceName == ResourceNameEnum.CLOUD_PRESSURE_LED_CMD_RESOURCE) {
+        if(resourceName == ResourceNameEnum.CLOUD_CO2_LED_CMD_RESOURCE) {
             int val =(int) Double.parseDouble(msg);
             ActuatorData data = new ActuatorData();
             data.setActuatorType(ActuatorData.LED_DISPLAY_ACTUATOR_TYPE);
             if (val == 1) {
                 data.setCommand(ActuatorData.COMMAND_ON);
-                data.setStateData("Pressure too high");
+                data.setStateData("High CO2!");
             } else {
                 data.setCommand(ActuatorData.COMMAND_OFF);
             }
@@ -221,11 +221,11 @@ public class DeviceDataManager extends JedisPubSub implements IDataMessageListen
         }
         if (this.enablePersistenceClient) {
             this.redisClient.connectClient();
-            Runnable toRun = this.redisClient.subscribeToChannel(this,
-                    new ResourceNameEnum[]{ResourceNameEnum.CDA_SENSOR_MSG_RESOURCE,
-                    ResourceNameEnum.CDA_ACTUATOR_CMD_RESOURCE});
-            this.subCDAThread = new Thread(toRun);
-            this.subCDAThread.start();
+//            Runnable toRun = this.redisClient.subscribeToChannel(this,
+//                    new ResourceNameEnum[]{ResourceNameEnum.CDA_SENSOR_MSG_RESOURCE,
+//                    ResourceNameEnum.CDA_ACTUATOR_CMD_RESOURCE});
+//            this.subCDAThread = new Thread(toRun);
+//            this.subCDAThread.start();
         }
         if (this.enableCloudClient){
             this.cloudClient.connectClient();
@@ -337,14 +337,14 @@ public class DeviceDataManager extends JedisPubSub implements IDataMessageListen
         String ret = null;
         ActuatorData cmd = new ActuatorData();
         if (data.getSensorType() == SensorData.HUMIDITY_SENSOR_TYPE) {
-            if (data.getValue() < this.humiditySimFloor) {
+            if (data.getValue() < this.triggerHumidifierFloor) {
                 cmd.setCommand(ActuatorData.COMMAND_ON);
                 cmd.setActuatorType(ActuatorData.HUMIDIFIER_ACTUATOR_TYPE);
                 cmd.setStateData("Humidity too low");
                 ret = this.dataUtil.actuatorDataToJson(cmd);
                 return ret;
             }
-            if (data.getValue() > this.humiditySimCeiling) {
+            if (data.getValue() > this.triggerHumidifierCeiling) {
                 cmd.setCommand(ActuatorData.COMMAND_OFF);
                 cmd.setActuatorType(ActuatorData.HUMIDIFIER_ACTUATOR_TYPE);
                 cmd.setStateData("Humidity too high");

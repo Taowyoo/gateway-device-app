@@ -103,7 +103,7 @@ public class CloudClientConnectorTest
 		IDataMessageListener listener = new DefaultDataMessageListener();
 		
 		assertTrue(this.cloudClient.connectClient());
-		assertTrue(this.cloudClient.subscribeToTopic(ResourceNameEnum.CLOUD_PRESSURE_LED_CMD_RESOURCE, qos));
+		assertTrue(this.cloudClient.subscribeToTopic(ResourceNameEnum.CLOUD_CO2_LED_CMD_RESOURCE, qos));
 		
 		try {
 			Thread.sleep(5000);
@@ -131,7 +131,7 @@ public class CloudClientConnectorTest
 			// ignore
 		}
 		
-		assertTrue(this.cloudClient.unsubscribeFromTopic(ResourceNameEnum.CLOUD_PRESSURE_LED_CMD_RESOURCE));
+		assertTrue(this.cloudClient.unsubscribeFromTopic(ResourceNameEnum.CLOUD_CO2_LED_CMD_RESOURCE));
 
 		try {
 			Thread.sleep(5000);

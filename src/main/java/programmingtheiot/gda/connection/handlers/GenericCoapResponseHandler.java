@@ -19,7 +19,6 @@ import programmingtheiot.common.IDataMessageListener;
 /**
  * Generic CoAP response handler implementation
  * Implement basic logic to handle CoAP response from Server
- *
  */
 public class GenericCoapResponseHandler implements CoapHandler {
     // static
@@ -36,7 +35,6 @@ public class GenericCoapResponseHandler implements CoapHandler {
 
     /**
      * Default Constructor
-     *
      */
     public GenericCoapResponseHandler() {
         this((IDataMessageListener) null);
@@ -44,6 +42,7 @@ public class GenericCoapResponseHandler implements CoapHandler {
 
     /**
      * Constructor, init instance with given IDataMessageListener
+     *
      * @param listener Given IDataMessageListener
      */
     public GenericCoapResponseHandler(IDataMessageListener listener) {
@@ -59,6 +58,7 @@ public class GenericCoapResponseHandler implements CoapHandler {
 
     /**
      * Implements the CoapHandler interface to load CoapResponse
+     *
      * @param response Given CoapResponse
      */
     @Override

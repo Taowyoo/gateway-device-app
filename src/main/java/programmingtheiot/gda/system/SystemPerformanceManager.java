@@ -94,9 +94,9 @@ public class SystemPerformanceManager
 	{
 		SensorData cpuSensorData = this.cpuUtilTask.generateTelemetry();
 		SensorData memSensorData = this.memUtilTask.generateTelemetry();
-		_Logger.log(Level.INFO, "Got system util values, CPU: {0}, Mem: {1}.", new Object[]{cpuSensorData.getValue(), memSensorData.getValue()});
-		this.dataMessageListener.handleSensorMessage(ResourceNameEnum.GDA_MGMT_STATUS_MSG_RESOURCE, cpuSensorData);
-		this.dataMessageListener.handleSensorMessage(ResourceNameEnum.GDA_MGMT_STATUS_MSG_RESOURCE, memSensorData);
+		_Logger.log(Level.CONFIG, "Got system util values, CPU: {0}, Mem: {1}.", new Object[]{cpuSensorData.getValue(), memSensorData.getValue()});
+		this.dataMessageListener.handleSensorMessage(ResourceNameEnum.GDA_SYSTEM_PERF_MSG_RESOURCE, cpuSensorData);
+		this.dataMessageListener.handleSensorMessage(ResourceNameEnum.GDA_SYSTEM_PERF_MSG_RESOURCE, memSensorData);
 	}
 	
 	public void setDataMessageListener(IDataMessageListener listener)

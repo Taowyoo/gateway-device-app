@@ -1,10 +1,10 @@
 /**
  * This class is part of the Programming the Internet of Things project.
- * 
+ * <p>
  * It is provided as a simple shell to guide the student and assist with
  * implementation for the Programming the Internet of Things exercises,
  * and designed to be modified by the student as needed.
- */ 
+ */
 
 package programmingtheiot.gda.connection.handlers;
 
@@ -33,7 +33,8 @@ public class GenericCoapResourceHandler extends CoapResource
 		Logger.getLogger(GenericCoapResourceHandler.class.getName());
 	
 	// params
-	private IDataMessageListener dataMsgListener = null;
+	protected IDataMessageListener dataMsgListener = null;
+	protected ResourceNameEnum fullResourceNameEnum;
 	// constructors
 	
 	/**
@@ -41,30 +42,11 @@ public class GenericCoapResourceHandler extends CoapResource
 	 * 
 	 * @param resource Basically, the path (or topic)
 	 */
-	public GenericCoapResourceHandler(ResourceNameEnum resource)
-	{
-		this(resource.getResourceName());
-	}
-	
-	/**
-	 * Constructor.
-	 * 
-	 * @param resourceName The name of the resource.
-	 */
-	public GenericCoapResourceHandler(String resourceName)
+	public GenericCoapResourceHandler(String resourceName, ResourceNameEnum resource)
 	{
 		super(resourceName);
+		this.fullResourceNameEnum = resource;
 	}
-
-//	public GenericCoapResourceHandler(ResourceNameEnum resource, boolean observable)
-//	{
-//		this(resource);
-//		if (observable){
-//			setObservable(true); // enable observing
-//			setObserveType(CoAP.Type.CON); // configure the notification type to CONs
-//			getAttributes().setObservable(); // mark observable in the Link-Format
-//		}
-//	}
 
 	// public methods
 	
@@ -104,21 +86,6 @@ public class GenericCoapResourceHandler extends CoapResource
 		// accept the request
 		context.accept();
 
-//		String payload = context.getRequestText();
-//		if (payload != null){
-//			synchronized (data){
-//				if (data == null){
-//					data = payload;
-//					context.respond(ResponseCode.CREATED, String.format("'%s' created", this.getURI()));
-//				}
-//				else {
-//					data = payload;
-//					context.respond(ResponseCode.CHANGED, String.format("'%s' changed", this.getURI()));
-//				}
-//				if (this.getName().contains(ConfigConst.SENSOR_MSG))
-//			}
-//			changed();
-//		}
 		String msg = "Cannot to be POST"; // fill this in
 		// send an appropriate response
 		context.respond(ResponseCode.NOT_IMPLEMENTED, msg);

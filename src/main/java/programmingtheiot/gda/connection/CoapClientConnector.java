@@ -8,6 +8,7 @@
 
 package programmingtheiot.gda.connection;
 
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Level;
@@ -20,6 +21,7 @@ import org.eclipse.californium.core.WebLink;
 import org.eclipse.californium.core.coap.CoAP.ResponseCode;
 import org.eclipse.californium.core.coap.MediaTypeRegistry;
 
+import org.eclipse.californium.elements.exception.ConnectorException;
 import programmingtheiot.common.ConfigConst;
 import programmingtheiot.common.ConfigUtil;
 import programmingtheiot.common.IDataMessageListener;
@@ -120,7 +122,7 @@ public class CoapClientConnector implements IRequestResponseClient
 	{
 		_Logger.info("Discovering resources on CoAP server...");
 		this.clientConn.setURI("/.well-known/core");
-		this.clientConn.setTimeout(timeout);
+		this.clientConn.setTimeout((long)timeout);
 		if (resources == null){
 			resources = new HashSet<>();
 		}
@@ -166,9 +168,15 @@ public class CoapClientConnector implements IRequestResponseClient
 			this.clientConn.useNONs();
 		}
 
-		this.clientConn.setTimeout(timeout);
+		this.clientConn.setTimeout((long)timeout);
 		this.clientConn.setURI(this.serverAddr + "/" + resource.getResourceName());
-		response = this.clientConn.delete();
+		try {
+			response = this.clientConn.delete();
+		} catch (ConnectorException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 		if (response != null) {
 			// TODO: implement your logic here
@@ -207,9 +215,15 @@ public class CoapClientConnector implements IRequestResponseClient
 			this.clientConn.useNONs();
 		}
 
-		this.clientConn.setTimeout(timeout);
+		this.clientConn.setTimeout((long)timeout);
 		this.clientConn.setURI(this.serverAddr + "/" + resource.getResourceName());
-		response = this.clientConn.get();
+		try {
+			response = this.clientConn.get();
+		} catch (ConnectorException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 		if (response != null) {
 			// TODO: implement your logic here
@@ -249,11 +263,17 @@ public class CoapClientConnector implements IRequestResponseClient
 			this.clientConn.useNONs();
 		}
 
-		this.clientConn.setTimeout(timeout);
+		this.clientConn.setTimeout((long)timeout);
 		this.clientConn.setURI(this.serverAddr + "/" + resource.getResourceName());
 
 		// TODO: determine which MediaTypeRegistry const should be used for this call
-		response = this.clientConn.post(payload, MediaTypeRegistry.TEXT_PLAIN);
+		try {
+			response = this.clientConn.post(payload, MediaTypeRegistry.TEXT_PLAIN);
+		} catch (ConnectorException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 		if (response != null) {
 			// TODO: implement your logic here
@@ -293,11 +313,17 @@ public class CoapClientConnector implements IRequestResponseClient
 			this.clientConn.useNONs();
 		}
 
-		this.clientConn.setTimeout(timeout);
+		this.clientConn.setTimeout((long)timeout);
 		this.clientConn.setURI(this.serverAddr + "/" + resource.getResourceName());
 
 		// TODO: determine which MediaTypeRegistry const should be used for this call
-		response = this.clientConn.put(payload, MediaTypeRegistry.TEXT_PLAIN);
+		try {
+			response = this.clientConn.put(payload, MediaTypeRegistry.TEXT_PLAIN);
+		} catch (ConnectorException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 		if (response != null) {
 			// TODO: implement your logic here

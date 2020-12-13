@@ -140,7 +140,7 @@ public class CoapServerGateway
 
 			if (nextResource == null) {
 				if (queue.size() == 1){
-					nextResource = new GenericCoapResourceHandler(resourceName);
+					nextResource = new GenericCoapResourceHandler(resourceName,resource);
 					((GenericCoapResourceHandler)nextResource).setDataMessageListener(this.dataMsgListener);
 				}
 				else {

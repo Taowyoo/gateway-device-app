@@ -35,7 +35,7 @@ public enum ResourceNameEnum
 	CLOUD_GDA_DEVICE(ConfigConst.GATEWAY_DEVICE,false),
 	CLOUD_CDA_DEVICE(ConfigConst.CONSTRAINED_DEVICE,false),
 	CLOUD_OTHER(ConfigConst.OTHER,false),
-	CLOUD_PRESSURE_LED_CMD_RESOURCE(ConfigConst.CLOUD_PRESSURE_LED_CMD_RESOURCE,false);
+	CLOUD_CO2_LED_CMD_RESOURCE(ConfigConst.CLOUD_CO2_LED_CMD_RESOURCE,false);
 
 
 	private static final HashMap<String, ResourceNameEnum> _ResourceNameLookupMap = new HashMap<>();

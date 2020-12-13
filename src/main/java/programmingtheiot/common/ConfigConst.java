@@ -69,7 +69,7 @@ public class ConfigConst
 	public static final String GDA_MGMT_CMD_MSG_RESOURCE     = PRODUCT_NAME + "/" + GATEWAY_DEVICE + "/" + MGMT_STATUS_CMD;
 	public static final String GDA_SYSTEM_PERF_MSG_RESOURCE  = PRODUCT_NAME + "/" + GATEWAY_DEVICE + "/" + SYSTEM_PERF_MSG;
 
-	public static final String CLOUD_PRESSURE_LED_CMD_RESOURCE = (ConfigConst.CONSTRAINED_DEVICE + "/"+ ConfigConst.CLOUD_PRESSURE_LED_NAME).toLowerCase();
+	public static final String CLOUD_CO2_LED_CMD_RESOURCE = (ConfigConst.CONSTRAINED_DEVICE + "/"+ ConfigConst.CLOUD_PRESSURE_LED_NAME).toLowerCase();
 
 	/*****
 	 * Configuration Sections, Keys and Defaults
@@ -145,6 +145,9 @@ public class ConfigConst
 	public static final String TEMP_SIM_FLOOR_KEY       = "tempSimFloor";
 	public static final String TEMP_SIM_CEILING_KEY     = "tempSimCeiling";
 
+	// limits for trigger
+	public static final String TRIGGER_HUMIDIT_CEILING_KEY     = "triggerHumidifierCeiling";
+	public static final String TRIGGER_HUMIDITY_FLOOR_KEY       = "triggerHumidifierFloor";
 	// Data container names
 	public static final String SYS_PERF_DATA  = "SysPerfData";
 	public static final String SYS_STATE_DATA = "SysStateData";
@@ -161,7 +164,7 @@ public class ConfigConst
 	public static final String TEMP_SENSOR_NAME = "TempSensor";
 
 	// cloud variable for subscribe
-	public static final String CLOUD_PRESSURE_LED_NAME = "PressureLED";
+	public static final String CLOUD_PRESSURE_LED_NAME = "CO2LED";
 	// constructors
 	/**
 	 * 

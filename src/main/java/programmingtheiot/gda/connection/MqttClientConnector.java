@@ -253,7 +253,7 @@ public class MqttClientConnector implements IPubSubClient, MqttCallbackExtended
 					case CDA_MGMT_STATUS_MSG_RESOURCE:
 					case GDA_MGMT_STATUS_MSG_RESOURCE:
 					case CDA_ACTUATOR_CMD_RESOURCE:
-					case CLOUD_PRESSURE_LED_CMD_RESOURCE:
+					case CLOUD_CO2_LED_CMD_RESOURCE:
 						dataMessageListener.handleIncomingMessage(resourceNameEnum,msgStr);
 						break;
 					default:

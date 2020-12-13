@@ -185,7 +185,10 @@ public class RedisPersistenceAdapter implements IPersistenceClient
 	public boolean storeData(String topic, int qos, ActuatorData... data)
 	{
 		for (ActuatorData oneData : data){
-			jedis.zadd(topic,oneData.getTimeStampMillis(),dataUtil.actuatorDataToJson(oneData));
+			String json = dataUtil.actuatorDataToJson(oneData);
+			long timeStamp = oneData.getTimeStampMillis();
+			storeData(topic, json, oneData.getTimeStampMillis());
+			_Logger.log(Level.INFO, String.format("ZADD %s ActuatorData to topic: %s with score: %s",oneData.getName(),topic, timeStamp));
 		}
 		return true;
 	}
@@ -194,17 +197,28 @@ public class RedisPersistenceAdapter implements IPersistenceClient
 	public boolean storeData(String topic, int qos, SensorData... data)
 	{
 		for (SensorData oneData : data){
-			jedis.zadd(topic,oneData.getTimeStampMillis(),dataUtil.sensorDataToJson(oneData));
-			_Logger.log(Level.INFO, String.format("ZADD score: %s data: %s", oneData.getTimeStampMillis(),dataUtil.sensorDataToJson(oneData)));
+			String json = dataUtil.sensorDataToJson(oneData);
+			long timeStamp = oneData.getTimeStampMillis();
+			storeData(topic, json, oneData.getTimeStampMillis());
+			_Logger.log(Level.INFO, String.format("ZADD %s SensorData to topic: %s with score: %s",oneData.getName(),topic, timeStamp));
 		}
 		return true;
+	}
+
+	private void storeData(String topic, String json, long timeStampMillis) {
+
+		jedis.zadd(topic, timeStampMillis, json);
+
 	}
 
 	@Override
 	public boolean storeData(String topic, int qos, SystemPerformanceData... data)
 	{
 		for (SystemPerformanceData oneData : data){
-			jedis.zadd(topic,oneData.getTimeStampMillis(),dataUtil.systemPerformanceDataToJson(oneData));
+			String json = dataUtil.systemPerformanceDataToJson(oneData);
+			long timeStamp = oneData.getTimeStampMillis();
+			storeData(topic, json, timeStamp);
+			_Logger.log(Level.INFO, String.format("ZADD %s SystemPerformanceData to topic: %s with score: %s",oneData.getName(),topic, timeStamp));
 		}
 		return true;
 	}
@@ -251,7 +265,7 @@ public class RedisPersistenceAdapter implements IPersistenceClient
 	
 	private Jedis initClient()
 	{
-		Jedis newJedis = new Jedis(this.host, this.port);
+		Jedis newJedis = new Jedis(this.host, this.port,10000);
 		if (this.enableCrypt){
 			// TODO: Encryption related implementation
 		}

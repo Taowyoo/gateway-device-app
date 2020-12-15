@@ -16,6 +16,8 @@ import programmingtheiot.common.ConfigUtil;
 import programmingtheiot.gda.system.SystemPerformanceManager;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -67,8 +69,8 @@ public class GatewayDeviceApp
 		Logger logger = Logger.getLogger("");
 		FileHandler fh;
 		try {
-			// This block configure the logger with handler and formatter
-			fh = new FileHandler("logs/LogFile.log");
+			String timeStamp = new SimpleDateFormat("yyyy-MM-dd-HHmmss").format(new Date());
+			fh = new FileHandler(String.format("logs/LogFile_%s.log", timeStamp));
 			logger.addHandler(fh);
 			SimpleFormatter formatter = new SimpleFormatter();
 			fh.setFormatter(formatter);

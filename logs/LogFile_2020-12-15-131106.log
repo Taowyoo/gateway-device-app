@@ -1,0 +1,2239 @@
+Dec 15, 2020 1:11:06 PM programmingtheiot.gda.app.GatewayDeviceApp <init>
+INFO: Initializing GDA...
+Dec 15, 2020 1:11:06 PM programmingtheiot.gda.app.GatewayDeviceApp parseArgs
+INFO: Parsing args...
+Dec 15, 2020 1:11:06 PM programmingtheiot.gda.app.GatewayDeviceApp parseArgs
+INFO: Parsing 0 command line args.
+Dec 15, 2020 1:11:06 PM programmingtheiot.gda.app.GatewayDeviceApp initConfig
+INFO: Attempting to load configuration: Default.
+Dec 15, 2020 1:11:06 PM programmingtheiot.gda.app.DeviceDataManager <init>
+INFO: Get config enablePersistenceClient: true
+Dec 15, 2020 1:11:06 PM programmingtheiot.gda.system.SystemPerformanceManager <init>
+INFO: Initialize SystemPerformanceManager with pollSecs: 30.
+Dec 15, 2020 1:11:06 PM programmingtheiot.gda.connection.MqttClientConnector initSecureConnectionParameters
+INFO: Configuring TLS...
+Dec 15, 2020 1:11:06 PM programmingtheiot.gda.connection.MqttClientConnector initSecureConnectionParameters
+INFO: PEM file valid. Using secure connection: ../keys/UbidotsCloudCert.pem
+Dec 15, 2020 1:11:06 PM programmingtheiot.common.SimpleCertManagementUtil loadCertificate
+INFO: Configuring SSL using X.509 certificate from file: ../keys/UbidotsCloudCert.pem
+Dec 15, 2020 1:11:06 PM programmingtheiot.common.SimpleCertManagementUtil importCertificate
+INFO: Successfully imported X.509 certificate using entry name UbidotsCloudCert.pem.3188.1 from file: ../keys/UbidotsCloudCert.pem
+Dec 15, 2020 1:11:06 PM programmingtheiot.common.SimpleCertManagementUtil importCertificate
+INFO: Successfully imported X.509 certificate using entry name UbidotsCloudCert.pem.1968.2 from file: ../keys/UbidotsCloudCert.pem
+Dec 15, 2020 1:11:06 PM programmingtheiot.common.SimpleCertManagementUtil loadCertificate
+INFO: X.509 certificate load and SSL socket init successful from file: ../keys/UbidotsCloudCert.pem
+Dec 15, 2020 1:11:06 PM programmingtheiot.gda.connection.MqttClientConnector initSecureConnectionParameters
+INFO: TLS enabled.
+Dec 15, 2020 1:11:06 PM programmingtheiot.gda.connection.MqttClientConnector initCredentialConnectionParameters
+INFO: Load userToken from credFile: BBFF-f3akoXm3JeqFFBrWMX5r2qz6RKF4bK
+Dec 15, 2020 1:11:06 PM programmingtheiot.gda.app.GatewayDeviceApp startApp
+INFO: Starting GDA...
+Dec 15, 2020 1:11:06 PM programmingtheiot.gda.app.DeviceDataManager startManager
+INFO: DeviceDataManager starting...
+Dec 15, 2020 1:11:06 PM programmingtheiot.gda.connection.MqttClientConnector connectClient
+INFO: Creating MQTT Client, broker: 'tcp://10.1.10.209:1883', client id: 'paho109203705055900'...
+Dec 15, 2020 1:11:06 PM programmingtheiot.gda.connection.MqttClientConnector connectClient
+INFO: Connecting to broker...
+Dec 15, 2020 1:11:07 PM programmingtheiot.gda.connection.RedisPersistenceAdapter connectClient
+INFO: Redis client is connecting to server...
+Dec 15, 2020 1:11:07 PM programmingtheiot.gda.connection.MqttClientConnector connectComplete
+INFO: [Callback] Complete to connect to broker 'tcp://10.1.10.209:1883'
+Dec 15, 2020 1:11:07 PM programmingtheiot.gda.connection.MqttClientConnector subscribeToTopic
+INFO: Subscribing to topic 'PIOT/ConstrainedDevice/ActuatorResponse' with QoS 1 ...
+Dec 15, 2020 1:11:07 PM programmingtheiot.gda.connection.MqttClientConnector subscribeToTopic
+INFO: Subscribing to topic 'PIOT/ConstrainedDevice/SensorMsg' with QoS 1 ...
+Dec 15, 2020 1:11:07 PM programmingtheiot.gda.connection.RedisPersistenceAdapter connectClient
+INFO: Redis client succeeded to connect to server!
+Dec 15, 2020 1:11:07 PM programmingtheiot.gda.connection.MqttClientConnector connectClient
+INFO: Creating MQTT Client, broker: 'ssl://industrial.api.ubidots.com:8883', client id: 'paho109203714310900'...
+Dec 15, 2020 1:11:07 PM programmingtheiot.gda.connection.MqttClientConnector subscribeToTopic
+INFO: Subscribing to topic 'PIOT/ConstrainedDevice/SystemPerfMsg' with QoS 1 ...
+Dec 15, 2020 1:11:07 PM programmingtheiot.gda.connection.MqttClientConnector connectClient
+INFO: Connecting to broker...
+Dec 15, 2020 1:11:07 PM programmingtheiot.gda.system.SystemPerformanceManager startManager
+INFO: Starting SystemPerformanceManager  ...
+Dec 15, 2020 1:11:07 PM programmingtheiot.gda.connection.MqttClientConnector connectComplete
+INFO: [Callback] Complete to connect to broker 'ssl://industrial.api.ubidots.com:8883'
+Dec 15, 2020 1:11:07 PM programmingtheiot.gda.system.SystemPerformanceManager startManager
+INFO: Starting a schedule for polling Telemetry data ...
+Dec 15, 2020 1:11:07 PM programmingtheiot.gda.connection.MqttClientConnector subscribeToTopic
+INFO: Subscribing to topic '/v1.6/devices/constraineddevice/co2led/lv' with QoS 1 ...
+Dec 15, 2020 1:11:07 PM programmingtheiot.gda.system.SystemPerformanceManager startManager
+INFO: Schedule for polling Telemetry data started.
+Dec 15, 2020 1:11:07 PM programmingtheiot.gda.system.SystemPerformanceManager startManager
+INFO: SystemPerformanceManager Started.
+Dec 15, 2020 1:11:07 PM programmingtheiot.gda.app.DeviceDataManager startManager
+INFO: DeviceDataManager started.
+Dec 15, 2020 1:11:07 PM programmingtheiot.gda.app.GatewayDeviceApp startApp
+INFO: GDA started successfully.
+Dec 15, 2020 1:11:07 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=0, value=-1.0} BaseIotData{name='CpuUtil', timeStamp='2020-12-15 13:11:07.000962', hasError=false, statusCode=0}
+Dec 15, 2020 1:11:07 PM programmingtheiot.gda.connection.RedisPersistenceAdapter storeData
+INFO: ZADD CpuUtil SensorData to topic: PIOT/GatewayDevice/SystemPerfMsg with score: 1608066667962
+Dec 15, 2020 1:11:07 PM programmingtheiot.gda.connection.MqttClientConnector publishMessage
+INFO: Publishing to topic '/v1.6/devices/GatewayDevice' with QoS 1, msg:
+{
+  "CpuUtil": {
+    "value": -1.0,
+    "timestamp": 1.608066667962E12
+  }
+}
+Dec 15, 2020 1:11:08 PM programmingtheiot.gda.connection.CloudClientConnector messageArrived
+INFO: [Callback] Receive a message from topic '/v1.6/devices/constraineddevice/co2led/lv':
+0.0
+Dec 15, 2020 1:11:08 PM programmingtheiot.gda.connection.CloudClientConnector messageArrived
+INFO: [Callback] Processed topic: 'constraineddevice/co2led'
+Dec 15, 2020 1:11:08 PM programmingtheiot.gda.app.DeviceDataManager handleIncomingMessage
+INFO: Handling an IncomingMessage '0.0' from 'constraineddevice/co2led'
+Dec 15, 2020 1:11:08 PM programmingtheiot.gda.connection.MqttClientConnector publishMessage
+INFO: Publishing to topic 'PIOT/ConstrainedDevice/ActuatorCmd' with QoS 1, msg:
+{
+  "actuatorType": 100,
+  "command": 0,
+  "isResponse": false,
+  "value": 0.0,
+  "stateData": "Default state data string",
+  "name": "Not Set",
+  "timeStamp": "2020-12-15 13:11:08.000096",
+  "hasError": false,
+  "statusCode": 0
+}
+Dec 15, 2020 1:11:08 PM programmingtheiot.gda.connection.MqttClientConnector deliveryComplete
+INFO: [Callback] Complete to delivery to broker, response: PUBACK msgId 4
+Dec 15, 2020 1:11:08 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=0, value=1.2561696E7} BaseIotData{name='MemUtil', timeStamp='2020-12-15 13:11:07.000972', hasError=false, statusCode=0}
+Dec 15, 2020 1:11:08 PM programmingtheiot.gda.connection.MqttClientConnector deliveryComplete
+INFO: [Callback] Complete to delivery to broker, response: PUBACK msgId 2
+Dec 15, 2020 1:11:08 PM programmingtheiot.gda.connection.RedisPersistenceAdapter storeData
+INFO: ZADD MemUtil SensorData to topic: PIOT/GatewayDevice/SystemPerfMsg with score: 1608066667972
+Dec 15, 2020 1:11:08 PM programmingtheiot.gda.connection.MqttClientConnector publishMessage
+INFO: Publishing to topic '/v1.6/devices/GatewayDevice' with QoS 1, msg:
+{
+  "MemUtil": {
+    "value": 1.2561696E7,
+    "timestamp": 1.608066667972E12
+  }
+}
+Dec 15, 2020 1:11:08 PM programmingtheiot.gda.connection.MqttClientConnector deliveryComplete
+INFO: [Callback] Complete to delivery to broker, response: PUBACK msgId 3
+Dec 15, 2020 1:11:37 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=0, value=-1.0} BaseIotData{name='CpuUtil', timeStamp='2020-12-15 13:11:37.000961', hasError=false, statusCode=0}
+Dec 15, 2020 1:11:37 PM programmingtheiot.gda.connection.RedisPersistenceAdapter storeData
+INFO: ZADD CpuUtil SensorData to topic: PIOT/GatewayDevice/SystemPerfMsg with score: 1608066697961
+Dec 15, 2020 1:11:37 PM programmingtheiot.gda.connection.MqttClientConnector publishMessage
+INFO: Publishing to topic '/v1.6/devices/GatewayDevice' with QoS 1, msg:
+{
+  "CpuUtil": {
+    "value": -1.0,
+    "timestamp": 1.608066697961E12
+  }
+}
+Dec 15, 2020 1:11:38 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=0, value=1.4658848E7} BaseIotData{name='MemUtil', timeStamp='2020-12-15 13:11:37.000961', hasError=false, statusCode=0}
+Dec 15, 2020 1:11:38 PM programmingtheiot.gda.connection.MqttClientConnector deliveryComplete
+INFO: [Callback] Complete to delivery to broker, response: PUBACK msgId 4
+Dec 15, 2020 1:11:38 PM programmingtheiot.gda.connection.RedisPersistenceAdapter storeData
+INFO: ZADD MemUtil SensorData to topic: PIOT/GatewayDevice/SystemPerfMsg with score: 1608066697961
+Dec 15, 2020 1:11:38 PM programmingtheiot.gda.connection.MqttClientConnector publishMessage
+INFO: Publishing to topic '/v1.6/devices/GatewayDevice' with QoS 1, msg:
+{
+  "MemUtil": {
+    "value": 1.4658848E7,
+    "timestamp": 1.608066697961E12
+  }
+}
+Dec 15, 2020 1:11:38 PM programmingtheiot.gda.connection.MqttClientConnector deliveryComplete
+INFO: [Callback] Complete to delivery to broker, response: PUBACK msgId 5
+Dec 15, 2020 1:12:07 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=0, value=-1.0} BaseIotData{name='CpuUtil', timeStamp='2020-12-15 13:12:07.000962', hasError=false, statusCode=0}
+Dec 15, 2020 1:12:07 PM programmingtheiot.gda.connection.RedisPersistenceAdapter storeData
+INFO: ZADD CpuUtil SensorData to topic: PIOT/GatewayDevice/SystemPerfMsg with score: 1608066727962
+Dec 15, 2020 1:12:07 PM programmingtheiot.gda.connection.MqttClientConnector publishMessage
+INFO: Publishing to topic '/v1.6/devices/GatewayDevice' with QoS 1, msg:
+{
+  "CpuUtil": {
+    "value": -1.0,
+    "timestamp": 1.608066727962E12
+  }
+}
+Dec 15, 2020 1:12:08 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=0, value=1.6756E7} BaseIotData{name='MemUtil', timeStamp='2020-12-15 13:12:07.000962', hasError=false, statusCode=0}
+Dec 15, 2020 1:12:08 PM programmingtheiot.gda.connection.MqttClientConnector deliveryComplete
+INFO: [Callback] Complete to delivery to broker, response: PUBACK msgId 6
+Dec 15, 2020 1:12:08 PM programmingtheiot.gda.connection.RedisPersistenceAdapter storeData
+INFO: ZADD MemUtil SensorData to topic: PIOT/GatewayDevice/SystemPerfMsg with score: 1608066727962
+Dec 15, 2020 1:12:08 PM programmingtheiot.gda.connection.MqttClientConnector publishMessage
+INFO: Publishing to topic '/v1.6/devices/GatewayDevice' with QoS 1, msg:
+{
+  "MemUtil": {
+    "value": 1.6756E7,
+    "timestamp": 1.608066727962E12
+  }
+}
+Dec 15, 2020 1:12:08 PM programmingtheiot.gda.connection.MqttClientConnector deliveryComplete
+INFO: [Callback] Complete to delivery to broker, response: PUBACK msgId 7
+Dec 15, 2020 1:12:37 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=0, value=-1.0} BaseIotData{name='CpuUtil', timeStamp='2020-12-15 13:12:37.000961', hasError=false, statusCode=0}
+Dec 15, 2020 1:12:37 PM programmingtheiot.gda.connection.RedisPersistenceAdapter storeData
+INFO: ZADD CpuUtil SensorData to topic: PIOT/GatewayDevice/SystemPerfMsg with score: 1608066757961
+Dec 15, 2020 1:12:37 PM programmingtheiot.gda.connection.MqttClientConnector publishMessage
+INFO: Publishing to topic '/v1.6/devices/GatewayDevice' with QoS 1, msg:
+{
+  "CpuUtil": {
+    "value": -1.0,
+    "timestamp": 1.608066757961E12
+  }
+}
+Dec 15, 2020 1:12:38 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=0, value=1.8853152E7} BaseIotData{name='MemUtil', timeStamp='2020-12-15 13:12:37.000961', hasError=false, statusCode=0}
+Dec 15, 2020 1:12:38 PM programmingtheiot.gda.connection.MqttClientConnector deliveryComplete
+INFO: [Callback] Complete to delivery to broker, response: PUBACK msgId 8
+Dec 15, 2020 1:12:38 PM programmingtheiot.gda.connection.RedisPersistenceAdapter storeData
+INFO: ZADD MemUtil SensorData to topic: PIOT/GatewayDevice/SystemPerfMsg with score: 1608066757961
+Dec 15, 2020 1:12:38 PM programmingtheiot.gda.connection.MqttClientConnector publishMessage
+INFO: Publishing to topic '/v1.6/devices/GatewayDevice' with QoS 1, msg:
+{
+  "MemUtil": {
+    "value": 1.8853152E7,
+    "timestamp": 1.608066757961E12
+  }
+}
+Dec 15, 2020 1:12:38 PM programmingtheiot.gda.connection.MqttClientConnector deliveryComplete
+INFO: [Callback] Complete to delivery to broker, response: PUBACK msgId 9
+Dec 15, 2020 1:13:07 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=0, value=-1.0} BaseIotData{name='CpuUtil', timeStamp='2020-12-15 13:13:07.000961', hasError=false, statusCode=0}
+Dec 15, 2020 1:13:07 PM programmingtheiot.gda.connection.RedisPersistenceAdapter storeData
+INFO: ZADD CpuUtil SensorData to topic: PIOT/GatewayDevice/SystemPerfMsg with score: 1608066787961
+Dec 15, 2020 1:13:07 PM programmingtheiot.gda.connection.MqttClientConnector publishMessage
+INFO: Publishing to topic '/v1.6/devices/GatewayDevice' with QoS 1, msg:
+{
+  "CpuUtil": {
+    "value": -1.0,
+    "timestamp": 1.608066787961E12
+  }
+}
+Dec 15, 2020 1:13:08 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=0, value=2.0950304E7} BaseIotData{name='MemUtil', timeStamp='2020-12-15 13:13:07.000961', hasError=false, statusCode=0}
+Dec 15, 2020 1:13:08 PM programmingtheiot.gda.connection.MqttClientConnector deliveryComplete
+INFO: [Callback] Complete to delivery to broker, response: PUBACK msgId 10
+Dec 15, 2020 1:13:08 PM programmingtheiot.gda.connection.RedisPersistenceAdapter storeData
+INFO: ZADD MemUtil SensorData to topic: PIOT/GatewayDevice/SystemPerfMsg with score: 1608066787961
+Dec 15, 2020 1:13:08 PM programmingtheiot.gda.connection.MqttClientConnector publishMessage
+INFO: Publishing to topic '/v1.6/devices/GatewayDevice' with QoS 1, msg:
+{
+  "MemUtil": {
+    "value": 2.0950304E7,
+    "timestamp": 1.608066787961E12
+  }
+}
+Dec 15, 2020 1:13:08 PM programmingtheiot.gda.connection.MqttClientConnector deliveryComplete
+INFO: [Callback] Complete to delivery to broker, response: PUBACK msgId 11
+Dec 15, 2020 1:13:08 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SystemPerfMsg':
+{
+  "name": "SysPerfData",
+  "timeStamp": "2020-12-15 13:13:08.766607",
+  "hasError": false,
+  "statusCode": 0,
+  "cpuUtil": 10.4,
+  "diskUtil": 0.39818786721885324,
+  "memUtil": 7.9
+}
+Dec 15, 2020 1:13:08 PM programmingtheiot.gda.app.DeviceDataManager handleSystemPerformanceMessage
+INFO: Handling a SystemPerformanceMessage: SystemPerformanceData{cpuUtil=10.4, diskUtil=0.39818788, memUtil=7.9} BaseIotData{name='SysPerfData', timeStamp='2020-12-15 13:13:08.766607', hasError=false, statusCode=0}
+Dec 15, 2020 1:13:08 PM programmingtheiot.gda.connection.RedisPersistenceAdapter storeData
+INFO: ZADD SysPerfData SystemPerformanceData to topic: PIOT/ConstrainedDevice/SystemPerfMsg with score: 1608067554607
+Dec 15, 2020 1:13:08 PM programmingtheiot.gda.connection.MqttClientConnector publishMessage
+INFO: Publishing to topic '/v1.6/devices/ConstrainedDevice' with QoS 1, msg:
+{
+  "CpuUtil": {
+    "value": 10.399999618530273,
+    "timestamp": 1.608067554607E12
+  },
+  "MemUtil": {
+    "value": 7.900000095367432,
+    "timestamp": 1.608067554607E12
+  },
+  "DiskUtil": {
+    "value": 0.39818787574768066,
+    "timestamp": 1.608067554607E12
+  }
+}
+Dec 15, 2020 1:13:08 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "TempSensor",
+  "timeStamp": "2020-12-15 13:13:08.763856",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 3,
+  "value": 24.13123321533203
+}
+Dec 15, 2020 1:13:08 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "PressureSensor",
+  "timeStamp": "2020-12-15 13:13:08.762104",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 2,
+  "value": 1026.091064453125
+}
+Dec 15, 2020 1:13:08 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=3, value=24.131233} BaseIotData{name='TempSensor', timeStamp='2020-12-15 13:13:08.763856', hasError=false, statusCode=0}
+Dec 15, 2020 1:13:08 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "HumiditySensor",
+  "timeStamp": "2020-12-15 13:13:08.749252",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 1,
+  "value": 37.85820007324219
+}
+Dec 15, 2020 1:13:08 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=2, value=1026.0911} BaseIotData{name='PressureSensor', timeStamp='2020-12-15 13:13:08.762104', hasError=false, statusCode=0}
+Dec 15, 2020 1:13:08 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "CO2Sensor",
+  "timeStamp": "2020-12-15 13:13:08.801030",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 4,
+  "value": 407.0
+}
+Dec 15, 2020 1:13:08 PM programmingtheiot.gda.connection.RedisPersistenceAdapter storeData
+INFO: ZADD TempSensor SensorData to topic: PIOT/ConstrainedDevice/SensorMsg with score: 1608067551856
+Dec 15, 2020 1:13:08 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=1, value=37.8582} BaseIotData{name='HumiditySensor', timeStamp='2020-12-15 13:13:08.749252', hasError=false, statusCode=0}
+Dec 15, 2020 1:13:08 PM programmingtheiot.gda.connection.RedisPersistenceAdapter storeData
+INFO: ZADD PressureSensor SensorData to topic: PIOT/ConstrainedDevice/SensorMsg with score: 1608067550104
+Dec 15, 2020 1:13:08 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=4, value=407.0} BaseIotData{name='CO2Sensor', timeStamp='2020-12-15 13:13:08.801030', hasError=false, statusCode=0}
+Dec 15, 2020 1:13:08 PM programmingtheiot.gda.connection.MqttClientConnector publishMessage
+INFO: Publishing to topic '/v1.6/devices/ConstrainedDevice' with QoS 1, msg:
+{
+  "TempSensor": {
+    "value": 24.13123321533203,
+    "timestamp": 1.608067551856E12
+  }
+}
+Dec 15, 2020 1:13:08 PM programmingtheiot.gda.connection.MqttClientConnector publishMessage
+INFO: Publishing to topic '/v1.6/devices/ConstrainedDevice' with QoS 1, msg:
+{
+  "PressureSensor": {
+    "value": 1026.091064453125,
+    "timestamp": 1.608067550104E12
+  }
+}
+Dec 15, 2020 1:13:08 PM programmingtheiot.gda.connection.RedisPersistenceAdapter storeData
+INFO: ZADD HumiditySensor SensorData to topic: PIOT/ConstrainedDevice/SensorMsg with score: 1608067537252
+Dec 15, 2020 1:13:08 PM programmingtheiot.gda.connection.RedisPersistenceAdapter storeData
+INFO: ZADD CO2Sensor SensorData to topic: PIOT/ConstrainedDevice/SensorMsg with score: 1608067589030
+Dec 15, 2020 1:13:08 PM programmingtheiot.gda.connection.MqttClientConnector publishMessage
+INFO: Publishing to topic '/v1.6/devices/ConstrainedDevice' with QoS 1, msg:
+{
+  "HumiditySensor": {
+    "value": 37.85820007324219,
+    "timestamp": 1.608067537252E12
+  }
+}
+Dec 15, 2020 1:13:08 PM programmingtheiot.gda.connection.MqttClientConnector publishMessage
+INFO: Publishing to topic '/v1.6/devices/ConstrainedDevice' with QoS 1, msg:
+{
+  "CO2Sensor": {
+    "value": 407.0,
+    "timestamp": 1.60806758903E12
+  }
+}
+Dec 15, 2020 1:13:08 PM programmingtheiot.gda.connection.MqttClientConnector deliveryComplete
+INFO: [Callback] Complete to delivery to broker, response: PUBACK msgId 12
+Dec 15, 2020 1:13:08 PM programmingtheiot.gda.connection.MqttClientConnector deliveryComplete
+INFO: [Callback] Complete to delivery to broker, response: PUBACK msgId 13
+Dec 15, 2020 1:13:08 PM programmingtheiot.gda.connection.MqttClientConnector deliveryComplete
+INFO: [Callback] Complete to delivery to broker, response: PUBACK msgId 14
+Dec 15, 2020 1:13:08 PM programmingtheiot.gda.connection.MqttClientConnector deliveryComplete
+INFO: [Callback] Complete to delivery to broker, response: PUBACK msgId 15
+Dec 15, 2020 1:13:08 PM programmingtheiot.gda.connection.MqttClientConnector deliveryComplete
+INFO: [Callback] Complete to delivery to broker, response: PUBACK msgId 16
+Dec 15, 2020 1:13:23 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SystemPerfMsg':
+{
+  "name": "SysPerfData",
+  "timeStamp": "2020-12-15 13:13:23.747792",
+  "hasError": false,
+  "statusCode": 0,
+  "cpuUtil": 10.7,
+  "diskUtil": 0.39818872753097734,
+  "memUtil": 7.9
+}
+Dec 15, 2020 1:13:23 PM programmingtheiot.gda.app.DeviceDataManager handleSystemPerformanceMessage
+INFO: Handling a SystemPerformanceMessage: SystemPerformanceData{cpuUtil=10.7, diskUtil=0.39818874, memUtil=7.9} BaseIotData{name='SysPerfData', timeStamp='2020-12-15 13:13:23.747792', hasError=false, statusCode=0}
+Dec 15, 2020 1:13:23 PM programmingtheiot.gda.connection.RedisPersistenceAdapter storeData
+INFO: ZADD SysPerfData SystemPerformanceData to topic: PIOT/ConstrainedDevice/SystemPerfMsg with score: 1608067550792
+Dec 15, 2020 1:13:23 PM programmingtheiot.gda.connection.MqttClientConnector publishMessage
+INFO: Publishing to topic '/v1.6/devices/ConstrainedDevice' with QoS 1, msg:
+{
+  "CpuUtil": {
+    "value": 10.699999809265137,
+    "timestamp": 1.608067550792E12
+  },
+  "MemUtil": {
+    "value": 7.900000095367432,
+    "timestamp": 1.608067550792E12
+  },
+  "DiskUtil": {
+    "value": 0.3981887400150299,
+    "timestamp": 1.608067550792E12
+  }
+}
+Dec 15, 2020 1:13:23 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "TempSensor",
+  "timeStamp": "2020-12-15 13:13:23.757200",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 3,
+  "value": 24.167591094970703
+}
+Dec 15, 2020 1:13:23 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "PressureSensor",
+  "timeStamp": "2020-12-15 13:13:23.755669",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 2,
+  "value": 1026.12158203125
+}
+Dec 15, 2020 1:13:23 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "HumiditySensor",
+  "timeStamp": "2020-12-15 13:13:23.750046",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 1,
+  "value": 38.209449768066406
+}
+Dec 15, 2020 1:13:23 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=3, value=24.167591} BaseIotData{name='TempSensor', timeStamp='2020-12-15 13:13:23.757200', hasError=false, statusCode=0}
+Dec 15, 2020 1:13:23 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=2, value=1026.1216} BaseIotData{name='PressureSensor', timeStamp='2020-12-15 13:13:23.755669', hasError=false, statusCode=0}
+Dec 15, 2020 1:13:23 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "CO2Sensor",
+  "timeStamp": "2020-12-15 13:13:23.774434",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 4,
+  "value": 400.0
+}
+Dec 15, 2020 1:13:23 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=1, value=38.20945} BaseIotData{name='HumiditySensor', timeStamp='2020-12-15 13:13:23.750046', hasError=false, statusCode=0}
+Dec 15, 2020 1:13:23 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=4, value=400.0} BaseIotData{name='CO2Sensor', timeStamp='2020-12-15 13:13:23.774434', hasError=false, statusCode=0}
+Dec 15, 2020 1:13:23 PM programmingtheiot.gda.connection.RedisPersistenceAdapter storeData
+INFO: ZADD TempSensor SensorData to topic: PIOT/ConstrainedDevice/SensorMsg with score: 1608067560200
+Dec 15, 2020 1:13:23 PM programmingtheiot.gda.connection.RedisPersistenceAdapter storeData
+INFO: ZADD HumiditySensor SensorData to topic: PIOT/ConstrainedDevice/SensorMsg with score: 1608067553046
+Dec 15, 2020 1:13:23 PM programmingtheiot.gda.connection.RedisPersistenceAdapter storeData
+INFO: ZADD PressureSensor SensorData to topic: PIOT/ConstrainedDevice/SensorMsg with score: 1608067558669
+Dec 15, 2020 1:13:23 PM programmingtheiot.gda.connection.MqttClientConnector publishMessage
+INFO: Publishing to topic '/v1.6/devices/ConstrainedDevice' with QoS 1, msg:
+{
+  "TempSensor": {
+    "value": 24.167591094970703,
+    "timestamp": 1.6080675602E12
+  }
+}
+Dec 15, 2020 1:13:23 PM programmingtheiot.gda.connection.RedisPersistenceAdapter storeData
+INFO: ZADD CO2Sensor SensorData to topic: PIOT/ConstrainedDevice/SensorMsg with score: 1608067577434
+Dec 15, 2020 1:13:23 PM programmingtheiot.gda.connection.MqttClientConnector publishMessage
+INFO: Publishing to topic '/v1.6/devices/ConstrainedDevice' with QoS 1, msg:
+{
+  "PressureSensor": {
+    "value": 1026.12158203125,
+    "timestamp": 1.608067558669E12
+  }
+}
+Dec 15, 2020 1:13:23 PM programmingtheiot.gda.connection.MqttClientConnector publishMessage
+INFO: Publishing to topic '/v1.6/devices/ConstrainedDevice' with QoS 1, msg:
+{
+  "HumiditySensor": {
+    "value": 38.209449768066406,
+    "timestamp": 1.608067553046E12
+  }
+}
+Dec 15, 2020 1:13:23 PM programmingtheiot.gda.connection.MqttClientConnector publishMessage
+INFO: Publishing to topic '/v1.6/devices/ConstrainedDevice' with QoS 1, msg:
+{
+  "CO2Sensor": {
+    "value": 400.0,
+    "timestamp": 1.608067577434E12
+  }
+}
+Dec 15, 2020 1:13:23 PM programmingtheiot.gda.connection.MqttClientConnector deliveryComplete
+INFO: [Callback] Complete to delivery to broker, response: PUBACK msgId 17
+Dec 15, 2020 1:13:23 PM programmingtheiot.gda.connection.MqttClientConnector deliveryComplete
+INFO: [Callback] Complete to delivery to broker, response: PUBACK msgId 18
+Dec 15, 2020 1:13:23 PM programmingtheiot.gda.connection.MqttClientConnector deliveryComplete
+INFO: [Callback] Complete to delivery to broker, response: PUBACK msgId 19
+Dec 15, 2020 1:13:23 PM programmingtheiot.gda.connection.MqttClientConnector deliveryComplete
+INFO: [Callback] Complete to delivery to broker, response: PUBACK msgId 20
+Dec 15, 2020 1:13:23 PM programmingtheiot.gda.connection.MqttClientConnector deliveryComplete
+INFO: [Callback] Complete to delivery to broker, response: PUBACK msgId 21
+Dec 15, 2020 1:13:37 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=0, value=-1.0} BaseIotData{name='CpuUtil', timeStamp='2020-12-15 13:13:37.000979', hasError=false, statusCode=0}
+Dec 15, 2020 1:13:37 PM programmingtheiot.gda.connection.RedisPersistenceAdapter storeData
+INFO: ZADD CpuUtil SensorData to topic: PIOT/GatewayDevice/SystemPerfMsg with score: 1608066817979
+Dec 15, 2020 1:13:37 PM programmingtheiot.gda.connection.MqttClientConnector publishMessage
+INFO: Publishing to topic '/v1.6/devices/GatewayDevice' with QoS 1, msg:
+{
+  "CpuUtil": {
+    "value": -1.0,
+    "timestamp": 1.608066817979E12
+  }
+}
+Dec 15, 2020 1:13:38 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=0, value=2.3047456E7} BaseIotData{name='MemUtil', timeStamp='2020-12-15 13:13:37.000979', hasError=false, statusCode=0}
+Dec 15, 2020 1:13:38 PM programmingtheiot.gda.connection.MqttClientConnector deliveryComplete
+INFO: [Callback] Complete to delivery to broker, response: PUBACK msgId 22
+Dec 15, 2020 1:13:38 PM programmingtheiot.gda.connection.RedisPersistenceAdapter storeData
+INFO: ZADD MemUtil SensorData to topic: PIOT/GatewayDevice/SystemPerfMsg with score: 1608066817979
+Dec 15, 2020 1:13:38 PM programmingtheiot.gda.connection.MqttClientConnector publishMessage
+INFO: Publishing to topic '/v1.6/devices/GatewayDevice' with QoS 1, msg:
+{
+  "MemUtil": {
+    "value": 2.3047456E7,
+    "timestamp": 1.608066817979E12
+  }
+}
+Dec 15, 2020 1:13:38 PM programmingtheiot.gda.connection.MqttClientConnector deliveryComplete
+INFO: [Callback] Complete to delivery to broker, response: PUBACK msgId 23
+Dec 15, 2020 1:13:38 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "TempSensor",
+  "timeStamp": "2020-12-15 13:13:38.760675",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 3,
+  "value": 24.185768127441406
+}
+Dec 15, 2020 1:13:38 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=3, value=24.185768} BaseIotData{name='TempSensor', timeStamp='2020-12-15 13:13:38.760675', hasError=false, statusCode=0}
+Dec 15, 2020 1:13:38 PM programmingtheiot.gda.connection.RedisPersistenceAdapter storeData
+INFO: ZADD TempSensor SensorData to topic: PIOT/ConstrainedDevice/SensorMsg with score: 1608067578675
+Dec 15, 2020 1:13:38 PM programmingtheiot.gda.connection.MqttClientConnector publishMessage
+INFO: Publishing to topic '/v1.6/devices/ConstrainedDevice' with QoS 1, msg:
+{
+  "TempSensor": {
+    "value": 24.185768127441406,
+    "timestamp": 1.608067578675E12
+  }
+}
+Dec 15, 2020 1:13:38 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "PressureSensor",
+  "timeStamp": "2020-12-15 13:13:38.758026",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 2,
+  "value": 1026.072509765625
+}
+Dec 15, 2020 1:13:38 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SystemPerfMsg':
+{
+  "name": "SysPerfData",
+  "timeStamp": "2020-12-15 13:13:38.769714",
+  "hasError": false,
+  "statusCode": 0,
+  "cpuUtil": 11.6,
+  "diskUtil": 0.39818958784310143,
+  "memUtil": 7.9
+}
+Dec 15, 2020 1:13:38 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=2, value=1026.0725} BaseIotData{name='PressureSensor', timeStamp='2020-12-15 13:13:38.758026', hasError=false, statusCode=0}
+Dec 15, 2020 1:13:38 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "HumiditySensor",
+  "timeStamp": "2020-12-15 13:13:38.746451",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 1,
+  "value": 38.63618087768555
+}
+Dec 15, 2020 1:13:38 PM programmingtheiot.gda.app.DeviceDataManager handleSystemPerformanceMessage
+INFO: Handling a SystemPerformanceMessage: SystemPerformanceData{cpuUtil=11.6, diskUtil=0.39818957, memUtil=7.9} BaseIotData{name='SysPerfData', timeStamp='2020-12-15 13:13:38.769714', hasError=false, statusCode=0}
+Dec 15, 2020 1:13:38 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "CO2Sensor",
+  "timeStamp": "2020-12-15 13:13:38.786962",
+  "hasError": true,
+  "statusCode": -1,
+  "sensorType": 4,
+  "value": 33276.0
+}
+Dec 15, 2020 1:13:38 PM programmingtheiot.gda.connection.RedisPersistenceAdapter storeData
+INFO: ZADD PressureSensor SensorData to topic: PIOT/ConstrainedDevice/SensorMsg with score: 1608067576026
+Dec 15, 2020 1:13:38 PM programmingtheiot.gda.connection.RedisPersistenceAdapter storeData
+INFO: ZADD SysPerfData SystemPerformanceData to topic: PIOT/ConstrainedDevice/SystemPerfMsg with score: 1608067587714
+Dec 15, 2020 1:13:38 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=1, value=38.63618} BaseIotData{name='HumiditySensor', timeStamp='2020-12-15 13:13:38.746451', hasError=false, statusCode=0}
+Dec 15, 2020 1:13:38 PM programmingtheiot.gda.connection.MqttClientConnector publishMessage
+INFO: Publishing to topic '/v1.6/devices/ConstrainedDevice' with QoS 1, msg:
+{
+  "PressureSensor": {
+    "value": 1026.072509765625,
+    "timestamp": 1.608067576026E12
+  }
+}
+Dec 15, 2020 1:13:38 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=4, value=33276.0} BaseIotData{name='CO2Sensor', timeStamp='2020-12-15 13:13:38.786962', hasError=true, statusCode=-1}
+Dec 15, 2020 1:13:38 PM programmingtheiot.gda.connection.MqttClientConnector publishMessage
+INFO: Publishing to topic '/v1.6/devices/ConstrainedDevice' with QoS 1, msg:
+{
+  "CpuUtil": {
+    "value": 11.600000381469727,
+    "timestamp": 1.608067587714E12
+  },
+  "MemUtil": {
+    "value": 7.900000095367432,
+    "timestamp": 1.608067587714E12
+  },
+  "DiskUtil": {
+    "value": 0.39818957448005676,
+    "timestamp": 1.608067587714E12
+  }
+}
+Dec 15, 2020 1:13:38 PM programmingtheiot.gda.connection.RedisPersistenceAdapter storeData
+INFO: ZADD HumiditySensor SensorData to topic: PIOT/ConstrainedDevice/SensorMsg with score: 1608067564451
+Dec 15, 2020 1:13:38 PM programmingtheiot.gda.connection.RedisPersistenceAdapter storeData
+INFO: ZADD CO2Sensor SensorData to topic: PIOT/ConstrainedDevice/SensorMsg with score: 1608067604962
+Dec 15, 2020 1:13:38 PM programmingtheiot.gda.connection.MqttClientConnector publishMessage
+INFO: Publishing to topic '/v1.6/devices/ConstrainedDevice' with QoS 1, msg:
+{
+  "HumiditySensor": {
+    "value": 38.63618087768555,
+    "timestamp": 1.608067564451E12
+  }
+}
+Dec 15, 2020 1:13:38 PM programmingtheiot.gda.connection.MqttClientConnector publishMessage
+INFO: Publishing to topic '/v1.6/devices/ConstrainedDevice' with QoS 1, msg:
+{
+  "CO2Sensor": {
+    "value": 33276.0,
+    "timestamp": 1.608067604962E12
+  }
+}
+Dec 15, 2020 1:13:38 PM programmingtheiot.gda.connection.MqttClientConnector deliveryComplete
+INFO: [Callback] Complete to delivery to broker, response: PUBACK msgId 24
+Dec 15, 2020 1:13:38 PM programmingtheiot.gda.connection.MqttClientConnector deliveryComplete
+INFO: [Callback] Complete to delivery to broker, response: PUBACK msgId 25
+Dec 15, 2020 1:13:38 PM programmingtheiot.gda.connection.MqttClientConnector deliveryComplete
+INFO: [Callback] Complete to delivery to broker, response: PUBACK msgId 26
+Dec 15, 2020 1:13:38 PM programmingtheiot.gda.connection.MqttClientConnector deliveryComplete
+INFO: [Callback] Complete to delivery to broker, response: PUBACK msgId 27
+Dec 15, 2020 1:13:38 PM programmingtheiot.gda.connection.MqttClientConnector deliveryComplete
+INFO: [Callback] Complete to delivery to broker, response: PUBACK msgId 28
+Dec 15, 2020 1:13:53 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SystemPerfMsg':
+{
+  "name": "SysPerfData",
+  "timeStamp": "2020-12-15 13:13:53.750309",
+  "hasError": false,
+  "statusCode": 0,
+  "cpuUtil": 11.2,
+  "diskUtil": 0.3981901613845175,
+  "memUtil": 7.9
+}
+Dec 15, 2020 1:13:53 PM programmingtheiot.gda.app.DeviceDataManager handleSystemPerformanceMessage
+INFO: Handling a SystemPerformanceMessage: SystemPerformanceData{cpuUtil=11.2, diskUtil=0.39819017, memUtil=7.9} BaseIotData{name='SysPerfData', timeStamp='2020-12-15 13:13:53.750309', hasError=false, statusCode=0}
+Dec 15, 2020 1:13:53 PM programmingtheiot.gda.connection.RedisPersistenceAdapter storeData
+INFO: ZADD SysPerfData SystemPerformanceData to topic: PIOT/ConstrainedDevice/SystemPerfMsg with score: 1608067583309
+Dec 15, 2020 1:13:53 PM programmingtheiot.gda.connection.MqttClientConnector publishMessage
+INFO: Publishing to topic '/v1.6/devices/ConstrainedDevice' with QoS 1, msg:
+{
+  "CpuUtil": {
+    "value": 11.199999809265137,
+    "timestamp": 1.608067583309E12
+  },
+  "MemUtil": {
+    "value": 7.900000095367432,
+    "timestamp": 1.608067583309E12
+  },
+  "DiskUtil": {
+    "value": 0.3981901705265045,
+    "timestamp": 1.608067583309E12
+  }
+}
+Dec 15, 2020 1:13:53 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "TempSensor",
+  "timeStamp": "2020-12-15 13:13:53.775906",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 3,
+  "value": 24.13123321533203
+}
+Dec 15, 2020 1:13:53 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "PressureSensor",
+  "timeStamp": "2020-12-15 13:13:53.774066",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 2,
+  "value": 1026.09716796875
+}
+Dec 15, 2020 1:13:53 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "HumiditySensor",
+  "timeStamp": "2020-12-15 13:13:53.765506",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 1,
+  "value": 39.13548278808594
+}
+Dec 15, 2020 1:13:53 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=3, value=24.131233} BaseIotData{name='TempSensor', timeStamp='2020-12-15 13:13:53.775906', hasError=false, statusCode=0}
+Dec 15, 2020 1:13:53 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=2, value=1026.0972} BaseIotData{name='PressureSensor', timeStamp='2020-12-15 13:13:53.774066', hasError=false, statusCode=0}
+Dec 15, 2020 1:13:53 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "CO2Sensor",
+  "timeStamp": "2020-12-15 13:13:53.798118",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 4,
+  "value": 575.0
+}
+Dec 15, 2020 1:13:53 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=1, value=39.135483} BaseIotData{name='HumiditySensor', timeStamp='2020-12-15 13:13:53.765506', hasError=false, statusCode=0}
+Dec 15, 2020 1:13:53 PM programmingtheiot.gda.connection.RedisPersistenceAdapter storeData
+INFO: ZADD TempSensor SensorData to topic: PIOT/ConstrainedDevice/SensorMsg with score: 1608067608906
+Dec 15, 2020 1:13:53 PM programmingtheiot.gda.connection.RedisPersistenceAdapter storeData
+INFO: ZADD PressureSensor SensorData to topic: PIOT/ConstrainedDevice/SensorMsg with score: 1608067607066
+Dec 15, 2020 1:13:53 PM programmingtheiot.gda.connection.MqttClientConnector publishMessage
+INFO: Publishing to topic '/v1.6/devices/ConstrainedDevice' with QoS 1, msg:
+{
+  "TempSensor": {
+    "value": 24.13123321533203,
+    "timestamp": 1.608067608906E12
+  }
+}
+Dec 15, 2020 1:13:53 PM programmingtheiot.gda.connection.RedisPersistenceAdapter storeData
+INFO: ZADD HumiditySensor SensorData to topic: PIOT/ConstrainedDevice/SensorMsg with score: 1608067598506
+Dec 15, 2020 1:13:53 PM programmingtheiot.gda.connection.MqttClientConnector publishMessage
+INFO: Publishing to topic '/v1.6/devices/ConstrainedDevice' with QoS 1, msg:
+{
+  "PressureSensor": {
+    "value": 1026.09716796875,
+    "timestamp": 1.608067607066E12
+  }
+}
+Dec 15, 2020 1:13:53 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=4, value=575.0} BaseIotData{name='CO2Sensor', timeStamp='2020-12-15 13:13:53.798118', hasError=false, statusCode=0}
+Dec 15, 2020 1:13:53 PM programmingtheiot.gda.connection.MqttClientConnector publishMessage
+INFO: Publishing to topic '/v1.6/devices/ConstrainedDevice' with QoS 1, msg:
+{
+  "HumiditySensor": {
+    "value": 39.13548278808594,
+    "timestamp": 1.608067598506E12
+  }
+}
+Dec 15, 2020 1:13:53 PM programmingtheiot.gda.connection.RedisPersistenceAdapter storeData
+INFO: ZADD CO2Sensor SensorData to topic: PIOT/ConstrainedDevice/SensorMsg with score: 1608067631118
+Dec 15, 2020 1:13:53 PM programmingtheiot.gda.connection.MqttClientConnector publishMessage
+INFO: Publishing to topic '/v1.6/devices/ConstrainedDevice' with QoS 1, msg:
+{
+  "CO2Sensor": {
+    "value": 575.0,
+    "timestamp": 1.608067631118E12
+  }
+}
+Dec 15, 2020 1:13:53 PM programmingtheiot.gda.connection.MqttClientConnector deliveryComplete
+INFO: [Callback] Complete to delivery to broker, response: PUBACK msgId 29
+Dec 15, 2020 1:13:53 PM programmingtheiot.gda.connection.MqttClientConnector deliveryComplete
+INFO: [Callback] Complete to delivery to broker, response: PUBACK msgId 30
+Dec 15, 2020 1:13:53 PM programmingtheiot.gda.connection.MqttClientConnector deliveryComplete
+INFO: [Callback] Complete to delivery to broker, response: PUBACK msgId 31
+Dec 15, 2020 1:13:53 PM programmingtheiot.gda.connection.MqttClientConnector deliveryComplete
+INFO: [Callback] Complete to delivery to broker, response: PUBACK msgId 32
+Dec 15, 2020 1:13:53 PM programmingtheiot.gda.connection.MqttClientConnector deliveryComplete
+INFO: [Callback] Complete to delivery to broker, response: PUBACK msgId 33
+Dec 15, 2020 1:14:07 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=0, value=-1.0} BaseIotData{name='CpuUtil', timeStamp='2020-12-15 13:14:07.000964', hasError=false, statusCode=0}
+Dec 15, 2020 1:14:07 PM programmingtheiot.gda.connection.RedisPersistenceAdapter storeData
+INFO: ZADD CpuUtil SensorData to topic: PIOT/GatewayDevice/SystemPerfMsg with score: 1608066847964
+Dec 15, 2020 1:14:07 PM programmingtheiot.gda.connection.MqttClientConnector publishMessage
+INFO: Publishing to topic '/v1.6/devices/GatewayDevice' with QoS 1, msg:
+{
+  "CpuUtil": {
+    "value": -1.0,
+    "timestamp": 1.608066847964E12
+  }
+}
+Dec 15, 2020 1:14:08 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=0, value=2.724176E7} BaseIotData{name='MemUtil', timeStamp='2020-12-15 13:14:07.000964', hasError=false, statusCode=0}
+Dec 15, 2020 1:14:08 PM programmingtheiot.gda.connection.MqttClientConnector deliveryComplete
+INFO: [Callback] Complete to delivery to broker, response: PUBACK msgId 34
+Dec 15, 2020 1:14:08 PM programmingtheiot.gda.connection.RedisPersistenceAdapter storeData
+INFO: ZADD MemUtil SensorData to topic: PIOT/GatewayDevice/SystemPerfMsg with score: 1608066847964
+Dec 15, 2020 1:14:08 PM programmingtheiot.gda.connection.MqttClientConnector publishMessage
+INFO: Publishing to topic '/v1.6/devices/GatewayDevice' with QoS 1, msg:
+{
+  "MemUtil": {
+    "value": 2.724176E7,
+    "timestamp": 1.608066847964E12
+  }
+}
+Dec 15, 2020 1:14:08 PM programmingtheiot.gda.connection.MqttClientConnector deliveryComplete
+INFO: [Callback] Complete to delivery to broker, response: PUBACK msgId 35
+Dec 15, 2020 1:14:08 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "TempSensor",
+  "timeStamp": "2020-12-15 13:14:08.765137",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 3,
+  "value": 24.294841766357422
+}
+Dec 15, 2020 1:14:08 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=3, value=24.294842} BaseIotData{name='TempSensor', timeStamp='2020-12-15 13:14:08.765137', hasError=false, statusCode=0}
+Dec 15, 2020 1:14:08 PM programmingtheiot.gda.connection.RedisPersistenceAdapter storeData
+INFO: ZADD TempSensor SensorData to topic: PIOT/ConstrainedDevice/SensorMsg with score: 1608067613137
+Dec 15, 2020 1:14:08 PM programmingtheiot.gda.connection.MqttClientConnector publishMessage
+INFO: Publishing to topic '/v1.6/devices/ConstrainedDevice' with QoS 1, msg:
+{
+  "TempSensor": {
+    "value": 24.294841766357422,
+    "timestamp": 1.608067613137E12
+  }
+}
+Dec 15, 2020 1:14:08 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SystemPerfMsg':
+{
+  "name": "SysPerfData",
+  "timeStamp": "2020-12-15 13:14:08.750276",
+  "hasError": false,
+  "statusCode": 0,
+  "cpuUtil": 10.7,
+  "diskUtil": 0.3981910216966416,
+  "memUtil": 7.9
+}
+Dec 15, 2020 1:14:08 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "PressureSensor",
+  "timeStamp": "2020-12-15 13:14:08.764192",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 2,
+  "value": 1026.133544921875
+}
+Dec 15, 2020 1:14:08 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "HumiditySensor",
+  "timeStamp": "2020-12-15 13:14:08.754353",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 1,
+  "value": 39.53608703613281
+}
+Dec 15, 2020 1:14:08 PM programmingtheiot.gda.app.DeviceDataManager handleSystemPerformanceMessage
+INFO: Handling a SystemPerformanceMessage: SystemPerformanceData{cpuUtil=10.7, diskUtil=0.39819103, memUtil=7.9} BaseIotData{name='SysPerfData', timeStamp='2020-12-15 13:14:08.750276', hasError=false, statusCode=0}
+Dec 15, 2020 1:14:08 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=2, value=1026.1335} BaseIotData{name='PressureSensor', timeStamp='2020-12-15 13:14:08.764192', hasError=false, statusCode=0}
+Dec 15, 2020 1:14:08 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "CO2Sensor",
+  "timeStamp": "2020-12-15 13:14:08.792808",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 4,
+  "value": 594.0
+}
+Dec 15, 2020 1:14:08 PM programmingtheiot.gda.connection.RedisPersistenceAdapter storeData
+INFO: ZADD SysPerfData SystemPerformanceData to topic: PIOT/ConstrainedDevice/SystemPerfMsg with score: 1608067598276
+Dec 15, 2020 1:14:08 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=1, value=39.536087} BaseIotData{name='HumiditySensor', timeStamp='2020-12-15 13:14:08.754353', hasError=false, statusCode=0}
+Dec 15, 2020 1:14:08 PM programmingtheiot.gda.connection.RedisPersistenceAdapter storeData
+INFO: ZADD PressureSensor SensorData to topic: PIOT/ConstrainedDevice/SensorMsg with score: 1608067612192
+Dec 15, 2020 1:14:08 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=4, value=594.0} BaseIotData{name='CO2Sensor', timeStamp='2020-12-15 13:14:08.792808', hasError=false, statusCode=0}
+Dec 15, 2020 1:14:08 PM programmingtheiot.gda.connection.MqttClientConnector publishMessage
+INFO: Publishing to topic '/v1.6/devices/ConstrainedDevice' with QoS 1, msg:
+{
+  "PressureSensor": {
+    "value": 1026.133544921875,
+    "timestamp": 1.608067612192E12
+  }
+}
+Dec 15, 2020 1:14:08 PM programmingtheiot.gda.connection.RedisPersistenceAdapter storeData
+INFO: ZADD HumiditySensor SensorData to topic: PIOT/ConstrainedDevice/SensorMsg with score: 1608067602353
+Dec 15, 2020 1:14:08 PM programmingtheiot.gda.connection.MqttClientConnector publishMessage
+INFO: Publishing to topic '/v1.6/devices/ConstrainedDevice' with QoS 1, msg:
+{
+  "HumiditySensor": {
+    "value": 39.53608703613281,
+    "timestamp": 1.608067602353E12
+  }
+}
+Dec 15, 2020 1:14:08 PM programmingtheiot.gda.connection.RedisPersistenceAdapter storeData
+INFO: ZADD CO2Sensor SensorData to topic: PIOT/ConstrainedDevice/SensorMsg with score: 1608067640808
+Dec 15, 2020 1:14:08 PM programmingtheiot.gda.connection.MqttClientConnector publishMessage
+INFO: Publishing to topic '/v1.6/devices/ConstrainedDevice' with QoS 1, msg:
+{
+  "CpuUtil": {
+    "value": 10.699999809265137,
+    "timestamp": 1.608067598276E12
+  },
+  "MemUtil": {
+    "value": 7.900000095367432,
+    "timestamp": 1.608067598276E12
+  },
+  "DiskUtil": {
+    "value": 0.39819103479385376,
+    "timestamp": 1.608067598276E12
+  }
+}
+Dec 15, 2020 1:14:08 PM programmingtheiot.gda.connection.MqttClientConnector publishMessage
+INFO: Publishing to topic '/v1.6/devices/ConstrainedDevice' with QoS 1, msg:
+{
+  "CO2Sensor": {
+    "value": 594.0,
+    "timestamp": 1.608067640808E12
+  }
+}
+Dec 15, 2020 1:14:08 PM programmingtheiot.gda.connection.MqttClientConnector deliveryComplete
+INFO: [Callback] Complete to delivery to broker, response: PUBACK msgId 36
+Dec 15, 2020 1:14:08 PM programmingtheiot.gda.connection.MqttClientConnector deliveryComplete
+INFO: [Callback] Complete to delivery to broker, response: PUBACK msgId 37
+Dec 15, 2020 1:14:08 PM programmingtheiot.gda.connection.MqttClientConnector deliveryComplete
+INFO: [Callback] Complete to delivery to broker, response: PUBACK msgId 38
+Dec 15, 2020 1:14:08 PM programmingtheiot.gda.connection.MqttClientConnector deliveryComplete
+INFO: [Callback] Complete to delivery to broker, response: PUBACK msgId 39
+Dec 15, 2020 1:14:08 PM programmingtheiot.gda.connection.MqttClientConnector deliveryComplete
+INFO: [Callback] Complete to delivery to broker, response: PUBACK msgId 40
+Dec 15, 2020 1:14:23 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "TempSensor",
+  "timeStamp": "2020-12-15 13:14:23.747238",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 3,
+  "value": 24.33119773864746
+}
+Dec 15, 2020 1:14:23 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=3, value=24.331198} BaseIotData{name='TempSensor', timeStamp='2020-12-15 13:14:23.747238', hasError=false, statusCode=0}
+Dec 15, 2020 1:14:23 PM programmingtheiot.gda.connection.RedisPersistenceAdapter storeData
+INFO: ZADD TempSensor SensorData to topic: PIOT/ConstrainedDevice/SensorMsg with score: 1608067610238
+Dec 15, 2020 1:14:23 PM programmingtheiot.gda.connection.MqttClientConnector publishMessage
+INFO: Publishing to topic '/v1.6/devices/ConstrainedDevice' with QoS 1, msg:
+{
+  "TempSensor": {
+    "value": 24.33119773864746,
+    "timestamp": 1.608067610238E12
+  }
+}
+Dec 15, 2020 1:14:23 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "PressureSensor",
+  "timeStamp": "2020-12-15 13:14:23.746032",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 2,
+  "value": 1026.09814453125
+}
+Dec 15, 2020 1:14:23 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SystemPerfMsg':
+{
+  "name": "SysPerfData",
+  "timeStamp": "2020-12-15 13:14:23.756168",
+  "hasError": false,
+  "statusCode": 0,
+  "cpuUtil": 11.0,
+  "diskUtil": 0.3981918820087657,
+  "memUtil": 7.9
+}
+Dec 15, 2020 1:14:23 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "HumiditySensor",
+  "timeStamp": "2020-12-15 13:14:23.742086",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 1,
+  "value": 40.17472839355469
+}
+Dec 15, 2020 1:14:23 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=2, value=1026.0981} BaseIotData{name='PressureSensor', timeStamp='2020-12-15 13:14:23.746032', hasError=false, statusCode=0}
+Dec 15, 2020 1:14:23 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "CO2Sensor",
+  "timeStamp": "2020-12-15 13:14:23.766413",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 4,
+  "value": 603.0
+}
+Dec 15, 2020 1:14:23 PM programmingtheiot.gda.app.DeviceDataManager handleSystemPerformanceMessage
+INFO: Handling a SystemPerformanceMessage: SystemPerformanceData{cpuUtil=11.0, diskUtil=0.39819187, memUtil=7.9} BaseIotData{name='SysPerfData', timeStamp='2020-12-15 13:14:23.756168', hasError=false, statusCode=0}
+Dec 15, 2020 1:14:23 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=1, value=40.17473} BaseIotData{name='HumiditySensor', timeStamp='2020-12-15 13:14:23.742086', hasError=false, statusCode=0}
+Dec 15, 2020 1:14:23 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=4, value=603.0} BaseIotData{name='CO2Sensor', timeStamp='2020-12-15 13:14:23.766413', hasError=false, statusCode=0}
+Dec 15, 2020 1:14:23 PM programmingtheiot.gda.connection.RedisPersistenceAdapter storeData
+INFO: ZADD HumiditySensor SensorData to topic: PIOT/ConstrainedDevice/SensorMsg with score: 1608067605086
+Dec 15, 2020 1:14:23 PM programmingtheiot.gda.connection.RedisPersistenceAdapter storeData
+INFO: ZADD SysPerfData SystemPerformanceData to topic: PIOT/ConstrainedDevice/SystemPerfMsg with score: 1608067619168
+Dec 15, 2020 1:14:23 PM programmingtheiot.gda.connection.RedisPersistenceAdapter storeData
+INFO: ZADD PressureSensor SensorData to topic: PIOT/ConstrainedDevice/SensorMsg with score: 1608067609032
+Dec 15, 2020 1:14:23 PM programmingtheiot.gda.connection.MqttClientConnector publishMessage
+INFO: Publishing to topic '/v1.6/devices/ConstrainedDevice' with QoS 1, msg:
+{
+  "PressureSensor": {
+    "value": 1026.09814453125,
+    "timestamp": 1.608067609032E12
+  }
+}
+Dec 15, 2020 1:14:23 PM programmingtheiot.gda.connection.MqttClientConnector publishMessage
+INFO: Publishing to topic '/v1.6/devices/ConstrainedDevice' with QoS 1, msg:
+{
+  "CpuUtil": {
+    "value": 11.0,
+    "timestamp": 1.608067619168E12
+  },
+  "MemUtil": {
+    "value": 7.900000095367432,
+    "timestamp": 1.608067619168E12
+  },
+  "DiskUtil": {
+    "value": 0.3981918692588806,
+    "timestamp": 1.608067619168E12
+  }
+}
+Dec 15, 2020 1:14:23 PM programmingtheiot.gda.connection.MqttClientConnector publishMessage
+INFO: Publishing to topic '/v1.6/devices/ConstrainedDevice' with QoS 1, msg:
+{
+  "HumiditySensor": {
+    "value": 40.17472839355469,
+    "timestamp": 1.608067605086E12
+  }
+}
+Dec 15, 2020 1:14:23 PM programmingtheiot.gda.connection.RedisPersistenceAdapter storeData
+INFO: ZADD CO2Sensor SensorData to topic: PIOT/ConstrainedDevice/SensorMsg with score: 1608067629413
+Dec 15, 2020 1:14:23 PM programmingtheiot.gda.connection.MqttClientConnector publishMessage
+INFO: Publishing to topic '/v1.6/devices/ConstrainedDevice' with QoS 1, msg:
+{
+  "CO2Sensor": {
+    "value": 603.0,
+    "timestamp": 1.608067629413E12
+  }
+}
+Dec 15, 2020 1:14:23 PM programmingtheiot.gda.connection.MqttClientConnector deliveryComplete
+INFO: [Callback] Complete to delivery to broker, response: PUBACK msgId 41
+Dec 15, 2020 1:14:23 PM programmingtheiot.gda.connection.MqttClientConnector deliveryComplete
+INFO: [Callback] Complete to delivery to broker, response: PUBACK msgId 42
+Dec 15, 2020 1:14:23 PM programmingtheiot.gda.connection.MqttClientConnector deliveryComplete
+INFO: [Callback] Complete to delivery to broker, response: PUBACK msgId 43
+Dec 15, 2020 1:14:23 PM programmingtheiot.gda.connection.MqttClientConnector deliveryComplete
+INFO: [Callback] Complete to delivery to broker, response: PUBACK msgId 44
+Dec 15, 2020 1:14:23 PM programmingtheiot.gda.connection.MqttClientConnector deliveryComplete
+INFO: [Callback] Complete to delivery to broker, response: PUBACK msgId 45
+Dec 15, 2020 1:14:37 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=0, value=-1.0} BaseIotData{name='CpuUtil', timeStamp='2020-12-15 13:14:37.000961', hasError=false, statusCode=0}
+Dec 15, 2020 1:14:37 PM programmingtheiot.gda.connection.RedisPersistenceAdapter storeData
+INFO: ZADD CpuUtil SensorData to topic: PIOT/GatewayDevice/SystemPerfMsg with score: 1608066877961
+Dec 15, 2020 1:14:37 PM programmingtheiot.gda.connection.MqttClientConnector publishMessage
+INFO: Publishing to topic '/v1.6/devices/GatewayDevice' with QoS 1, msg:
+{
+  "CpuUtil": {
+    "value": -1.0,
+    "timestamp": 1.608066877961E12
+  }
+}
+Dec 15, 2020 1:14:38 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=0, value=8381952.0} BaseIotData{name='MemUtil', timeStamp='2020-12-15 13:14:37.000961', hasError=false, statusCode=0}
+Dec 15, 2020 1:14:38 PM programmingtheiot.gda.connection.MqttClientConnector deliveryComplete
+INFO: [Callback] Complete to delivery to broker, response: PUBACK msgId 46
+Dec 15, 2020 1:14:38 PM programmingtheiot.gda.connection.RedisPersistenceAdapter storeData
+INFO: ZADD MemUtil SensorData to topic: PIOT/GatewayDevice/SystemPerfMsg with score: 1608066877961
+Dec 15, 2020 1:14:38 PM programmingtheiot.gda.connection.MqttClientConnector publishMessage
+INFO: Publishing to topic '/v1.6/devices/GatewayDevice' with QoS 1, msg:
+{
+  "MemUtil": {
+    "value": 8381952.0,
+    "timestamp": 1.608066877961E12
+  }
+}
+Dec 15, 2020 1:14:38 PM programmingtheiot.gda.connection.MqttClientConnector deliveryComplete
+INFO: [Callback] Complete to delivery to broker, response: PUBACK msgId 47
+Dec 15, 2020 1:14:38 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "TempSensor",
+  "timeStamp": "2020-12-15 13:14:38.755182",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 3,
+  "value": 24.33119773864746
+}
+Dec 15, 2020 1:14:38 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=3, value=24.331198} BaseIotData{name='TempSensor', timeStamp='2020-12-15 13:14:38.755182', hasError=false, statusCode=0}
+Dec 15, 2020 1:14:38 PM programmingtheiot.gda.connection.RedisPersistenceAdapter storeData
+INFO: ZADD TempSensor SensorData to topic: PIOT/ConstrainedDevice/SensorMsg with score: 1608067633182
+Dec 15, 2020 1:14:38 PM programmingtheiot.gda.connection.MqttClientConnector publishMessage
+INFO: Publishing to topic '/v1.6/devices/ConstrainedDevice' with QoS 1, msg:
+{
+  "TempSensor": {
+    "value": 24.33119773864746,
+    "timestamp": 1.608067633182E12
+  }
+}
+Dec 15, 2020 1:14:38 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SystemPerfMsg':
+{
+  "name": "SysPerfData",
+  "timeStamp": "2020-12-15 13:14:38.760117",
+  "hasError": false,
+  "statusCode": 0,
+  "cpuUtil": 10.7,
+  "diskUtil": 0.3981925989355358,
+  "memUtil": 7.9
+}
+Dec 15, 2020 1:14:38 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "PressureSensor",
+  "timeStamp": "2020-12-15 13:14:38.750516",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 2,
+  "value": 1026.109619140625
+}
+Dec 15, 2020 1:14:38 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "HumiditySensor",
+  "timeStamp": "2020-12-15 13:14:38.739640",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 1,
+  "value": 39.864112854003906
+}
+Dec 15, 2020 1:14:38 PM programmingtheiot.gda.app.DeviceDataManager handleSystemPerformanceMessage
+INFO: Handling a SystemPerformanceMessage: SystemPerformanceData{cpuUtil=10.7, diskUtil=0.39819258, memUtil=7.9} BaseIotData{name='SysPerfData', timeStamp='2020-12-15 13:14:38.760117', hasError=false, statusCode=0}
+Dec 15, 2020 1:14:38 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "CO2Sensor",
+  "timeStamp": "2020-12-15 13:14:38.788901",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 4,
+  "value": 543.0
+}
+Dec 15, 2020 1:14:38 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=2, value=1026.1096} BaseIotData{name='PressureSensor', timeStamp='2020-12-15 13:14:38.750516', hasError=false, statusCode=0}
+Dec 15, 2020 1:14:38 PM programmingtheiot.gda.connection.RedisPersistenceAdapter storeData
+INFO: ZADD SysPerfData SystemPerformanceData to topic: PIOT/ConstrainedDevice/SystemPerfMsg with score: 1608067638117
+Dec 15, 2020 1:14:38 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=1, value=39.864113} BaseIotData{name='HumiditySensor', timeStamp='2020-12-15 13:14:38.739640', hasError=false, statusCode=0}
+Dec 15, 2020 1:14:38 PM programmingtheiot.gda.connection.RedisPersistenceAdapter storeData
+INFO: ZADD PressureSensor SensorData to topic: PIOT/ConstrainedDevice/SensorMsg with score: 1608067628516
+Dec 15, 2020 1:14:38 PM programmingtheiot.gda.connection.RedisPersistenceAdapter storeData
+INFO: ZADD HumiditySensor SensorData to topic: PIOT/ConstrainedDevice/SensorMsg with score: 1608067617640
+Dec 15, 2020 1:14:38 PM programmingtheiot.gda.connection.MqttClientConnector publishMessage
+INFO: Publishing to topic '/v1.6/devices/ConstrainedDevice' with QoS 1, msg:
+{
+  "CpuUtil": {
+    "value": 10.699999809265137,
+    "timestamp": 1.608067638117E12
+  },
+  "MemUtil": {
+    "value": 7.900000095367432,
+    "timestamp": 1.608067638117E12
+  },
+  "DiskUtil": {
+    "value": 0.3981925845146179,
+    "timestamp": 1.608067638117E12
+  }
+}
+Dec 15, 2020 1:14:38 PM programmingtheiot.gda.connection.MqttClientConnector publishMessage
+INFO: Publishing to topic '/v1.6/devices/ConstrainedDevice' with QoS 1, msg:
+{
+  "HumiditySensor": {
+    "value": 39.864112854003906,
+    "timestamp": 1.60806761764E12
+  }
+}
+Dec 15, 2020 1:14:38 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=4, value=543.0} BaseIotData{name='CO2Sensor', timeStamp='2020-12-15 13:14:38.788901', hasError=false, statusCode=0}
+Dec 15, 2020 1:14:38 PM programmingtheiot.gda.connection.MqttClientConnector publishMessage
+INFO: Publishing to topic '/v1.6/devices/ConstrainedDevice' with QoS 1, msg:
+{
+  "PressureSensor": {
+    "value": 1026.109619140625,
+    "timestamp": 1.608067628516E12
+  }
+}
+Dec 15, 2020 1:14:38 PM programmingtheiot.gda.connection.RedisPersistenceAdapter storeData
+INFO: ZADD CO2Sensor SensorData to topic: PIOT/ConstrainedDevice/SensorMsg with score: 1608067666901
+Dec 15, 2020 1:14:38 PM programmingtheiot.gda.connection.MqttClientConnector publishMessage
+INFO: Publishing to topic '/v1.6/devices/ConstrainedDevice' with QoS 1, msg:
+{
+  "CO2Sensor": {
+    "value": 543.0,
+    "timestamp": 1.608067666901E12
+  }
+}
+Dec 15, 2020 1:14:38 PM programmingtheiot.gda.connection.MqttClientConnector deliveryComplete
+INFO: [Callback] Complete to delivery to broker, response: PUBACK msgId 48
+Dec 15, 2020 1:14:38 PM programmingtheiot.gda.connection.MqttClientConnector deliveryComplete
+INFO: [Callback] Complete to delivery to broker, response: PUBACK msgId 49
+Dec 15, 2020 1:14:38 PM programmingtheiot.gda.connection.MqttClientConnector deliveryComplete
+INFO: [Callback] Complete to delivery to broker, response: PUBACK msgId 50
+Dec 15, 2020 1:14:38 PM programmingtheiot.gda.connection.MqttClientConnector deliveryComplete
+INFO: [Callback] Complete to delivery to broker, response: PUBACK msgId 51
+Dec 15, 2020 1:14:38 PM programmingtheiot.gda.connection.MqttClientConnector deliveryComplete
+INFO: [Callback] Complete to delivery to broker, response: PUBACK msgId 52
+Dec 15, 2020 1:14:53 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SystemPerfMsg':
+{
+  "name": "SysPerfData",
+  "timeStamp": "2020-12-15 13:14:53.756523",
+  "hasError": false,
+  "statusCode": 0,
+  "cpuUtil": 10.7,
+  "diskUtil": 0.3981933158623059,
+  "memUtil": 7.9
+}
+Dec 15, 2020 1:14:53 PM programmingtheiot.gda.app.DeviceDataManager handleSystemPerformanceMessage
+INFO: Handling a SystemPerformanceMessage: SystemPerformanceData{cpuUtil=10.7, diskUtil=0.39819333, memUtil=7.9} BaseIotData{name='SysPerfData', timeStamp='2020-12-15 13:14:53.756523', hasError=false, statusCode=0}
+Dec 15, 2020 1:14:53 PM programmingtheiot.gda.connection.RedisPersistenceAdapter storeData
+INFO: ZADD SysPerfData SystemPerformanceData to topic: PIOT/ConstrainedDevice/SystemPerfMsg with score: 1608067649523
+Dec 15, 2020 1:14:53 PM programmingtheiot.gda.connection.MqttClientConnector publishMessage
+INFO: Publishing to topic '/v1.6/devices/ConstrainedDevice' with QoS 1, msg:
+{
+  "CpuUtil": {
+    "value": 10.699999809265137,
+    "timestamp": 1.608067649523E12
+  },
+  "MemUtil": {
+    "value": 7.900000095367432,
+    "timestamp": 1.608067649523E12
+  },
+  "DiskUtil": {
+    "value": 0.3981933295726776,
+    "timestamp": 1.608067649523E12
+  }
+}
+Dec 15, 2020 1:14:53 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "TempSensor",
+  "timeStamp": "2020-12-15 13:14:53.770059",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 3,
+  "value": 24.403913497924805
+}
+Dec 15, 2020 1:14:53 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "PressureSensor",
+  "timeStamp": "2020-12-15 13:14:53.769379",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 2,
+  "value": 1026.077880859375
+}
+Dec 15, 2020 1:14:53 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "HumiditySensor",
+  "timeStamp": "2020-12-15 13:14:53.760924",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 1,
+  "value": 39.96281433105469
+}
+Dec 15, 2020 1:14:53 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=3, value=24.403913} BaseIotData{name='TempSensor', timeStamp='2020-12-15 13:14:53.770059', hasError=false, statusCode=0}
+Dec 15, 2020 1:14:53 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "CO2Sensor",
+  "timeStamp": "2020-12-15 13:14:53.784084",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 4,
+  "value": 472.0
+}
+Dec 15, 2020 1:14:53 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=2, value=1026.0779} BaseIotData{name='PressureSensor', timeStamp='2020-12-15 13:14:53.769379', hasError=false, statusCode=0}
+Dec 15, 2020 1:14:53 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=1, value=39.962814} BaseIotData{name='HumiditySensor', timeStamp='2020-12-15 13:14:53.760924', hasError=false, statusCode=0}
+Dec 15, 2020 1:14:53 PM programmingtheiot.gda.connection.RedisPersistenceAdapter storeData
+INFO: ZADD TempSensor SensorData to topic: PIOT/ConstrainedDevice/SensorMsg with score: 1608067663059
+Dec 15, 2020 1:14:53 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=4, value=472.0} BaseIotData{name='CO2Sensor', timeStamp='2020-12-15 13:14:53.784084', hasError=false, statusCode=0}
+Dec 15, 2020 1:14:53 PM programmingtheiot.gda.connection.RedisPersistenceAdapter storeData
+INFO: ZADD PressureSensor SensorData to topic: PIOT/ConstrainedDevice/SensorMsg with score: 1608067662379
+Dec 15, 2020 1:14:53 PM programmingtheiot.gda.connection.MqttClientConnector publishMessage
+INFO: Publishing to topic '/v1.6/devices/ConstrainedDevice' with QoS 1, msg:
+{
+  "TempSensor": {
+    "value": 24.403913497924805,
+    "timestamp": 1.608067663059E12
+  }
+}
+Dec 15, 2020 1:14:53 PM programmingtheiot.gda.connection.MqttClientConnector publishMessage
+INFO: Publishing to topic '/v1.6/devices/ConstrainedDevice' with QoS 1, msg:
+{
+  "PressureSensor": {
+    "value": 1026.077880859375,
+    "timestamp": 1.608067662379E12
+  }
+}
+Dec 15, 2020 1:14:53 PM programmingtheiot.gda.connection.MqttClientConnector deliveryComplete
+INFO: [Callback] Complete to delivery to broker, response: PUBACK msgId 53
+Dec 15, 2020 1:14:53 PM programmingtheiot.gda.connection.MqttClientConnector deliveryComplete
+INFO: [Callback] Complete to delivery to broker, response: PUBACK msgId 54
+Dec 15, 2020 1:14:53 PM programmingtheiot.gda.connection.MqttClientConnector deliveryComplete
+INFO: [Callback] Complete to delivery to broker, response: PUBACK msgId 55
+Dec 15, 2020 1:15:07 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=0, value=-1.0} BaseIotData{name='CpuUtil', timeStamp='2020-12-15 13:15:07.000961', hasError=false, statusCode=0}
+Dec 15, 2020 1:15:08 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "TempSensor",
+  "timeStamp": "2020-12-15 13:15:08.766778",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 3,
+  "value": 24.276662826538086
+}
+Dec 15, 2020 1:15:08 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=3, value=24.276663} BaseIotData{name='TempSensor', timeStamp='2020-12-15 13:15:08.766778', hasError=false, statusCode=0}
+Dec 15, 2020 1:15:08 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SystemPerfMsg':
+{
+  "name": "SysPerfData",
+  "timeStamp": "2020-12-15 13:15:08.767671",
+  "hasError": false,
+  "statusCode": 0,
+  "cpuUtil": 11.5,
+  "diskUtil": 0.39819417617443,
+  "memUtil": 7.9
+}
+Dec 15, 2020 1:15:08 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "PressureSensor",
+  "timeStamp": "2020-12-15 13:15:08.763885",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 2,
+  "value": 1026.0712890625
+}
+Dec 15, 2020 1:15:08 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "HumiditySensor",
+  "timeStamp": "2020-12-15 13:15:08.751817",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 1,
+  "value": 39.411258697509766
+}
+Dec 15, 2020 1:15:08 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=2, value=1026.0713} BaseIotData{name='PressureSensor', timeStamp='2020-12-15 13:15:08.763885', hasError=false, statusCode=0}
+Dec 15, 2020 1:15:08 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "CO2Sensor",
+  "timeStamp": "2020-12-15 13:15:08.797126",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 4,
+  "value": 418.0
+}
+Dec 15, 2020 1:15:08 PM programmingtheiot.gda.app.DeviceDataManager handleSystemPerformanceMessage
+INFO: Handling a SystemPerformanceMessage: SystemPerformanceData{cpuUtil=11.5, diskUtil=0.39819416, memUtil=7.9} BaseIotData{name='SysPerfData', timeStamp='2020-12-15 13:15:08.767671', hasError=false, statusCode=0}
+Dec 15, 2020 1:15:08 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=1, value=39.41126} BaseIotData{name='HumiditySensor', timeStamp='2020-12-15 13:15:08.751817', hasError=false, statusCode=0}
+Dec 15, 2020 1:15:08 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=4, value=418.0} BaseIotData{name='CO2Sensor', timeStamp='2020-12-15 13:15:08.797126', hasError=false, statusCode=0}
+Dec 15, 2020 1:15:23 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SystemPerfMsg':
+{
+  "name": "SysPerfData",
+  "timeStamp": "2020-12-15 13:15:23.745996",
+  "hasError": false,
+  "statusCode": 0,
+  "cpuUtil": 10.1,
+  "diskUtil": 0.39819474971584606,
+  "memUtil": 7.9
+}
+Dec 15, 2020 1:15:23 PM programmingtheiot.gda.app.DeviceDataManager handleSystemPerformanceMessage
+INFO: Handling a SystemPerformanceMessage: SystemPerformanceData{cpuUtil=10.1, diskUtil=0.39819476, memUtil=7.9} BaseIotData{name='SysPerfData', timeStamp='2020-12-15 13:15:23.745996', hasError=false, statusCode=0}
+Dec 15, 2020 1:15:23 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "TempSensor",
+  "timeStamp": "2020-12-15 13:15:23.762801",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 3,
+  "value": 24.313018798828125
+}
+Dec 15, 2020 1:15:23 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "PressureSensor",
+  "timeStamp": "2020-12-15 13:15:23.762303",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 2,
+  "value": 1026.047119140625
+}
+Dec 15, 2020 1:15:23 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "HumiditySensor",
+  "timeStamp": "2020-12-15 13:15:23.757545",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 1,
+  "value": 38.81035614013672
+}
+Dec 15, 2020 1:15:23 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=3, value=24.313019} BaseIotData{name='TempSensor', timeStamp='2020-12-15 13:15:23.762801', hasError=false, statusCode=0}
+Dec 15, 2020 1:15:23 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "CO2Sensor",
+  "timeStamp": "2020-12-15 13:15:23.777552",
+  "hasError": true,
+  "statusCode": -1,
+  "sensorType": 4,
+  "value": 33264.0
+}
+Dec 15, 2020 1:15:23 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=2, value=1026.0471} BaseIotData{name='PressureSensor', timeStamp='2020-12-15 13:15:23.762303', hasError=false, statusCode=0}
+Dec 15, 2020 1:15:23 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=1, value=38.810356} BaseIotData{name='HumiditySensor', timeStamp='2020-12-15 13:15:23.757545', hasError=false, statusCode=0}
+Dec 15, 2020 1:15:23 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=4, value=33264.0} BaseIotData{name='CO2Sensor', timeStamp='2020-12-15 13:15:23.777552', hasError=true, statusCode=-1}
+Dec 15, 2020 1:15:38 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SystemPerfMsg':
+{
+  "name": "SysPerfData",
+  "timeStamp": "2020-12-15 13:15:38.741966",
+  "hasError": false,
+  "statusCode": 0,
+  "cpuUtil": 11.0,
+  "diskUtil": 0.39819561002797016,
+  "memUtil": 7.9
+}
+Dec 15, 2020 1:15:38 PM programmingtheiot.gda.app.DeviceDataManager handleSystemPerformanceMessage
+INFO: Handling a SystemPerformanceMessage: SystemPerformanceData{cpuUtil=11.0, diskUtil=0.39819562, memUtil=7.9} BaseIotData{name='SysPerfData', timeStamp='2020-12-15 13:15:38.741966', hasError=false, statusCode=0}
+Dec 15, 2020 1:15:38 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "TempSensor",
+  "timeStamp": "2020-12-15 13:15:38.764978",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 3,
+  "value": 24.276662826538086
+}
+Dec 15, 2020 1:15:38 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "PressureSensor",
+  "timeStamp": "2020-12-15 13:15:38.764190",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 2,
+  "value": 1026.082763671875
+}
+Dec 15, 2020 1:15:38 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "HumiditySensor",
+  "timeStamp": "2020-12-15 13:15:38.754993",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 1,
+  "value": 38.89453887939453
+}
+Dec 15, 2020 1:15:38 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=3, value=24.276663} BaseIotData{name='TempSensor', timeStamp='2020-12-15 13:15:38.764978', hasError=false, statusCode=0}
+Dec 15, 2020 1:15:38 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=2, value=1026.0828} BaseIotData{name='PressureSensor', timeStamp='2020-12-15 13:15:38.764190', hasError=false, statusCode=0}
+Dec 15, 2020 1:15:38 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "CO2Sensor",
+  "timeStamp": "2020-12-15 13:15:38.784952",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 4,
+  "value": 498.0
+}
+Dec 15, 2020 1:15:38 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=1, value=38.89454} BaseIotData{name='HumiditySensor', timeStamp='2020-12-15 13:15:38.754993', hasError=false, statusCode=0}
+Dec 15, 2020 1:15:38 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=4, value=498.0} BaseIotData{name='CO2Sensor', timeStamp='2020-12-15 13:15:38.784952', hasError=false, statusCode=0}
+Dec 15, 2020 1:15:53 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SystemPerfMsg':
+{
+  "name": "SysPerfData",
+  "timeStamp": "2020-12-15 13:15:53.738439",
+  "hasError": false,
+  "statusCode": 0,
+  "cpuUtil": 10.2,
+  "diskUtil": 0.3981964703400943,
+  "memUtil": 8.0
+}
+Dec 15, 2020 1:15:53 PM programmingtheiot.gda.app.DeviceDataManager handleSystemPerformanceMessage
+INFO: Handling a SystemPerformanceMessage: SystemPerformanceData{cpuUtil=10.2, diskUtil=0.39819646, memUtil=8.0} BaseIotData{name='SysPerfData', timeStamp='2020-12-15 13:15:53.738439', hasError=false, statusCode=0}
+Dec 15, 2020 1:15:53 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "TempSensor",
+  "timeStamp": "2020-12-15 13:15:53.749545",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 3,
+  "value": 24.440269470214844
+}
+Dec 15, 2020 1:15:53 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "PressureSensor",
+  "timeStamp": "2020-12-15 13:15:53.749121",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 2,
+  "value": 1026.1064453125
+}
+Dec 15, 2020 1:15:53 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "HumiditySensor",
+  "timeStamp": "2020-12-15 13:15:53.745320",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 1,
+  "value": 39.5970458984375
+}
+Dec 15, 2020 1:15:53 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=3, value=24.44027} BaseIotData{name='TempSensor', timeStamp='2020-12-15 13:15:53.749545', hasError=false, statusCode=0}
+Dec 15, 2020 1:15:53 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=2, value=1026.1064} BaseIotData{name='PressureSensor', timeStamp='2020-12-15 13:15:53.749121', hasError=false, statusCode=0}
+Dec 15, 2020 1:15:53 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "CO2Sensor",
+  "timeStamp": "2020-12-15 13:15:53.759838",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 4,
+  "value": 506.0
+}
+Dec 15, 2020 1:15:53 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=1, value=39.597046} BaseIotData{name='HumiditySensor', timeStamp='2020-12-15 13:15:53.745320', hasError=false, statusCode=0}
+Dec 15, 2020 1:15:53 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=4, value=506.0} BaseIotData{name='CO2Sensor', timeStamp='2020-12-15 13:15:53.759838', hasError=false, statusCode=0}
+Dec 15, 2020 1:16:08 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SystemPerfMsg':
+{
+  "name": "SysPerfData",
+  "timeStamp": "2020-12-15 13:16:08.755344",
+  "hasError": false,
+  "statusCode": 0,
+  "cpuUtil": 10.6,
+  "diskUtil": 0.39819704388151034,
+  "memUtil": 7.9
+}
+Dec 15, 2020 1:16:08 PM programmingtheiot.gda.app.DeviceDataManager handleSystemPerformanceMessage
+INFO: Handling a SystemPerformanceMessage: SystemPerformanceData{cpuUtil=10.6, diskUtil=0.39819705, memUtil=7.9} BaseIotData{name='SysPerfData', timeStamp='2020-12-15 13:16:08.755344', hasError=false, statusCode=0}
+Dec 15, 2020 1:16:08 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "TempSensor",
+  "timeStamp": "2020-12-15 13:16:08.756199",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 3,
+  "value": 24.440269470214844
+}
+Dec 15, 2020 1:16:08 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "PressureSensor",
+  "timeStamp": "2020-12-15 13:16:08.754436",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 2,
+  "value": 1026.09814453125
+}
+Dec 15, 2020 1:16:08 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "HumiditySensor",
+  "timeStamp": "2020-12-15 13:16:08.745861",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 1,
+  "value": 39.84088897705078
+}
+Dec 15, 2020 1:16:08 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=3, value=24.44027} BaseIotData{name='TempSensor', timeStamp='2020-12-15 13:16:08.756199', hasError=false, statusCode=0}
+Dec 15, 2020 1:16:08 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "CO2Sensor",
+  "timeStamp": "2020-12-15 13:16:08.782449",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 4,
+  "value": 556.0
+}
+Dec 15, 2020 1:16:08 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=2, value=1026.0981} BaseIotData{name='PressureSensor', timeStamp='2020-12-15 13:16:08.754436', hasError=false, statusCode=0}
+Dec 15, 2020 1:16:08 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=1, value=39.84089} BaseIotData{name='HumiditySensor', timeStamp='2020-12-15 13:16:08.745861', hasError=false, statusCode=0}
+Dec 15, 2020 1:16:08 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=4, value=556.0} BaseIotData{name='CO2Sensor', timeStamp='2020-12-15 13:16:08.782449', hasError=false, statusCode=0}
+Dec 15, 2020 1:16:23 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SystemPerfMsg':
+{
+  "name": "SysPerfData",
+  "timeStamp": "2020-12-15 13:16:23.754376",
+  "hasError": false,
+  "statusCode": 0,
+  "cpuUtil": 10.8,
+  "diskUtil": 0.3981979041936345,
+  "memUtil": 7.9
+}
+Dec 15, 2020 1:16:23 PM programmingtheiot.gda.app.DeviceDataManager handleSystemPerformanceMessage
+INFO: Handling a SystemPerformanceMessage: SystemPerformanceData{cpuUtil=10.8, diskUtil=0.3981979, memUtil=7.9} BaseIotData{name='SysPerfData', timeStamp='2020-12-15 13:16:23.754376', hasError=false, statusCode=0}
+Dec 15, 2020 1:16:23 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "TempSensor",
+  "timeStamp": "2020-12-15 13:16:23.761965",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 3,
+  "value": 24.33119773864746
+}
+Dec 15, 2020 1:16:23 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "PressureSensor",
+  "timeStamp": "2020-12-15 13:16:23.759739",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 2,
+  "value": 1026.07080078125
+}
+Dec 15, 2020 1:16:23 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "HumiditySensor",
+  "timeStamp": "2020-12-15 13:16:23.746214",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 1,
+  "value": 38.633277893066406
+}
+Dec 15, 2020 1:16:23 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "CO2Sensor",
+  "timeStamp": "2020-12-15 13:16:23.801803",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 4,
+  "value": 433.0
+}
+Dec 15, 2020 1:16:23 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=2, value=1026.0708} BaseIotData{name='PressureSensor', timeStamp='2020-12-15 13:16:23.759739', hasError=false, statusCode=0}
+Dec 15, 2020 1:16:23 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=3, value=24.331198} BaseIotData{name='TempSensor', timeStamp='2020-12-15 13:16:23.761965', hasError=false, statusCode=0}
+Dec 15, 2020 1:16:23 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=4, value=433.0} BaseIotData{name='CO2Sensor', timeStamp='2020-12-15 13:16:23.801803', hasError=false, statusCode=0}
+Dec 15, 2020 1:16:23 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=1, value=38.633278} BaseIotData{name='HumiditySensor', timeStamp='2020-12-15 13:16:23.746214', hasError=false, statusCode=0}
+Dec 15, 2020 1:16:38 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SystemPerfMsg':
+{
+  "name": "SysPerfData",
+  "timeStamp": "2020-12-15 13:16:38.750974",
+  "hasError": false,
+  "statusCode": 0,
+  "cpuUtil": 11.1,
+  "diskUtil": 0.39819862112040455,
+  "memUtil": 8.0
+}
+Dec 15, 2020 1:16:38 PM programmingtheiot.gda.app.DeviceDataManager handleSystemPerformanceMessage
+INFO: Handling a SystemPerformanceMessage: SystemPerformanceData{cpuUtil=11.1, diskUtil=0.39819863, memUtil=8.0} BaseIotData{name='SysPerfData', timeStamp='2020-12-15 13:16:38.750974', hasError=false, statusCode=0}
+Dec 15, 2020 1:16:38 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "TempSensor",
+  "timeStamp": "2020-12-15 13:16:38.768304",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 3,
+  "value": 24.276662826538086
+}
+Dec 15, 2020 1:16:38 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "PressureSensor",
+  "timeStamp": "2020-12-15 13:16:38.765835",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 2,
+  "value": 1026.083984375
+}
+Dec 15, 2020 1:16:38 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "HumiditySensor",
+  "timeStamp": "2020-12-15 13:16:38.754969",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 1,
+  "value": 38.20655059814453
+}
+Dec 15, 2020 1:16:38 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=3, value=24.276663} BaseIotData{name='TempSensor', timeStamp='2020-12-15 13:16:38.768304', hasError=false, statusCode=0}
+Dec 15, 2020 1:16:38 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "CO2Sensor",
+  "timeStamp": "2020-12-15 13:16:38.790997",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 4,
+  "value": 447.0
+}
+Dec 15, 2020 1:16:38 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=2, value=1026.084} BaseIotData{name='PressureSensor', timeStamp='2020-12-15 13:16:38.765835', hasError=false, statusCode=0}
+Dec 15, 2020 1:16:38 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=1, value=38.20655} BaseIotData{name='HumiditySensor', timeStamp='2020-12-15 13:16:38.754969', hasError=false, statusCode=0}
+Dec 15, 2020 1:16:38 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=4, value=447.0} BaseIotData{name='CO2Sensor', timeStamp='2020-12-15 13:16:38.790997', hasError=false, statusCode=0}
+Dec 15, 2020 1:16:53 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "TempSensor",
+  "timeStamp": "2020-12-15 13:16:53.752093",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 3,
+  "value": 24.240304946899414
+}
+Dec 15, 2020 1:16:53 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=3, value=24.240305} BaseIotData{name='TempSensor', timeStamp='2020-12-15 13:16:53.752093', hasError=false, statusCode=0}
+Dec 15, 2020 1:16:53 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SystemPerfMsg':
+{
+  "name": "SysPerfData",
+  "timeStamp": "2020-12-15 13:16:53.755765",
+  "hasError": false,
+  "statusCode": 0,
+  "cpuUtil": 10.7,
+  "diskUtil": 0.39819933804717467,
+  "memUtil": 8.0
+}
+Dec 15, 2020 1:16:53 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "PressureSensor",
+  "timeStamp": "2020-12-15 13:16:53.750951",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 2,
+  "value": 1026.048583984375
+}
+Dec 15, 2020 1:16:53 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "HumiditySensor",
+  "timeStamp": "2020-12-15 13:16:53.742556",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 1,
+  "value": 38.21525573730469
+}
+Dec 15, 2020 1:16:53 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "CO2Sensor",
+  "timeStamp": "2020-12-15 13:16:53.776216",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 4,
+  "value": 445.0
+}
+Dec 15, 2020 1:16:53 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=2, value=1026.0486} BaseIotData{name='PressureSensor', timeStamp='2020-12-15 13:16:53.750951', hasError=false, statusCode=0}
+Dec 15, 2020 1:16:53 PM programmingtheiot.gda.app.DeviceDataManager handleSystemPerformanceMessage
+INFO: Handling a SystemPerformanceMessage: SystemPerformanceData{cpuUtil=10.7, diskUtil=0.39819935, memUtil=8.0} BaseIotData{name='SysPerfData', timeStamp='2020-12-15 13:16:53.755765', hasError=false, statusCode=0}
+Dec 15, 2020 1:16:53 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=1, value=38.215256} BaseIotData{name='HumiditySensor', timeStamp='2020-12-15 13:16:53.742556', hasError=false, statusCode=0}
+Dec 15, 2020 1:16:53 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=4, value=445.0} BaseIotData{name='CO2Sensor', timeStamp='2020-12-15 13:16:53.776216', hasError=false, statusCode=0}
+Dec 15, 2020 1:17:08 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SystemPerfMsg':
+{
+  "name": "SysPerfData",
+  "timeStamp": "2020-12-15 13:17:08.755062",
+  "hasError": false,
+  "statusCode": 0,
+  "cpuUtil": 10.2,
+  "diskUtil": 0.39820019835929876,
+  "memUtil": 8.0
+}
+Dec 15, 2020 1:17:08 PM programmingtheiot.gda.app.DeviceDataManager handleSystemPerformanceMessage
+INFO: Handling a SystemPerformanceMessage: SystemPerformanceData{cpuUtil=10.2, diskUtil=0.39820018, memUtil=8.0} BaseIotData{name='SysPerfData', timeStamp='2020-12-15 13:17:08.755062', hasError=false, statusCode=0}
+Dec 15, 2020 1:17:08 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "TempSensor",
+  "timeStamp": "2020-12-15 13:17:08.764246",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 3,
+  "value": 24.203947067260742
+}
+Dec 15, 2020 1:17:08 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "PressureSensor",
+  "timeStamp": "2020-12-15 13:17:08.762633",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 2,
+  "value": 1026.064208984375
+}
+Dec 15, 2020 1:17:08 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "HumiditySensor",
+  "timeStamp": "2020-12-15 13:17:08.747425",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 1,
+  "value": 38.337181091308594
+}
+Dec 15, 2020 1:17:08 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "CO2Sensor",
+  "timeStamp": "2020-12-15 13:17:08.780430",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 4,
+  "value": 497.0
+}
+Dec 15, 2020 1:17:08 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=2, value=1026.0642} BaseIotData{name='PressureSensor', timeStamp='2020-12-15 13:17:08.762633', hasError=false, statusCode=0}
+Dec 15, 2020 1:17:08 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=1, value=38.33718} BaseIotData{name='HumiditySensor', timeStamp='2020-12-15 13:17:08.747425', hasError=false, statusCode=0}
+Dec 15, 2020 1:17:08 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=3, value=24.203947} BaseIotData{name='TempSensor', timeStamp='2020-12-15 13:17:08.764246', hasError=false, statusCode=0}
+Dec 15, 2020 1:17:08 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=4, value=497.0} BaseIotData{name='CO2Sensor', timeStamp='2020-12-15 13:17:08.780430', hasError=false, statusCode=0}
+Dec 15, 2020 1:17:23 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "TempSensor",
+  "timeStamp": "2020-12-15 13:17:23.758311",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 3,
+  "value": 24.25848388671875
+}
+Dec 15, 2020 1:17:23 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=3, value=24.258484} BaseIotData{name='TempSensor', timeStamp='2020-12-15 13:17:23.758311', hasError=false, statusCode=0}
+Dec 15, 2020 1:17:23 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SystemPerfMsg':
+{
+  "name": "SysPerfData",
+  "timeStamp": "2020-12-15 13:17:23.760725",
+  "hasError": false,
+  "statusCode": 0,
+  "cpuUtil": 9.8,
+  "diskUtil": 0.39820077190071484,
+  "memUtil": 8.0
+}
+Dec 15, 2020 1:17:23 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "PressureSensor",
+  "timeStamp": "2020-12-15 13:17:23.756663",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 2,
+  "value": 1026.07568359375
+}
+Dec 15, 2020 1:17:23 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "HumiditySensor",
+  "timeStamp": "2020-12-15 13:17:23.746537",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 1,
+  "value": 38.77261734008789
+}
+Dec 15, 2020 1:17:23 PM programmingtheiot.gda.app.DeviceDataManager handleSystemPerformanceMessage
+INFO: Handling a SystemPerformanceMessage: SystemPerformanceData{cpuUtil=9.8, diskUtil=0.39820078, memUtil=8.0} BaseIotData{name='SysPerfData', timeStamp='2020-12-15 13:17:23.760725', hasError=false, statusCode=0}
+Dec 15, 2020 1:17:23 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=2, value=1026.0757} BaseIotData{name='PressureSensor', timeStamp='2020-12-15 13:17:23.756663', hasError=false, statusCode=0}
+Dec 15, 2020 1:17:23 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=1, value=38.772617} BaseIotData{name='HumiditySensor', timeStamp='2020-12-15 13:17:23.746537', hasError=false, statusCode=0}
+Dec 15, 2020 1:17:23 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "CO2Sensor",
+  "timeStamp": "2020-12-15 13:17:23.795230",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 4,
+  "value": 502.0
+}
+Dec 15, 2020 1:17:23 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=4, value=502.0} BaseIotData{name='CO2Sensor', timeStamp='2020-12-15 13:17:23.795230', hasError=false, statusCode=0}
+Dec 15, 2020 1:17:38 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SystemPerfMsg':
+{
+  "name": "SysPerfData",
+  "timeStamp": "2020-12-15 13:17:38.756094",
+  "hasError": false,
+  "statusCode": 0,
+  "cpuUtil": 10.0,
+  "diskUtil": 0.39820163221283894,
+  "memUtil": 8.0
+}
+Dec 15, 2020 1:17:38 PM programmingtheiot.gda.app.DeviceDataManager handleSystemPerformanceMessage
+INFO: Handling a SystemPerformanceMessage: SystemPerformanceData{cpuUtil=10.0, diskUtil=0.39820164, memUtil=8.0} BaseIotData{name='SysPerfData', timeStamp='2020-12-15 13:17:38.756094', hasError=false, statusCode=0}
+Dec 15, 2020 1:17:38 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "TempSensor",
+  "timeStamp": "2020-12-15 13:17:38.758844",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 3,
+  "value": 24.440269470214844
+}
+Dec 15, 2020 1:17:38 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "PressureSensor",
+  "timeStamp": "2020-12-15 13:17:38.757351",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 2,
+  "value": 1026.10595703125
+}
+Dec 15, 2020 1:17:38 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "HumiditySensor",
+  "timeStamp": "2020-12-15 13:17:38.748605",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 1,
+  "value": 38.82196807861328
+}
+Dec 15, 2020 1:17:38 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=3, value=24.44027} BaseIotData{name='TempSensor', timeStamp='2020-12-15 13:17:38.758844', hasError=false, statusCode=0}
+Dec 15, 2020 1:17:38 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "CO2Sensor",
+  "timeStamp": "2020-12-15 13:17:38.791539",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 4,
+  "value": 487.0
+}
+Dec 15, 2020 1:17:38 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=2, value=1026.106} BaseIotData{name='PressureSensor', timeStamp='2020-12-15 13:17:38.757351', hasError=false, statusCode=0}
+Dec 15, 2020 1:17:38 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=1, value=38.821968} BaseIotData{name='HumiditySensor', timeStamp='2020-12-15 13:17:38.748605', hasError=false, statusCode=0}
+Dec 15, 2020 1:17:38 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=4, value=487.0} BaseIotData{name='CO2Sensor', timeStamp='2020-12-15 13:17:38.791539', hasError=false, statusCode=0}
+Dec 15, 2020 1:17:53 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SystemPerfMsg':
+{
+  "name": "SysPerfData",
+  "timeStamp": "2020-12-15 13:17:53.742098",
+  "hasError": false,
+  "statusCode": 0,
+  "cpuUtil": 10.4,
+  "diskUtil": 0.398202349139609,
+  "memUtil": 8.0
+}
+Dec 15, 2020 1:17:53 PM programmingtheiot.gda.app.DeviceDataManager handleSystemPerformanceMessage
+INFO: Handling a SystemPerformanceMessage: SystemPerformanceData{cpuUtil=10.4, diskUtil=0.39820236, memUtil=8.0} BaseIotData{name='SysPerfData', timeStamp='2020-12-15 13:17:53.742098', hasError=false, statusCode=0}
+Dec 15, 2020 1:17:53 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "TempSensor",
+  "timeStamp": "2020-12-15 13:17:53.747674",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 3,
+  "value": 24.294841766357422
+}
+Dec 15, 2020 1:17:53 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "PressureSensor",
+  "timeStamp": "2020-12-15 13:17:53.746621",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 2,
+  "value": 1026.05029296875
+}
+Dec 15, 2020 1:17:53 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "HumiditySensor",
+  "timeStamp": "2020-12-15 13:17:53.742515",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 1,
+  "value": 38.65650177001953
+}
+Dec 15, 2020 1:17:53 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "CO2Sensor",
+  "timeStamp": "2020-12-15 13:17:53.758256",
+  "hasError": true,
+  "statusCode": -1,
+  "sensorType": 4,
+  "value": 33233.0
+}
+Dec 15, 2020 1:17:53 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=3, value=24.294842} BaseIotData{name='TempSensor', timeStamp='2020-12-15 13:17:53.747674', hasError=false, statusCode=0}
+Dec 15, 2020 1:17:53 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=2, value=1026.0503} BaseIotData{name='PressureSensor', timeStamp='2020-12-15 13:17:53.746621', hasError=false, statusCode=0}
+Dec 15, 2020 1:17:53 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=1, value=38.6565} BaseIotData{name='HumiditySensor', timeStamp='2020-12-15 13:17:53.742515', hasError=false, statusCode=0}
+Dec 15, 2020 1:17:53 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=4, value=33233.0} BaseIotData{name='CO2Sensor', timeStamp='2020-12-15 13:17:53.758256', hasError=true, statusCode=-1}
+Dec 15, 2020 1:18:08 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SystemPerfMsg':
+{
+  "name": "SysPerfData",
+  "timeStamp": "2020-12-15 13:18:08.754624",
+  "hasError": false,
+  "statusCode": 0,
+  "cpuUtil": 10.5,
+  "diskUtil": 0.3982030660663791,
+  "memUtil": 8.0
+}
+Dec 15, 2020 1:18:08 PM programmingtheiot.gda.app.DeviceDataManager handleSystemPerformanceMessage
+INFO: Handling a SystemPerformanceMessage: SystemPerformanceData{cpuUtil=10.5, diskUtil=0.39820307, memUtil=8.0} BaseIotData{name='SysPerfData', timeStamp='2020-12-15 13:18:08.754624', hasError=false, statusCode=0}
+Dec 15, 2020 1:18:08 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "TempSensor",
+  "timeStamp": "2020-12-15 13:18:08.757445",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 3,
+  "value": 24.203947067260742
+}
+Dec 15, 2020 1:18:08 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "PressureSensor",
+  "timeStamp": "2020-12-15 13:18:08.752216",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 2,
+  "value": 1026.03173828125
+}
+Dec 15, 2020 1:18:08 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "HumiditySensor",
+  "timeStamp": "2020-12-15 13:18:08.743621",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 1,
+  "value": 38.250091552734375
+}
+Dec 15, 2020 1:18:08 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "CO2Sensor",
+  "timeStamp": "2020-12-15 13:18:08.782440",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 4,
+  "value": 473.0
+}
+Dec 15, 2020 1:18:08 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=3, value=24.203947} BaseIotData{name='TempSensor', timeStamp='2020-12-15 13:18:08.757445', hasError=false, statusCode=0}
+Dec 15, 2020 1:18:08 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=2, value=1026.0317} BaseIotData{name='PressureSensor', timeStamp='2020-12-15 13:18:08.752216', hasError=false, statusCode=0}
+Dec 15, 2020 1:18:08 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=1, value=38.25009} BaseIotData{name='HumiditySensor', timeStamp='2020-12-15 13:18:08.743621', hasError=false, statusCode=0}
+Dec 15, 2020 1:18:08 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=4, value=473.0} BaseIotData{name='CO2Sensor', timeStamp='2020-12-15 13:18:08.782440', hasError=false, statusCode=0}
+Dec 15, 2020 1:18:23 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "TempSensor",
+  "timeStamp": "2020-12-15 13:18:23.749444",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 3,
+  "value": 24.222126007080078
+}
+Dec 15, 2020 1:18:23 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=3, value=24.222126} BaseIotData{name='TempSensor', timeStamp='2020-12-15 13:18:23.749444', hasError=false, statusCode=0}
+Dec 15, 2020 1:18:23 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SystemPerfMsg':
+{
+  "name": "SysPerfData",
+  "timeStamp": "2020-12-15 13:18:23.750308",
+  "hasError": false,
+  "statusCode": 0,
+  "cpuUtil": 11.0,
+  "diskUtil": 0.3982039263785032,
+  "memUtil": 8.0
+}
+Dec 15, 2020 1:18:23 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "PressureSensor",
+  "timeStamp": "2020-12-15 13:18:23.748754",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 2,
+  "value": 1026.01416015625
+}
+Dec 15, 2020 1:18:23 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "HumiditySensor",
+  "timeStamp": "2020-12-15 13:18:23.742668",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 1,
+  "value": 37.91044998168945
+}
+Dec 15, 2020 1:18:23 PM programmingtheiot.gda.app.DeviceDataManager handleSystemPerformanceMessage
+INFO: Handling a SystemPerformanceMessage: SystemPerformanceData{cpuUtil=11.0, diskUtil=0.39820394, memUtil=8.0} BaseIotData{name='SysPerfData', timeStamp='2020-12-15 13:18:23.750308', hasError=false, statusCode=0}
+Dec 15, 2020 1:18:23 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "CO2Sensor",
+  "timeStamp": "2020-12-15 13:18:23.774729",
+  "hasError": true,
+  "statusCode": -1,
+  "sensorType": 4,
+  "value": 33210.0
+}
+Dec 15, 2020 1:18:23 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=2, value=1026.0142} BaseIotData{name='PressureSensor', timeStamp='2020-12-15 13:18:23.748754', hasError=false, statusCode=0}
+Dec 15, 2020 1:18:23 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=1, value=37.91045} BaseIotData{name='HumiditySensor', timeStamp='2020-12-15 13:18:23.742668', hasError=false, statusCode=0}
+Dec 15, 2020 1:18:23 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=4, value=33210.0} BaseIotData{name='CO2Sensor', timeStamp='2020-12-15 13:18:23.774729', hasError=true, statusCode=-1}
+Dec 15, 2020 1:18:38 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SystemPerfMsg':
+{
+  "name": "SysPerfData",
+  "timeStamp": "2020-12-15 13:18:38.747029",
+  "hasError": false,
+  "statusCode": 0,
+  "cpuUtil": 11.4,
+  "diskUtil": 0.3982046433052733,
+  "memUtil": 8.0
+}
+Dec 15, 2020 1:18:38 PM programmingtheiot.gda.app.DeviceDataManager handleSystemPerformanceMessage
+INFO: Handling a SystemPerformanceMessage: SystemPerformanceData{cpuUtil=11.4, diskUtil=0.39820465, memUtil=8.0} BaseIotData{name='SysPerfData', timeStamp='2020-12-15 13:18:38.747029', hasError=false, statusCode=0}
+Dec 15, 2020 1:18:38 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "TempSensor",
+  "timeStamp": "2020-12-15 13:18:38.759440",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 3,
+  "value": 24.167591094970703
+}
+Dec 15, 2020 1:18:38 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "PressureSensor",
+  "timeStamp": "2020-12-15 13:18:38.757198",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 2,
+  "value": 1026.01611328125
+}
+Dec 15, 2020 1:18:38 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "HumiditySensor",
+  "timeStamp": "2020-12-15 13:18:38.748176",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 1,
+  "value": 38.02947235107422
+}
+Dec 15, 2020 1:18:38 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=2, value=1026.0161} BaseIotData{name='PressureSensor', timeStamp='2020-12-15 13:18:38.757198', hasError=false, statusCode=0}
+Dec 15, 2020 1:18:38 PM programmingtheiot.gda.connection.MqttClientConnector messageArrived
+INFO: [Callback] Receive a message from topic 'PIOT/ConstrainedDevice/SensorMsg':
+{
+  "name": "CO2Sensor",
+  "timeStamp": "2020-12-15 13:18:38.795779",
+  "hasError": false,
+  "statusCode": 0,
+  "sensorType": 4,
+  "value": 461.0
+}
+Dec 15, 2020 1:18:38 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=3, value=24.167591} BaseIotData{name='TempSensor', timeStamp='2020-12-15 13:18:38.759440', hasError=false, statusCode=0}
+Dec 15, 2020 1:18:38 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=1, value=38.029472} BaseIotData{name='HumiditySensor', timeStamp='2020-12-15 13:18:38.748176', hasError=false, statusCode=0}
+Dec 15, 2020 1:18:38 PM programmingtheiot.gda.app.DeviceDataManager handleSensorMessage
+INFO: Handling a SensorMessage: SensorData{sensorType=4, value=461.0} BaseIotData{name='CO2Sensor', timeStamp='2020-12-15 13:18:38.795779', hasError=false, statusCode=0}
